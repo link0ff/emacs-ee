@@ -19,15 +19,19 @@
       (add-text-properties b (point) (list 'face (ee-c-face c-level))))))
    (r-printer . (lambda (r a-level r-level children-p attr-alist)
     (let ((b (point)))
-      (insert (format "%s%s %-29s %s"
+      (insert (format "%s%s %s"
                       (or (car (ee-field 'mark r)) " ")
                       (make-string (1- a-level) ?\040)
-                      (ee-field 'name r)
-                      (or (ee-field 'documentation r) "")))
+                      (ee-field 'name r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
-   (r-select . ee-commands-call-interactively))]
+        (add-text-properties b (point) (list 'face 'ee-link-visited))))
+      (if (ee-field 'documentation r)
+          (progn
+            (setq p (point))
+            (insert " " (ee-field 'documentation r))
+            (add-text-properties p (point) (list 'face 'ee-shadow)))))))
+   (r-select . ee-variables-call-interactively))]
  [((type . view)
    (name . "by Suffix")
    (default)
@@ -52,12 +56,16 @@
       (add-text-properties b (point) (list 'face (ee-c-face c-level))))))
    (r-printer . (lambda (r a-level r-level children-p attr-alist)
     (let ((b (point)))
-      (insert (format "%s%s %-29s %s"
+      (insert (format "%s%s %s"
                       (or (car (ee-field 'mark r)) " ")
                       (make-string (1- a-level) ?\040)
-                      (ee-field 'name r)
-                      (or (ee-field 'documentation r) "")))
+                      (ee-field 'name r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
-   (r-select . ee-commands-call-interactively))]]
+        (add-text-properties b (point) (list 'face 'ee-link-visited))))
+      (if (ee-field 'documentation r)
+          (progn
+            (setq p (point))
+            (insert " " (ee-field 'documentation r))
+            (add-text-properties p (point) (list 'face 'ee-shadow)))))))
+   (r-select . ee-variables-call-interactively))]]

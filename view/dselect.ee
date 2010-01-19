@@ -40,7 +40,7 @@
                       (ee-field 'package r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (post-generate . (lambda () (ee-view-expansion-hide-all)))
    (r-select . ee-dselect-display-info-with-narrow))]
  [((type . view)
@@ -80,7 +80,7 @@
                       (ee-field 'package r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (post-generate . (lambda () (ee-view-expansion-hide-all)))
    (r-select . ee-dselect-display-info-with-narrow))]
  [((type . view)
@@ -99,7 +99,7 @@
                       (ee-field 'package r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (post-generate . (lambda () (ee-view-expansion-hide-all)))
    (r-select . ee-dselect-display-info-with-narrow))]
  [((type . view)
@@ -119,7 +119,7 @@
                       (ee-field 'package r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (r-select . ee-dselect-display-info-with-narrow))]
  [((type . view)
    (name . "by Type/Emacs-related packages")
@@ -155,9 +155,9 @@
                       (ee-field 'package r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited))))
       (setq b (point))
       (insert (let ((doc (or (ee-dselect-get-description-as-string r) "")))
                 (substring doc 0 (string-match "\n" doc))))
-      (add-text-properties b (point) (list 'face 'ee-face-faded-face)))))
+      (add-text-properties b (point) (list 'face 'ee-shadow)))))
    (r-select . ee-dselect-display-info-with-narrow))]]

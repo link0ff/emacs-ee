@@ -1,4 +1,4 @@
-;;; ee-commands.el --- categorized menu of Emacs commands
+;;; ee-variables.el --- categorized menu of Emacs variables
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -32,49 +32,47 @@
 
 ;;; Constants
 
-(defconst ee-commands-mode-name "ee-commands")
+(defconst ee-variables-mode-name "ee-variables")
 
 ;;; Customizable Variables
 
-(defgroup ee-commands nil
-  "Categorized menu of Emacs commands."
-  :prefix "ee-commands-"
+(defgroup ee-variables nil
+  "Categorized menu of Emacs variables."
+  :prefix "ee-variables-"
   :group 'ee)
-
-(defcustom ee-commands-record-flag nil
-  "Put the called command in the command-history."
-  :type 'boolean
-  :group 'ee-commands)
 
 ;;; Data Description
 
-(defvar ee-commands-data
+(defvar ee-variables-data
   '[(meta
      (format-version . "0.0.1")
-     (view-data-file . "view/commands.ee")
-     (collector . ee-commands-data-collect)
-     (fields name command documentation ())
-     (key-fields command))])
+     (view-data-file . "view/variables.ee")
+     (collector . ee-variables-data-collect)
+     (fields name variable documentation ())
+     (key-fields variable))])
 
 ;;; Data Extraction
 
-(defun ee-commands-data-collect (data)
+(defun ee-variables-data-collect (data)
   (let* ((field-names (ee-data-field-names data))
          (new-data
           (ee-data-convert-lists-to-vectors
            (let (res)
              (mapatoms (lambda (s)
-                         (if (and (functionp s) (commandp s))
+                         (if (and (symbolp s)
+                                  (boundp s)
+                                  (not (memq (aref (symbol-name s) 0) '(?: ?*))))
                              (push s res))))
              (mapcar (lambda (s)
                        (mapcar (lambda (field-name)
                                  (cond
                                   ((eq field-name 'name) (symbol-name s))
-                                  ((eq field-name 'command) s)
+                                  ((eq field-name 'variable) s)
                                   ((eq field-name 'documentation)
-                                   (let ((doc (documentation s)))
-                                     (if doc
-                                         (substring doc 0 (string-match "\n" doc)))))))
+                                   (let ((doc (documentation-property s 'variable-documentation)))
+                                     (if (and doc (stringp doc))
+                                         (substring doc 0 (string-match "\n" doc)))))
+                                  ))
                                field-names))
                      (sort res (lambda (s1 s2)
                                  (string< (symbol-name s1)
@@ -84,43 +82,39 @@
 
 ;;; Actions
 
-(defun ee-commands-call-interactively (&optional arg)
+(defun ee-variables-call-interactively (&optional arg)
   (interactive)
-  (let ((command (ee-field 'command))
-        (parent-buffer ee-parent-buffer))
-    (when (and command parent-buffer)
-      (switch-to-buffer parent-buffer)
-      (call-interactively command ee-commands-record-flag))))
+  (describe-variable (ee-field 'variable)))
 
 ;;; Key Bindings
 
-(defvar ee-commands-keymap nil
-  "Local keymap for ee-commands mode.")
+(defvar ee-variables-keymap nil
+  "Local keymap for ee-variables mode.")
 
-(defun ee-commands-keymap-make-default ()
-  "Defines default key bindings for `ee-commands-keymap'.
+(defun ee-variables-keymap-make-default ()
+  "Defines default key bindings for `ee-variables-keymap'.
 It inherits key bindings from `ee-mode-map'."
   (or ee-mode-map
       (ee-mode-map-make-default))
   (let ((map (copy-keymap ee-mode-map)))
-    ;; (define-key map "\C-o" 'ee-commands-call-interactively)
-    (setq ee-commands-keymap map)))
+    ;; (define-key map "\C-o" 'ee-variables-call-interactively)
+    (setq ee-variables-keymap map)))
 
-(or ee-commands-keymap
-    (ee-commands-keymap-make-default))
+(or ee-variables-keymap
+    (ee-variables-keymap-make-default))
 
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-commands (&optional arg)
-  "Categorized menu of Emacs commands."
+(defun ee-variables (&optional arg)
+  "Categorized menu of Emacs variables."
   (interactive "P")
   (ee-view-buffer-create
-   (format "*%s*" ee-commands-mode-name)
-   ee-commands-mode-name
-   ee-commands-keymap
-   ee-commands-data))
+   (format "*%s*" ee-variables-mode-name)
+   ee-variables-mode-name
+   ee-variables-keymap
+   ee-variables-data))
 
-(provide 'ee-commands)
+(provide 'ee-variables)
 
-;;; ee-commands.el ends here
+;;; ee-variables.el ends here

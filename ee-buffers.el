@@ -1,24 +1,24 @@
 ;;; ee-buffers.el --- display and manipulate Emacs buffers
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -32,8 +32,7 @@
 
 ;;; Constants
 
-(defconst ee-buffers-mode-name "ee-buffers"
-  "*Mode name.")
+(defconst ee-buffers-mode-name "ee-buffers")
 
 ;;; Customizable Variables
 
@@ -43,14 +42,14 @@
   :group 'ee)
 
 ;; TODO: move to view/buffers.ee?
-(defcustom ee-buffers-auto-refresh t
+(defcustom ee-buffers-auto-refresh nil;t
   "Refresh ee-buffers view buffer if buffer is visible."
   :type 'boolean
   :group 'ee-buffers)
 
 ;; TODO: move to view/buffers.ee?
 (defcustom ee-buffers-faded-timeout 600 ;3600
-  "Timeout in seconds, after which items will be displayed in ee-face-faded-face."
+  "Timeout in seconds, after which items will be displayed in ee-shadow."
   :type 'integer
   :group 'ee-buffers)
 
@@ -104,7 +103,7 @@ Example:
 ;;; Data Extraction
 
 (defun ee-buffers-data-collect (data)
-  (let* ((field-names (ee-data-meta-field-get data 'fields))
+  (let* ((field-names (ee-data-meta-field-get data 'fields)) ;; TODO: use (ee-data-field-names data)?
          (old-data (if ee-data
                        (mapcar (lambda (r)
                                  (ee-field 'buffer r))
@@ -121,7 +120,7 @@ Example:
                     ((eq field-name 'buffer) buffer)
                     ((eq field-name 'buffer-name) (buffer-name buffer))
                     ((eq field-name 'major-mode) major-mode)
-                    ((eq field-name 'mode-name) mode-name)
+                    ((eq field-name 'mode-name) (format-mode-line mode-name nil nil buffer))
                     ((eq field-name 'file-name) (buffer-file-name buffer))
                     ((eq field-name 'directory) default-directory)
                     ((eq field-name 'size) (buffer-size))
@@ -130,13 +129,15 @@ Example:
                     ((eq field-name 'read-only) buffer-read-only)
                     ((eq field-name 'modified) (buffer-modified-p buffer))
                     ((eq field-name 'modtime) (visited-file-modtime))
-                    ((eq field-name 'display-time) buffer-display-time)
-                    ((eq field-name 'display-count) buffer-display-count)
+                    ((eq field-name 'display-time)
+                     (and (boundp 'buffer-display-time) buffer-display-time))
+                    ((eq field-name 'display-count)
+                     (and (boundp 'buffer-display-count) buffer-display-count))
                     ((eq field-name 'file-truename) buffer-file-truename)
                     ((eq field-name 'file-format) buffer-file-format)
                     ((eq field-name 'file-coding-system) buffer-file-coding-system)))
                  field-names)))
-            (buffer-list)))))
+            (buffer-list (selected-frame))))))
     (aset new-data 0 (aref data 0))
     (if old-data
         (ee-data-records-do
@@ -167,7 +168,22 @@ Example:
 ;; TODO: better name?
 (defun ee-buffers-view-buffer-current ()
   (interactive)
-  (ee-view-record-by-key ee-parent-buffer))
+  (let ((buffers (member ee-parent-buffer (buffer-list (selected-frame)))))
+    (if buffers
+        ;; cycle buffers until visible is found
+        (while (not (ee-view-record-by-key (car buffers)))
+          (setq buffers (cdr buffers))))))
+
+(defun ee-buffers-view-buffer-next ()
+  (interactive)
+  (let ((buffers (cdr (member (ee-field 'buffer) (buffer-list (selected-frame))))))
+    (if buffers
+        ;; cycle buffers until visible is found
+        (while (not (ee-view-record-by-key (car buffers)))
+          (setq buffers (cdr buffers)))))
+  ;; TODO: rename to ee-buffers-view-buffer-next-or-prev
+  ;; and by C-u change direction to prev/next
+  )
 
 (defun ee-buffers-view-buffer-visible ()
   (let ((buf (get-buffer (ee-buffers-buffer-name)))
@@ -208,6 +224,8 @@ See also `ee-buffers-auto-refresh-delay' for hook setter."
   (remove-hook 'post-command-hook
                'ee-buffers-auto-refresh-delayed))
 
+;; TODO: toggle
+;; TODO: FEATURE-unload-hook
 (defun ee-buffers-auto-refresh-hook-change ()
   (interactive)
   ;;   (if ee-buffers-auto-refresh
@@ -224,10 +242,11 @@ See also `ee-buffers-auto-refresh-delay' for hook setter."
 (defun ee-buffers-switch-to-buffer (&optional arg other-window)
   (interactive)
   (let ((buffer (ee-field 'buffer)))
-    (if buffer
-        (cond ((eq other-window 'display) (display-buffer buffer))
+    (if (and buffer (buffer-name buffer))
+        (cond ((eq other-window 'display) (display-buffer buffer t))
               (other-window (switch-to-buffer-other-window buffer))
-              (t (switch-to-buffer buffer))))))
+              (t (switch-to-buffer buffer)))
+      (error "Invalid buffer"))))
 
 (defun ee-buffers-switch-to-buffer-other-window (&optional arg)
   (interactive)
@@ -270,8 +289,7 @@ It inherits key bindings from `ee-mode-map'."
   (let ((map (copy-keymap ee-mode-map)))
     (define-key map "s" 'ee-buffers-mark-save)
     (define-key map "." 'ee-buffers-view-buffer-current)
-    ;; (define-key map "," 'ee-buffers-view-buffer-prev)
-
+    (define-key map "," 'ee-buffers-view-buffer-next)
     (define-key map "o" 'ee-buffers-switch-to-buffer-other-window)
     (define-key map "\C-o" 'ee-buffers-display-buffer)
 

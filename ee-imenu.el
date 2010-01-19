@@ -1,24 +1,24 @@
 ;;; ee-imenu.el --- categorized mode-specific buffer indexes
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, tools, convenience
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -30,10 +30,12 @@
 
 (require 'ee)
 
+(eval-when-compile
+  (require 'imenu nil t))
+
 ;;; Constants
 
-(defconst ee-imenu-mode-name "ee-imenu"
-  "*Mode name.")
+(defconst ee-imenu-mode-name "ee-imenu")
 
 ;;; Customizable Variables
 
@@ -158,8 +160,7 @@ It inherits key bindings from `ee-mode-map'."
 (defun ee-imenu (&optional arg)
   "Categorized mode-specific buffer indexes."
   (interactive "P")
-  (or (fboundp 'imenu-default-create-index-function)
-      (require 'imenu))
+  (require 'imenu)
   (ee-view-buffer-create
    (format "*%s*/%s" ee-imenu-mode-name (buffer-name))
    ee-imenu-mode-name

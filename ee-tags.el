@@ -1,24 +1,24 @@
 ;;; ee-tags.el --- etags facility
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, tags
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -35,8 +35,7 @@
 
 ;;; Constants
 
-(defconst ee-tags-mode-name "ee-tags"
-  "*Mode name.")
+(defconst ee-tags-mode-name "ee-tags")
 
 ;;; Customizable Variables
 
@@ -151,8 +150,7 @@ It inherits key bindings from `ee-mode-map'."
 (defun ee-tags (&optional arg)
   "Etags facility."
   (interactive "P")
-  (or (featurep 'etags)
-      (require  'etags))
+  (require 'etags)
   (ee-view-buffer-create
    (format "*%s*" ee-tags-mode-name)
    ee-tags-mode-name

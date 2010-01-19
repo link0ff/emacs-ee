@@ -34,7 +34,7 @@
                       (ee-field 'name r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (post-generate . (lambda () (or ee-hidden-expansions (ee-view-expansion-hide-all))))
    (r-select . ee-imenu-switch-to-buffer)
    (r-execute . ee-imenu-execute))]
@@ -78,7 +78,7 @@
                       (ee-field 'name r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (post-generate . (lambda () (or ee-hidden-expansions (ee-view-expansion-hide-all))))
    (r-select . ee-imenu-switch-to-buffer)
    (r-execute . ee-imenu-execute))]
@@ -118,7 +118,7 @@
                       (ee-field 'name r)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (post-generate . (lambda () (ee-view-expansion-hide-all)))
    (r-select . ee-imenu-switch-to-buffer)
    (r-execute . ee-imenu-execute))]]

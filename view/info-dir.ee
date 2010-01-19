@@ -18,8 +18,8 @@
                  ;; TODO: break loop here
                  (setq found t))))
           (not found)))))
-   (c-path-finder . (lambda (r) (list (list (ee-field 'dir-section r)))))
-   ;; (c-path-finder . (lambda (r) (list (or (ee-field 'info-dir-section r) '("(not categorized)")))))
+   (c-path-finder . (lambda (r) (list (list (or (ee-field 'dir-section r) "(Uncategorized)")))))
+   ;; (c-path-finder . (lambda (r) (list (or (ee-field 'info-dir-section r) '("(Uncategorized)")))))
    (c-sorter . (lambda (a-level c-level s-level attr-alist)
     (lambda (c1 c2) (string< (car c1) (car c2)))))
    (r-sorter . (lambda (a-level r-level attr-alist)

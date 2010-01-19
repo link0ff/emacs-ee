@@ -1,7 +1,7 @@
 \input texinfo   @c -*-texinfo-*-
 @c %**start of header
 @setfilename ee.info
-@settitle ee - categorizing information manager for Emacs
+@settitle Ee - Emacs information manager
 @c %**end of header
 
 @ifhtml
@@ -10,22 +10,21 @@
 
 @dircategory Emacs
 @direntry
-* EE: (ee).                The categorizing information manager for Emacs.
+* Ee: (ee).		Emacs information manager.
 @end direntry
 
-@set VERSION 0.0.2
+@set VERSION 0.1.0
 @set EDITION $Revision$
 @set UPDATED $Date$
 
 @ifnottex
-This document describes the emacs-ee,
-the categorizing information manager for Emacs.
+This document describes the Ee, Emacs information manager.
 
 This is edition @value{EDITION} @value{UPDATED}
 of the @cite{Ee User Manual}
 for @code{ee} Version @value{VERSION}.
 
-Copyright @copyright{} 2002, 2003  Juri Linkov @email{juri@@jurta.org}
+Copyright @copyright{} 2002, 2003, 2004, 2010  Juri Linkov @email{juri@@jurta.org}
 
 Permission is granted to make and distribute verbatim copies of
 this manual provided the copyright notice and this permission notice
@@ -40,7 +39,7 @@ are preserved on all copies.
 @titlepage
 @title Ee User Manual
 @sp 1
-@subtitle A Categorizing Information Manager for Emacs
+@subtitle Emacs Information Manager
 @subtitle @value{EDITION} @value{UPDATED}
 @subtitle for ee v@value{VERSION}
 @author by Juri Linkov @email{juri@@jurta.org}
@@ -63,7 +62,7 @@ are preserved on all copies.
 @node Top, Introduction, (dir), (dir)
 
 This document describes the @code{ee} version @value{VERSION},
-the categorizing information manager for Emacs.
+Emacs information manager.
 
 PLEASE NOTE THAT THIS MANUAL IS NOT FINISHED,
 BECAUSE THIS PACKAGE IS UNDER DEVELOPMENT,
@@ -85,7 +84,7 @@ AND ALL DETAILS DESCRIBED HERE CAN BE CHANGED.
 
 Appendices:
 * Installation::                Installation.
-* Reporting Bugs::              How to report a bug in Emacs-ee.
+* Reporting Bugs::              How to report a bug in ee.
 
 * Terminology::                 Terminology.
 * Concept Index::               Concept Index.
@@ -425,7 +424,7 @@ See the file README or
 @chapter Reporting Bugs
 
 Please report bugs, make suggestions and contributions
-to @email{juri@@jurta.ee} or on the Web pages
+to @email{juri@@jurta.org} or on the Web pages
 at @uref{http://www.jurta.org/emacs/ee/}.
 
 @node Terminology, Concept Index, Reporting Bugs, Top

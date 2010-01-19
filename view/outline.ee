@@ -20,8 +20,10 @@
               ;; (format "%-44s : %s %s" (substring (ee-field 'heading r) 0 (min (length (ee-field 'heading r)) (- 44 a-level))) (ee-field 'heading b) (ee-field 'heading e))
               ;; (format "%s %s %s" a-level (and r (ee-field 'level r)) (if r (ee-field 'heading r) "(no-heading)"))
               (format "%s" (if r (ee-field 'heading r) "(no-heading)")))
-      (if (and children-p (< a-level (length ee-r-faces)))
-          (add-text-properties b (point) (list 'face (ee-r-face a-level)))))))
+      ;; use original outline properties
+      ;; (if (and children-p (< a-level (length ee-r-faces)))
+      ;;     (add-text-properties b (point) (list 'face (ee-r-face a-level))))
+      )))
    (r-select . ee-outline-switch-to-buffer)
    (r-execute . ee-outline-execute))]
  [((type . view)
@@ -42,7 +44,9 @@
                (make-string (1- (+ c-level s-level)) ?\040)
                header
                (or (cadr (assq 'counter attr-alist)) "0")))
-      (add-text-properties b (point) (list 'face (ee-c-face c-level))))))
+      ;; use original outline properties
+      ;; (add-text-properties b (point) (list 'face (ee-c-face c-level)))
+      )))
    (r-printer . (lambda (r a-level r-level children-p attr-alist)
     (insert (format "%s%s %s"
                     (or (car (ee-field 'mark r)) " ")

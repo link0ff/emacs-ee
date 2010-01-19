@@ -1,24 +1,24 @@
 ;;; ee-edb.el --- summary mode for EDB
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, edb, database, forms
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -30,10 +30,13 @@
 
 (require 'ee)
 
+(eval-when-compile
+  (require 'database nil t)
+  (require 'db-summary nil t))
+
 ;;; Constants
 
-(defconst ee-edb-mode-name "ee-edb"
-  "*Mode name.")
+(defconst ee-edb-mode-name "ee-edb")
 
 ;;; Customizable Variables
 
@@ -106,10 +109,11 @@
 It inherits key bindings from `ee-mode-map'."
   (or ee-mode-map
       (ee-mode-map-make-default))
-  (let ((map (copy-keymap ee-mode-map)))
-    ;; (define-key map "c" 'ee-edb-create-record)
-    (define-key database-view-mode-map "H" 'ee-edb)
-    (setq ee-edb-keymap map)))
+  (and (boundp 'database-view-mode-map)
+       (let ((map (copy-keymap ee-mode-map)))
+         ;; (define-key map "c" 'ee-edb-create-record)
+         (define-key database-view-mode-map "H" 'ee-edb)
+         (setq ee-edb-keymap map))))
 
 (or ee-edb-keymap
     (ee-edb-keymap-make-default))
@@ -118,9 +122,8 @@ It inherits key bindings from `ee-mode-map'."
 (defun ee-edb (&optional arg)
   "Summary mode for EDB."
   (interactive "P")
-  (or (featurep 'database)
-      (and (require 'database)
-           (require 'db-summary)))
+  (require 'database)
+  (require 'db-summary)
   (ee-view-buffer-create
    (format "*%s*/%s" ee-edb-mode-name (buffer-name))
    ee-edb-mode-name

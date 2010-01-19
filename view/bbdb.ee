@@ -38,7 +38,7 @@
                     (or (bbdb-record-name (ee-field 'bbdb-record r)) "(NAME_UNKNOWN)")
                     (or (bbdb-record-net (ee-field 'bbdb-record r)) "(NET_ADDRESS_UNKNOWN)")))
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-marked))))))
    ;; (post-generate . (lambda () (or ee-hidden-expansions (ee-view-expansion-hide-all))))
    (r-select)
    (r-execute . ee-bbdb-execute))]]

@@ -1,24 +1,24 @@
 ;;; ee-menubar.el --- categorized access to Emacs menu-bar
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, tools
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -26,18 +26,21 @@
 
 ;; See the file README and documentation for more information.
 
+;;; Suggested keybindings:
+
+;; (define-key global-map "\M-`" 'ee-menubar)
+;; (define-key global-map [f10] 'ee-menubar)
+
 ;;; Code:
 
 (require 'ee)
 
 (eval-when-compile
-  (require 'cl)
-  (require 'tmm))
+  (require 'tmm nil t))
 
 ;;; Constants
 
-(defconst ee-menubar-mode-name "ee-menubar"
-  "*Mode name.")
+(defconst ee-menubar-mode-name "ee-menubar")
 
 ;;; Customizable Variables
 
@@ -174,18 +177,11 @@ It inherits key bindings from `ee-mode-map'."
 
 ;;; Top-Level Functions
 
-;;;###autoload (define-key global-map "\M-`" 'ee-menubar)
-;;;###autoload (define-key global-map [f10] 'ee-menubar)
-
-;;;###autoload (fset 'ee-textmenu 'ee-menubar)
-;;;###autoload (fset 'ee-tmm 'ee-menubar)
-
 ;;;###autoload
 (defun ee-menubar (&optional arg)
   "Categorized access to Emacs menu-bar."
   (interactive "P")
-  (or (featurep 'tmm)
-      (require  'tmm))
+  (require 'tmm)
   ;; TODO: remove next two lines, when submenus will be implemented
   ;; as categories (not records) in the ee-menubar-c-tree-builder,
   ;; so ee-hidden-expansions could be used to retain opened menus
@@ -196,6 +192,8 @@ It inherits key bindings from `ee-mode-map'."
      ee-menubar-mode-name
      ee-menubar-keymap
      ee-menubar-data)))
+
+;;;###autoload (defalias 'ee-tmm 'ee-menubar)
 
 (provide 'ee-menubar)
 

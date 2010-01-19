@@ -1,24 +1,24 @@
 ;;; ee-outline.el --- manipulate outlines collected from outline-mode
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, outlines
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -29,6 +29,8 @@
 ;; HINT: good hack is to invoke ee-outline on ee-buffers (or ee-dired)
 ;; with directory tree where (setq outline-regexp " *[+-]") is set
 
+;; TODO: use standard Emacs faces outline-1, outline-2, ..., outline-8
+
 ;;; Code:
 
 (require 'ee)
@@ -38,8 +40,7 @@
 
 ;;; Constants
 
-(defconst ee-outline-mode-name "ee-outline"
-  "*Mode name.")
+(defconst ee-outline-mode-name "ee-outline")
 
 ;;; Customizable Variables
 
@@ -77,7 +78,7 @@
         (cond
          ((eq field-name 'level) (nth 0 e))
          ((eq field-name 'heading)
-          (buffer-substring-no-properties
+          (buffer-substring;;-no-properties ;; use original outline properties
            (nth 1 e) ;;BAD:? (+ (nth 0 e) (nth 1 e))
            (nth 2 e)))
          ((eq field-name 'b) (nth 1 e))
@@ -161,6 +162,8 @@
 
 (defun ee-outline-display-buffer (&optional arg)
   (interactive)
+  ;; TODO: qv occur-mode-display-occurrence
+  ;; TODO: qv ibuffer-occur-display-occurence
   (ee-outline-switch-to-buffer arg 'display))
 
 ;; TODO: use arg other-window and bind to some key ("r"?)
@@ -210,8 +213,7 @@ It inherits key bindings from `ee-mode-map'."
 (defun ee-outline (&optional arg)
   "Manipulate outlines collected from outline-mode."
   (interactive "P")
-  (or (fboundp 'outline-on-heading-p)
-      (require 'outline))
+  (require 'outline)
   (ee-view-buffer-create
    (format "*%s*/%s" ee-outline-mode-name (buffer-name))
    ee-outline-mode-name

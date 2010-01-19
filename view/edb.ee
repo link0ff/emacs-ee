@@ -22,7 +22,7 @@
    (r-printer . (lambda (r a-level r-level children-p attr-alist)
     (dbs-insert-link-summary (ee-field 'edb-record r) nil)
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-marked))))))
    (post-generate . (lambda ()
     ;; (dbs-move-to-proper-record) ; go to proper line
     ))

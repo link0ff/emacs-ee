@@ -32,7 +32,7 @@
                     (ee-field 'unread r)
                     (ee-field 'name r)))
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-marked))))))
    (r-select)
    (r-execute . ee-gnus-execute))]
  [((type . view)
@@ -48,7 +48,7 @@
                     (ee-field 'unread r)
                     (ee-field 'name r)))
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-marked))))))
    (r-select)
    (r-execute . ee-gnus-execute))]
  [((type . view)
@@ -64,6 +64,6 @@
                     (ee-field 'unread r)
                     (ee-field 'name r)))
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-marked))))))
    (r-select)
    (r-execute . ee-gnus-execute))]]

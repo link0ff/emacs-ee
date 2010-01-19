@@ -16,8 +16,8 @@
                (ee-field 'name r)))
       (cond
        ((ee-field 'mark r)
-        (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-face-marked-face)))))))
-   (post-generate . (lambda () (if (eq ee-history-type 'command) (progn (set-syntax-table emacs-lisp-mode-syntax-table) (font-lock-mode))) (goto-char (point-max)) (forward-line -1)))
+        (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-marked)))))))
+   (post-generate . (lambda () (if (eq ee-history-type 'command) (progn (set-syntax-table emacs-lisp-mode-syntax-table) (font-lock-mode 1))) (goto-char (point-max)) (forward-line -1)))
    (r-select . ee-history-select)
    (r-execute . ee-history-execute))]
  [((type . view)
@@ -37,7 +37,7 @@
                (ee-field 'name r)))
       (cond
        ((ee-field 'mark r)
-        (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-face-marked-face)))))))
-   (post-generate . (lambda () (if (eq ee-history-type 'command) (progn (set-syntax-table emacs-lisp-mode-syntax-table) (font-lock-mode))) (goto-char (point-max)) (forward-line -1)))
+        (add-text-properties (line-beginning-position) (+ (line-beginning-position) 1) (list 'face 'ee-marked)))))))
+   (post-generate . (lambda () (if (eq ee-history-type 'command) (progn (set-syntax-table emacs-lisp-mode-syntax-table) (font-lock-mode 1))) (goto-char (point-max)) (forward-line -1)))
    (r-select . ee-history-select)
    (r-execute . ee-history-execute))]]

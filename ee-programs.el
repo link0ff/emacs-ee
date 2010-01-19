@@ -1,24 +1,24 @@
 ;;; ee-programs.el --- categorized program menu
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -30,13 +30,9 @@
 
 (require 'ee)
 
-(eval-when-compile
-  (require 'cl))
-
 ;;; Constants
 
-(defconst ee-programs-mode-name "ee-programs"
-  "*Mode name.")
+(defconst ee-programs-mode-name "ee-programs")
 
 ;;; Customizable Variables
 
@@ -46,12 +42,12 @@
   :group 'ee)
 
 (defcustom ee-programs-debian-menu-dir "/usr/lib/menu"
-  "*Debian GNU/Linux menu directory name."
+  "Debian GNU/Linux menu directory name."
   :type 'string
   :group 'ee-programs)
 
 (defcustom ee-programs-windows-start-dir "C:/WINDOWS/Start Menu" ;; "C:/WINDOWS/Kaynnista-valikko"
-  "*M$Window$ Start-menu directory name."
+  "M$Window$ Start-menu directory name."
   :type 'string
   :group 'ee-programs)
 
@@ -124,19 +120,19 @@
                                     ;; TODO: add "description" and "longtitle"
                                     ((eq field-name 'name)
                                      (if (or (string-match "[^g]title=\"\\([^\"]*\\)\"" str)
-                                             (string-match "[^g]title=\\([^\\[:space:]]*\\)[\\[:space:]]" str))
+                                             (string-match "[^g]title=\\([^ \t\n\\]*\\)" str))
                                          (match-string 1 str)))
                                     ((eq field-name 'category)
                                      (if (or (string-match "section=\"\\([^\"]*\\)\"" str)
-                                             (string-match "section=\\([^\\[:space:]]*\\)[\\[:space:]]" str))
+                                             (string-match "section=\\([^ \t\n\\]*\\)" str))
                                          (match-string 1 str)))
                                     ((eq field-name 'command)
                                      (if (or (string-match "command=\"\\([^\"]*\\)\"" str)
-                                             (string-match "command=\\([^\\[:space:]]*\\)[\\\\[:space:]]" str))
+                                             (string-match "command=\\([^ \t\n\\]*\\)" str))
                                          (match-string 1 str)))
                                     ((eq field-name ())
                                      (if (or (string-match "needs=\"\\([^\"]*\\)\"" str)
-                                             (string-match "needs=\\([^\\[:space:]]*\\)[\\[:space:]]" str))
+                                             (string-match "needs=\\([^ \t\n\\]*\\)" str))
                                          (list (cons 'needs (match-string 1 str)))))))
                                  field-names)
                                 res))))
@@ -203,7 +199,7 @@
         "x-terminal-emulator"
         "-T" (ee-field 'name)
         "-e" (ee-field 'command)))
-      ((eq system-type 'windows-nt)
+      ((and (eq system-type 'windows-nt) (fboundp 'w32-shell-name))
        (list (w32-shell-name) "-c" (shell-quote-argument (ee-field 'command))))
       (t
        (split-string (ee-field 'command))))))

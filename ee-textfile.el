@@ -1,24 +1,24 @@
 ;;; ee-textfile.el --- organize information from text files
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -30,10 +30,12 @@
 
 (require 'ee)
 
+(eval-when-compile
+  (require 'add-log))
+
 ;;; Constants
 
-(defconst ee-textfile-mode-name "ee-textfile"
-  "*Mode name.")
+(defconst ee-textfile-mode-name "ee-textfile")
 
 ;;; Customizable Variables
 
@@ -74,23 +76,22 @@
 
 ;;; Global Variables
 
-;; TODO: these regexp defvars could be added to add-log.el
 (defvar ee-textfile-changelog-date-regexp "^\\sw.........[0-9:+ ]*"
   "Regexp used to find dates in date lines.")
 (defvar ee-textfile-changelog-name-regexp "\\([^<(]+?\\)[ \t]*[(<]\\([A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+\\)[>)]"
     "Regexp used to find author names.")
 ;; (defvar ee-textfile-changelog-email-regexp "\\([^<(]+?\\)[ \t]*[(<]\\([A-Za-z0-9_.-]+@[A-Za-z0-9_.-]+\\)[>)]"
 ;;   "Regexp used to find author email addresses.")
-(defvar ee-textfile-changelog-file-regexp "^\t\\* \\([^ ,:([\n]+\\)" ;; TODO: add other regexps from add-log.el
+(defvar ee-textfile-changelog-file-regexp "^\t\\* \\([^:([\n]+\\)"
   "Regexp used to find file names.")
 (defvar ee-textfile-changelog-list-regexp "\\= (\\([^) ,:\n]+\\)" ;; TODO: add other regexps from add-log.el
-  "Regexp used to find parenthesized lists of functions or variables.")
+  "Regexp used to find parenthesized lists of functions or variables.") ; unused now
 (defvar ee-textfile-changelog-conditionals-regexp "\\[!?\\([^]\n]+\\)\\]\\(:\\| (\\)"
-  "Regexp used to find conditionals of the form `[...]'.")
+  "Regexp used to find conditionals of the form `[...]'.") ; unused now
 (defvar ee-textfile-changelog-function-regexp "<\\([^>\n]+\\)>\\(:\\| (\\)"
-  "Regexp used to find items of the form `<....>'.")
+  "Regexp used to find items of the form `<....>'.") ; unused now
 (defvar ee-textfile-changelog-acknowledgement-regexp "\\(^\t\\|  \\)\\(From\\|Patch\\(es\\)? by\\|Report\\(ed by\\| from\\)\\|Suggest\\(ed by\\|ion from\\)\\)"
-  "Regexp used to find acknowledgments.")
+  "Regexp used to find acknowledgments.") ; unused now
 
 ;;; Data Description
 
@@ -135,16 +136,20 @@
                            (setq name (match-string-no-properties 1)
                                  email (match-string-no-properties 2))))
                       ((looking-at ee-textfile-changelog-file-regexp)
-                       (setq file (match-string-no-properties 1)
-                             res (cons
-                                  (mapcar (lambda (field-name)
-                                            (cond
-                                             ((eq field-name 'date) date)
-                                             ((eq field-name 'name) name)
-                                             ((eq field-name 'email) email)
-                                             ((eq field-name 'file) file)))
-                                          field-names)
-                                  res))))
+                       (mapc (lambda (elt)
+                               (setq file elt
+                                     res (cons
+                                          (mapcar (lambda (field-name)
+                                                    (cond
+                                                     ((eq field-name 'date) date)
+                                                     ((eq field-name 'name) name)
+                                                     ((eq field-name 'email) email)
+                                                     ((eq field-name 'file) elt)))
+                                                  field-names)
+                                          res)))
+                             (delete "" (split-string
+                                         (match-string-no-properties 1)
+                                         "[, ]+")))))
                      (forward-line 1)))))
              (nreverse res)))))
     (aset new-data 0 (aref data 0))
@@ -265,8 +270,7 @@ It inherits key bindings from `ee-textfile-keymap'."
 (defun ee-textfile-changelog (&optional arg)
   "Organize information from ChangeLog files."
   (interactive "P")
-  (or (featurep 'add-log)
-      (require 'add-log))
+  (require 'add-log)
   (ee-view-buffer-create
    (format "*%s*/%s" ee-textfile-mode-name (buffer-name))
    ee-textfile-mode-name

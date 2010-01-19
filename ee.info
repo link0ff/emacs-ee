@@ -1,17 +1,16 @@
-This is ee.info, produced by makeinfo version 4.6 from ee.texi.
+This is ee.info, produced by makeinfo version 4.11 from ee.texi.
 
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
-* EE: (ee).                The categorizing information manager for Emacs.
+* Ee: (ee).		Emacs information manager.
 END-INFO-DIR-ENTRY
 
-   This document describes the emacs-ee, the categorizing information
-manager for Emacs.
+   This document describes the Ee, Emacs information manager.
 
    This is edition $Revision$ $Date$ of the `Ee User Manual' for `ee'
-Version 0.0.2.
+Version 0.1.0.
 
-   Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+   Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -20,8 +19,8 @@ preserved on all copies.
 
 File: ee.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
 
-   This document describes the `ee' version 0.0.2, the categorizing
-information manager for Emacs.
+   This document describes the `ee' version 0.1.0, Emacs information
+manager.
 
    PLEASE NOTE THAT THIS MANUAL IS NOT FINISHED, BECAUSE THIS PACKAGE
 IS UNDER DEVELOPMENT, AND ALL DETAILS DESCRIBED HERE CAN BE CHANGED.
@@ -41,7 +40,7 @@ IS UNDER DEVELOPMENT, AND ALL DETAILS DESCRIBED HERE CAN BE CHANGED.
 
 Appendices:
 * Installation::                Installation.
-* Reporting Bugs::              How to report a bug in Emacs-ee.
+* Reporting Bugs::              How to report a bug in ee.
 
 * Terminology::                 Terminology.
 * Concept Index::               Concept Index.
@@ -52,8 +51,8 @@ Appendices:
 
 File: ee.info,  Node: Introduction,  Next: Data-Flow Diagram,  Prev: Top,  Up: Top
 
-Introduction
-************
+1 Introduction
+**************
 
 
 Ee is the categorizing information manager for Emacs.
@@ -71,8 +70,8 @@ printing category tree and record lines.
 
 File: ee.info,  Node: Data-Flow Diagram,  Next: Data Structures,  Prev: Introduction,  Up: Top
 
-Data-Flow Diagram
-*****************
+2 Data-Flow Diagram
+*******************
 
      +----------------+    +----------------+
      | data           |<---| data           |
@@ -112,8 +111,8 @@ Data-Flow Diagram
 
 File: ee.info,  Node: Data Structures,  Next: View Description,  Prev: Data-Flow Diagram,  Up: Top
 
-Data Structures
-***************
+3 Data Structures
+*****************
 
 `data-file'
      Name of the file that contains data.
@@ -151,8 +150,8 @@ Data Structures
 
 File: ee.info,  Node: View Description,  Next: View Generation,  Prev: Data Structures,  Up: Top
 
-View Description
-****************
+4 View Description
+******************
 
 Views are described by data structures.
 
@@ -248,8 +247,8 @@ begin with 'c-' prefix operate on categories, functions that begin with
 
 File: ee.info,  Node: View Generation,  Next: View Buffer,  Prev: View Description,  Up: Top
 
-View Generation
-***************
+5 View Generation
+*****************
 
 Data:
      [c-1 field-1 field-2 field-3]
@@ -290,8 +289,8 @@ Data:
 
 File: ee.info,  Node: View Buffer,  Next: Visibility,  Prev: View Generation,  Up: Top
 
-View Buffer
-***********
+6 View Buffer
+*************
 
 Expansion division: ee-expansion
 
@@ -323,8 +322,8 @@ ri-number means record index
 
 File: ee.info,  Node: Visibility,  Next: Navigation,  Prev: View Buffer,  Up: Top
 
-Visibility
-**********
+7 Visibility
+************
 
 show/hide = expand/collase
 
@@ -333,14 +332,14 @@ show/hide = expand/collase
 
 File: ee.info,  Node: Navigation,  Next: Marking and Deletion,  Prev: Visibility,  Up: Top
 
-Navigation
-**********
+8 Navigation
+************
 
 
 File: ee.info,  Node: Marking and Deletion,  Next: Writing Extensions,  Prev: Navigation,  Up: Top
 
-Marking and Deletion
-********************
+9 Marking and Deletion
+**********************
 
 Marking and deleting viewed items.
 
@@ -354,8 +353,8 @@ marked.
 
 File: ee.info,  Node: Writing Extensions,  Next: Installation,  Prev: Marking and Deletion,  Up: Top
 
-Writing Extensions
-******************
+10 Writing Extensions
+*********************
 
 You can write new ee extensions.
 
@@ -374,25 +373,26 @@ You can write new ee extensions.
 
 File: ee.info,  Node: Installation,  Next: Reporting Bugs,  Prev: Writing Extensions,  Up: Top
 
-Installation
-************
+11 Installation
+***************
 
 See the file README or `http://www.jurta.org/emacs/ee/'
 
 
 File: ee.info,  Node: Reporting Bugs,  Next: Terminology,  Prev: Installation,  Up: Top
 
-Reporting Bugs
-**************
+12 Reporting Bugs
+*****************
 
 Please report bugs, make suggestions and contributions to
-<juri@jurta.ee> or on the Web pages at `http://www.jurta.org/emacs/ee/'.
+<juri@jurta.org> or on the Web pages at
+`http://www.jurta.org/emacs/ee/'.
 
 
 File: ee.info,  Node: Terminology,  Next: Concept Index,  Prev: Reporting Bugs,  Up: Top
 
-Terminology
-***********
+13 Terminology
+**************
 
 `category'
 
@@ -406,11 +406,12 @@ File: ee.info,  Node: Concept Index,  Next: Command Index,  Prev: Terminology,  
 Concept Index
 *************
 
+ [index ]
 * Menu:
 
-* Extensions:                            Writing Extensions.
-* file flags:                            View Description.
-* Introduction:                          Introduction.
+* Extensions:                            Writing Extensions.   (line  6)
+* file flags:                            View Description.     (line 15)
+* Introduction:                          Introduction.         (line  6)
 
 
 File: ee.info,  Node: Command Index,  Next: Key Index,  Prev: Concept Index,  Up: Top
@@ -418,6 +419,7 @@ File: ee.info,  Node: Command Index,  Next: Key Index,  Prev: Concept Index,  Up
 Command Index
 *************
 
+ [index ]
 * Menu:
 
 File: ee.info,  Node: Key Index,  Next: Variable Index,  Prev: Command Index,  Up: Top
@@ -425,6 +427,7 @@ File: ee.info,  Node: Key Index,  Next: Variable Index,  Prev: Command Index,  U
 Key Index
 *********
 
+ [index ]
 * Menu:
 
 File: ee.info,  Node: Variable Index,  Prev: Key Index,  Up: Top
@@ -432,27 +435,28 @@ File: ee.info,  Node: Variable Index,  Prev: Key Index,  Up: Top
 Variable Index
 **************
 
+ [index ]
 * Menu:
 
 
 Tag Table:
-Node: Top605
-Node: Introduction1898
-Node: Data-Flow Diagram2584
-Node: Data Structures3802
-Node: View Description5041
-Node: View Generation8567
-Node: View Buffer9378
-Node: Visibility10608
-Node: Navigation10798
-Node: Marking and Deletion10915
-Node: Writing Extensions11333
-Node: Installation11783
-Node: Reporting Bugs11965
-Node: Terminology12219
-Node: Concept Index12376
-Node: Command Index12681
-Node: Key Index12807
-Node: Variable Index12926
+Node: Top556
+Node: Introduction1822
+Node: Data-Flow Diagram2512
+Node: Data Structures3734
+Node: View Description4977
+Node: View Generation8507
+Node: View Buffer9322
+Node: Visibility10556
+Node: Navigation10750
+Node: Marking and Deletion10871
+Node: Writing Extensions11293
+Node: Installation11749
+Node: Reporting Bugs11937
+Node: Terminology12198
+Node: Concept Index12361
+Node: Command Index12722
+Node: Key Index12860
+Node: Variable Index12991
 
 End Tag Table

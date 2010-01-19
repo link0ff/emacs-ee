@@ -26,10 +26,10 @@
               (if children-p "- " "  ")
               (format "%s" (if r (ee-field 'title r) "(no-heading)")))
       (if (and children-p (< a-level (length ee-r-faces)))
-          (add-text-properties b (point) (list 'face 'ee-face-category-face)))
+          (add-text-properties b (point) (list 'face 'ee-category)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (post-generate . (lambda () (or ee-hidden-expansions (ee-view-expansion-hide-all))))
    (r-select . ee-menubar-select)
    (r-execute . ee-menubar-execute))]
@@ -47,9 +47,9 @@
               (if children-p "- " "  ")
               (format "%s" (if r (ee-field 'title r) "(no-heading)")))
       (if (and children-p (< a-level (length ee-r-faces)))
-          (add-text-properties b (point) (list 'face 'ee-face-category-face)))
+          (add-text-properties b (point) (list 'face 'ee-category)))
       (cond
        ((ee-field 'read r)
-        (add-text-properties b (point) (list 'face 'ee-face-visited-link-face)))))))
+        (add-text-properties b (point) (list 'face 'ee-link-visited)))))))
    (r-select . ee-menubar-select)
    (r-execute . ee-menubar-execute))]]

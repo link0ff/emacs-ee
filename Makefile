@@ -1,7 +1,7 @@
 # Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
 # This file is distributed under the terms of the GNU GPL.
 
-VERSION = 0.0.2
+VERSION = 0.1.0
 
 EMACS    = emacs -no-site-file -no-init-file
 MAKEINFO = makeinfo --no-split
@@ -19,6 +19,7 @@ ELFILES  = \
 	ee-dired.el \
 	ee-dselect.el \
 	ee-edb.el \
+	ee-ell.el \
 	ee-example.el \
 	ee-fields.el \
 	ee-finder.el \
@@ -34,6 +35,7 @@ ELFILES  = \
 	ee-ps.el \
 	ee-tags.el \
 	ee-textfile.el \
+	ee-variables.el \
 	ee-views.el \
 	ee-windows.el
 
@@ -56,6 +58,7 @@ EEVIEWFILES  = \
 	view/dired.ee \
 	view/dselect.ee \
 	view/edb.ee \
+	view/ell.ee \
 	view/example.ee \
 	view/fields.ee \
 	view/finder.ee \
@@ -72,6 +75,7 @@ EEVIEWFILES  = \
 	view/programs.ee \
 	view/ps.ee \
 	view/tags.ee \
+	view/variables.ee \
 	view/views.ee \
 	view/windows.ee
 
@@ -79,7 +83,7 @@ TEXIFILES = ee.texi
 INFOFILES = $(TEXIFILES:.texi=.info)
 HTMLFILES = $(TEXIFILES:.texi=.html)
 
-DISTFILES = ChangeLog Makefile README \
+DISTFILES = ChangeLog COPYING Makefile README \
             $(ELFILES) \
             $(EEDATAFILES) \
             $(TEXIFILES) $(INFOFILES)

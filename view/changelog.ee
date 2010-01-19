@@ -26,7 +26,7 @@
                (or (cadr (assq 'counter attr-alist)) "0")))
       (add-text-properties b (point) (list 'face (ee-c-face c-level))))))
    (r-printer . (lambda (r a-level r-level children-p attr-alist)
-    (insert (format "%s%s%s%-16s %s"
+    (insert (format "%s%s%s%-32s %s"
                     (or (car (ee-field 'mark r)) " ")
                     (make-string r-level ?\040)
                     (if children-p "- " "  ")
@@ -38,22 +38,19 @@
    (r-select . ee-textfile-changelog-select)
    (r-execute . ee-textfile-changelog-execute))]
  [((type . view)
-   (name . "by Author Name/by Date") ; also "by Email Address"?
+   (name . "by Author Name/by Month") ; also "by Email Address"?
    (c-path-finder . (lambda (r)
     (list (cons (ee-field 'name r)
                 (butlast (ee-split-string (ee-field 'date r) "-"))))))
    (c-sorter . (lambda (a-level c-level s-level attr-alist)
-    (lambda (c1 c2)
-      (string< (car c1) (car c2)))
-    ;; Altenative is to sort by amount of entries:
-    ;; (cond ((eq c-level 1)
-    ;;        (lambda (c1 c2)
-    ;;          (> (or (cadr (assq 'counter (assq ee-mark-attr-alist c1))) 0)
-    ;;             (or (cadr (assq 'counter (assq ee-mark-attr-alist c2))) 0))))
-    ;;       ((eq c-level 2)
-    ;;        (lambda (c1 c2)
-    ;;          (string< (car c2) (car c1)))))
-    ))
+    (cond ((eq c-level 1)
+           ;; Sort by amount of entries
+           (lambda (c1 c2)
+             (> (or (cadr (assq 'counter (assq ee-mark-attr-alist c1))) 0)
+                (or (cadr (assq 'counter (assq ee-mark-attr-alist c2))) 0))))
+          ((eq c-level 2)
+           (lambda (c1 c2)
+             (string< (car c2) (car c1)))))))
    (r-sorter . (lambda (a-level r-level attr-alist) (lambda (ri1 ri2) t)))
    (c-calculator)
    (r-calculator . (lambda (r a-level r-level children-p result) 1))
@@ -82,10 +79,9 @@
    (r-select . ee-textfile-changelog-select)
    (r-execute . ee-textfile-changelog-execute))]
  [((type . view)
-   (name . "by File Name/by Date")
+   (name . "by File Name")
    (c-path-finder . (lambda (r)
-    (list (append (ee-split-string (ee-field 'file r) "/")
-                  (list (car (ee-split-string (ee-field 'date r) "-")))))))
+    (list (ee-split-string (ee-field 'file r) "/"))))
    (c-sorter . (lambda (a-level c-level s-level attr-alist)
     (lambda (c1 c2) (string< (car c1) (car c2)))))
    (c-calculator)

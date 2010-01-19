@@ -25,7 +25,7 @@
                     (ee-field 'TIME r)
                     (ee-field 'COMMAND r)))
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (line-end-position) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (line-end-position) (list 'face 'ee-marked))))))
    (r-execute . ee-ps-execute))]
  [((type . view)
    (name . "by %CPU")
@@ -50,7 +50,7 @@
                     (ee-field 'TIME r)
                     (ee-field 'COMMAND r)))
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (line-end-position) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (line-end-position) (list 'face 'ee-marked))))))
    (r-execute . ee-ps-execute))]
  [((type . view)
    (name . "by USER")
@@ -90,5 +90,5 @@
                     (ee-field 'TIME r)
                     (ee-field 'COMMAND r)))
     (cond ((ee-field 'mark r)
-           (add-text-properties (line-beginning-position) (line-end-position) (list 'face 'ee-face-marked-face))))))
+           (add-text-properties (line-beginning-position) (line-end-position) (list 'face 'ee-marked))))))
    (r-execute . ee-ps-execute))]]

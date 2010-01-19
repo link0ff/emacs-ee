@@ -13,7 +13,7 @@
     (let ((categories (ee-field 'categories r)))
       (cond
        ((eq (length categories) 0)
-        (list (list "(Not categorized)")))
+        (list (list "(Uncategorized)")))
        ((eq (length categories) 1)
         (list (ee-split-string (car categories) "/")))
        (t (mapcan (lambda (category)
@@ -71,7 +71,7 @@
           (progn
             (setq p (point))
             (insert " " (ee-field 'description r))
-            (add-text-properties p (point) (list 'face 'ee-face-faded-face)))))))
+            (add-text-properties p (point) (list 'face 'ee-shadow)))))))
    (r-select . ee-links-select)
    (r-execute))]
  [((type . view)
@@ -107,7 +107,7 @@
           (add-text-properties (+ p 2) (point) (list 'face 'ee-default-1-face)))
       (setq p (point))
       (insert " " (or (ee-field 'description r) ""))
-      (add-text-properties p (point) (list 'face 'ee-face-faded-face)))))
+      (add-text-properties p (point) (list 'face 'ee-shadow)))))
    (post-generate . (lambda () (ee-view-expansion-hide-all)))
    (r-select . ee-links-select)
    (r-execute))]
@@ -116,8 +116,8 @@
    (c-path-finder . (lambda (r)
     (list (if (ee-field 'contact r)
               (let ((last-name (car (last (split-string (ee-field 'contact r) " ")))))
-                (list (if (> (length last-name) 1)
-                          (substring last-name 0 1)
+                (list (if (>= (length last-name) 1)
+                          (upcase (substring last-name 0 1))
                         "?")
                       (ee-field 'contact r)))
             (list "No contact")))))

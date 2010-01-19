@@ -1,24 +1,24 @@
 ;;; ee-finder.el --- keyword-based Emacs code finder
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, help
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -34,7 +34,9 @@
 ;; so convert e.g.
 ;; "Keywords: multibyte character, character set, syntax, category"
 ;; to ("multibyte character" "character set" "syntax" "category")
-;; and "Keywords: dired extensions files"
+;; instead of ("multibyte" "character" "character" "set" "syntax" "category")
+;; and
+;; "Keywords: dired extensions files"
 ;; to ("dired" "extensions" "files")
 
 ;; TODO: collect other fields from lisp files (qv lisp-mnt.el)
@@ -48,8 +50,7 @@
 
 ;;; Constants
 
-(defconst ee-finder-mode-name "ee-finder"
-  "*Mode name.")
+(defconst ee-finder-mode-name "ee-finder")
 
 ;;; Customizable Variables
 
@@ -80,9 +81,9 @@
               (mapcar
                (lambda (field-name)
                  (cond
-                  ((eq field-name 'file) (nth 0 package))
-                  ((eq field-name 'synopsis)  (nth 1 package))
-                  ((eq field-name 'keywords)  (nth 2 package))))
+                  ((eq field-name 'file)     (nth 0 package))
+                  ((eq field-name 'synopsis) (nth 1 package))
+                  ((eq field-name 'keywords) (nth 2 package))))
                field-names))
             finder-package-info))))
     (aset new-data 0 (aref data 0))
@@ -95,6 +96,11 @@
   ;; TODO: find file
   (find-file (locate-library (ee-field 'file))))
 
+(defun ee-finder-commentary (&optional arg other-window)
+  "Display FILE's commentary section."
+  (interactive)
+  (finder-commentary (ee-field 'file)))
+
 ;;; Key Bindings
 
 (defvar ee-finder-keymap nil
@@ -106,6 +112,7 @@ It inherits key bindings from `ee-mode-map'."
   (or ee-mode-map
       (ee-mode-map-make-default))
   (let ((map (copy-keymap ee-mode-map)))
+    (define-key map "i" 'ee-finder-commentary)
     ;; (define-key map "o" 'ee-finder-switch-to-buffer-other-window)
     ;; (define-key map "\C-o" 'ee-finder-display-buffer)
     (setq ee-finder-keymap map)))
@@ -119,8 +126,7 @@ It inherits key bindings from `ee-mode-map'."
 (defun ee-finder (&optional arg)
   "Keyword-based Emacs code finder."
   (interactive "P")
-  (or (featurep 'finder)
-      (require  'finder))
+  (require 'finder)
   (ee-view-buffer-create
    (format "*%s*" ee-finder-mode-name)
    ee-finder-mode-name

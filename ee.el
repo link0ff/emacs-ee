@@ -1,6 +1,6 @@
-;;; ee.el --- categorizing information manager for Emacs
+;;; ee.el --- Emacs information manager
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, convenience, tools, outlines
@@ -18,7 +18,7 @@
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -31,39 +31,36 @@
 
 ;;; Code:
 
-(eval-when-compile
-  (require 'cl))
-
 
 ;;; Constants
 
-(defconst ee-version "0.0.2"
+(defconst ee-version "0.1.0"
   "Version numbers of this version of Ee.")
 
 
 ;;; Customizable Variables
 
 (defgroup ee nil
-  "Categorizing information manager for Emacs."
+  "Emacs information manager."
   :prefix "ee-"
   :group 'data
   :group 'tools
   :group 'convenience)
 
-(defcustom ee-data-directory "~/.emacs-ee/"
-  "*Name of default directory where persistent data files are saved
+(defcustom ee-data-directory "~/.emacs.d/ee/"
+  "Name of default directory where persistent data files are saved
 and searched to read when relative filename is given."
   :type 'directory
   :group 'ee)
 
-(defcustom ee-view-data-directory "~/.emacs-ee/"
-  "*Name of default directory where persistent view data files are saved
+(defcustom ee-view-data-directory "~/.emacs.d/ee/"
+  "Name of default directory where persistent view data files are saved
 and searched to read when relative filename is given."
   :type 'directory
   :group 'ee)
 
 (defcustom ee-data-file-save-format 'records
-  "*Format used in the saved data files.
+  "Format used in the saved data files.
 If 'pp, then save data to the file pretty-printed.
 If 'records, then save every record on own line.
 If nil, then save unformatted."
@@ -72,7 +69,7 @@ If nil, then save unformatted."
 
 ;; TODO: move to view-data?
 (defcustom ee-quick-keys t ;; TODO: nil
-  "*Define additional key bindings for faster tree navigation.
+  "Define additional key bindings for faster tree navigation.
 Additonal key bindings include arrow keys with combinations
 of C- and S- modifiers.
 Also useful mouse actions are bound to [mouse-1] button.
@@ -81,14 +78,14 @@ This takes effect when first loading the ee package."
   :group 'ee)
 
 (defcustom ee-mouse-expansion-sensitivity 3
-  "*Number of positions mouse should be moved on the expansion line
+  "Number of positions mouse should be moved on the expansion line
 in one direction to the left or to the right before expansion
 is shown or hidden."
   :type 'integer
   :group 'ee)
 
 (defcustom ee-mouse-scroll-margin 2
-  "*Number of lines of margin at the top and bottom of a window.
+  "Number of lines of margin at the top and bottom of a window.
 Scroll the window downward or upward whenever mouse motions
 get within this many lines of the top or bottom of the window.
 The scrolling margin is ignored when window already displays
@@ -97,7 +94,7 @@ the beginning of buffer."
   :group 'ee)
 
 (defcustom ee-mouse-scroll-lines 1
-  "*Number of lines to scroll at the top and bottom of a window.
+  "Number of lines to scroll at the top and bottom of a window.
 Scroll the window downward or upward this many lines
 when mouse is moved of the top or bottom of the window."
   :type 'integer
@@ -129,7 +126,7 @@ when mouse is moved of the top or bottom of the window."
   :group 'ee)
 
 (defcustom ee-root-data-file "ee.ee"
-  "*Name of data file that holds the index of available ee extensions."
+  "Name of data file that holds the index of available ee extensions."
   :type 'file
   :group 'ee)
 
@@ -138,6 +135,9 @@ when mouse is moved of the top or bottom of the window."
 
 (defvar ee-mode-map nil
   "Local keymap for ee-mode buffers.")
+
+(defvar data-getters)
+(defvar data-setters)
 
 
 ;;; Buffer-Local Variables
@@ -205,8 +205,9 @@ and where ee-outline commands operate.")
 ;; qv vc-annotate-color-map
 ;; qv outline-font-lock-keywords
 ;; TODO: defface: ee-category-1-face ee-category-2-face ee-category-3-face ee-category-4-face
+;; qv outline-font-lock-faces
 (defvar ee-faces-default '[font-lock-warning-face
-                           ee-face-category-face;font-lock-function-name-face
+                           ee-category;font-lock-function-name-face
                            font-lock-type-face
                            font-lock-keyword-face
                            font-lock-builtin-face
@@ -242,35 +243,44 @@ and where ee-outline commands operate.")
 
 ;;; Logical Faces
 
-(defface ee-face-category-face
+(defface ee-category
   '((((type tty) (class color)) (:foreground "blue"))
     (((background light)) (:foreground "Blue"))
     (((background dark)) (:foreground "LightSkyBlue"))
     (t (:italic t)))
   "Face used to display category lines."
   :group 'ee)
+(put 'ee-face-category-face 'face-alias 'ee-category)
 
-;; (defface ee-face-faded-face
+;; (defface ee-faded
 ;;   '((((type tty) (class color)) (:foreground "gray"))
 ;;     (((background light)) (:foreground "DimGray"))
 ;;     (((background dark)) (:foreground "DimGray"))
 ;;     (t (:italic t)))
 ;;   "Face used to display faded items."
 ;;   :group 'ee)
+;; (put 'ee-face-faded-face 'face-alias 'ee-faded)
 
-;; TODO: better name ee-face-dim-face?
-;; TODO: better name ee-face-shaded-face?
-;; TODO: better name ee-face-fuzzy-face?
+;; TODO: better name ee-dim?
+;; TODO: better name ee-fuzzy?
+;; TODO: better name ee-shaded?
+;; TODO: better name ee-faded?
 ;; TODO: try color #cccccc for faded-face
-(defface ee-face-faded-face
-  '((((type tty) (class color)) (:foreground "white"))
-    (((class color) (background light)) (:foreground "grey50"))
-    (((class color) (background dark)) (:foreground "grey40"))
-    (t ))
-  "Face used to display faded items."
-  :group 'ee)
+(if (facep 'shadow)
+    (defface ee-shadow
+      '((t :inherit shadow))
+      "Face used to display shadowed items."
+      :group 'ee)
+  (defface ee-shadow
+    '((((type tty pc) (class color)) (:foreground "yellow"))
+      (((background dark))  (:foreground "grey50"))
+      (((background light)) (:foreground "grey50")))
+    "Face used to display shadowed items."
+    :group 'ee))
+(put 'ee-face-faded-face 'face-alias 'ee-shadow)
 
-(defface ee-face-omitted-face
+;; TODO: rename to ee-ignored similar to dired-face-ignored
+(defface ee-omitted
   '((((type tty) (class color)) (:foreground "green"))
     (((class grayscale) (background light)) (:foreground "DimGray"))
     (((class grayscale) (background dark)) (:foreground "LightGray"))
@@ -279,16 +289,18 @@ and where ee-outline commands operate.")
     (t (:italic t)))
   "Face used to display omitted items."
   :group 'ee)
+(put 'ee-face-omitted-face 'face-alias 'ee-omitted)
 
-(defface ee-face-marked-face
+(defface ee-marked
   '((((type tty) (class color)) (:foreground "red"))
     (((class color) (background light)) (:foreground "Red"))
     (((class color) (background dark)) (:foreground "Red"))
     (t (:inverse-video t :bold t)))
   "Face used to display marked items."
   :group 'ee)
+(put 'ee-face-marked-face 'face-alias 'ee-marked)
 
-(defface ee-face-bookmarked-face ;; TODO: better name?
+(defface ee-bookmarked ;; TODO: better name?
   '((((type tty) (class color)) (:foreground "gray"))
     (((class grayscale) (background light))
      (:foreground "LightGray" :bold t :underline t))
@@ -299,22 +311,41 @@ and where ee-outline commands operate.")
     (t (:bold t :underline t)))
   "Face used to display bookmarked items."
   :group 'ee)
+(put 'ee-face-bookmarked-face 'face-alias 'ee-bookmarked)
 
-(defface ee-face-link-face
-  '((((type tty) (class color)) (:foreground "blue"))
-    (((background light)) (:foreground "Blue"))
-    (((background dark)) (:foreground "LightSkyBlue"))
-    (t (:italic t)))
+;; backward compatibility for pre-22.0 Emacs
+(or (get 'link 'face-defface-spec)
+(defface link
+  '((((class color) (background light))
+     :foreground "blue" :underline t)
+    (((class color) (background dark))
+     :foreground "cyan" :underline t)
+    (t :inherit underline))
+  "Basic face for unvisited links."
+  :group 'basic-faces))
+
+(defface ee-link
+  '((t :inherit link))
   "Face used to display link items."
   :group 'ee)
+(put 'ee-face-link-face 'face-alias 'ee-link)
 
-(defface ee-face-visited-link-face
-  '((((type tty) (class color)) (:foreground "magenta"))
-    (((background light)) (:foreground "DarkMagenta"))
-    (((background dark)) (:foreground "DarkMagenta"))
-    (t (:italic t)))
+;; backward compatibility for pre-22.0 Emacs
+(or (get 'link-visited 'face-defface-spec)
+(defface link-visited
+  '((((class color) (background light))
+     :foreground "magenta4" :underline t)
+    (((class color) (background dark))
+     :foreground "violet" :underline t)
+    (t :inherit underline))
+  "Basic face for visited links."
+  :group 'basic-faces))
+
+(defface ee-link-visited
+  '((t :inherit link-visited))
   "Face used to display visited link items."
   :group 'ee)
+(put 'ee-face-visited-link-face 'face-alias 'ee-link-visited)
 
 
 ;;; Markers
@@ -523,7 +554,7 @@ relational data from `ee-data' according to descritions in `ee-view-data'."
         (let ((inhibit-read-only t))
           (widen)
           (goto-char (point-min))
-          (mapc 'delete-overlay (overlays-in (point-min) (point-max)))
+          (remove-overlays)
           (set-text-properties (point-min) (point-max) nil)
           (erase-buffer)
           (set-buffer-modified-p nil))))
@@ -710,13 +741,17 @@ relational data from `ee-data' according to descritions in `ee-view-data'."
       (cons (car list) (list (ee-gen-list-to-atree (cdr list) atree)))
     atree))
 
-;; (ee-split-string "a/b/c" "/") -> ("a" _s "b" _s "c")
+;; (ee-split-string "a/b/c/" "/") -> ("a" _s "b" _s "c")
 (defun ee-split-string (string string-separator)
   "Split string `string' by `string-separator' into list,
 and separates element of new list by value of variable
 `ee-mark-subcategory-tree', which marks subcategory subtrees."
   (if (stringp string)
-      (let ((list (split-string string string-separator))
+      (let ((list (delete ""
+                          ;; starting from Emacs 21.3.50 the default behavior
+                          ;; of `split-string' was changed, so delete ""
+                          ;; to make it compatible with earlier versions
+                          (split-string string string-separator)))
             (list-separator ee-mark-subcategory-tree))
         (if (car list)
             (cons (car list)
@@ -1001,7 +1036,6 @@ and separates element of new list by value of variable
 
 ;;; Data processing functions
 
-;; TODO: send patch to <bug-gnu-emacs@gnu.org>
 ;; TODO: add to subr.el after add-to-list (also delete-from-list from emacs.patches.el)
 ;; TODO: compare with (aput) from assoc.el
 (defun ee-data-add-to-alist (alist-var aelement &optional append)
@@ -1014,8 +1048,8 @@ AELEMENT is added at the end.
 Examples: (setq trees '((oak . acorns) (maple . seeds)))
           (add-to-alist 'trees '(pine . cones))
                => ((pine . cones) (oak . acorns) (maple . seeds))
-          (add-to-alist 'trees '(pine . coconuts)) ;; how in English 'ananas'?
-               => ((pine . coconuts) (oak . acorns) (maple . seeds))
+          (add-to-alist 'trees '(pine . pineapple))
+               => ((pine . pineapple) (oak . acorns) (maple . seeds))
           (add-to-alist 'trees '(pine . nil))
                => ((oak . acorns) (maple . seeds))
 
@@ -1218,6 +1252,12 @@ other hooks, such as major mode hooks, can do the job."
       (setq list (cdr list)))
     field-names))
 
+(defun ee-data-size (data)
+  (if data
+      ;; takes into account the metadata record
+      (1- (length data))
+    0))
+
 ;; TODO: defmacro?
 (defun ee-data-records-do (data fun &optional start-index)
   (let ((_len (length data))
@@ -1298,9 +1338,11 @@ with name `field-name' is equal to `field-value'."
     (if (eval data)
         (set data (vconcat (eval data) record)))))
 
-(defun ee-data-record-delete (ri)
-  (if ee-data
-      (aset ee-data ri nil)))
+(defun ee-data-record-delete (ri &optional squeeze)
+  (when ee-data
+    (aset ee-data ri nil)
+    (if squeeze
+        (setq ee-data (vconcat (delq nil (append ee-data nil)))))))
 
 (defun ee-data-update (&optional data-type data data-file data-file-auto-save data-collect)
   ;; TODO: if data is nil, then in case of persistent data reread data from file
@@ -1425,6 +1467,7 @@ with name `field-name' is equal to `field-value'."
                 (pp data (current-buffer)))
                (t
                 (prin1 data (current-buffer))))
+              (princ "\n" (current-buffer))
               (save-buffer)))
           (message "Saving data to %s...done" data-file)))
     (if (interactive-p)
@@ -1566,10 +1609,9 @@ with name `field-name' is equal to `field-value'."
   (if (and (ee-view-on-expansion-line-p)
            (not (ee-view-expansion-visible-p)))
       (ee-view-expansion-show)
-      ;; (next-line 1)
-    (ee-view-expansion-next)
-    )
-  )
+    ;; (next-line 1)
+    ;; (forward-char)
+    (ee-view-expansion-next)))
 
 (defun ee-view-expansion-hide-all-visible ()
   (interactive)
@@ -1607,6 +1649,7 @@ with name `field-name' is equal to `field-value'."
   (if (and (ee-view-on-expansion-line-p)
            (ee-view-expansion-visible-p))
       (ee-view-expansion-hide)
+    ;; (backward-char)
     (let ((point (point)))
       (ee-view-expansion-up 1)
       (if (eq point (point))
@@ -1770,10 +1813,15 @@ With argument, move up ARG levels."
 (defun ee-view-record-next (&optional arg)
   ;; TODO: use arg
   (interactive)
+;;   (message "1:[%s]" (line-number-at-pos (point)))
   (when (not (eobp))
+;;     (message "!1:[%s]" (eobp))
     (next-line 1)                ; next-line to ignore invisible lines
+;;     (message "!2:[%s]" (eobp))
     (while (not (or (ee-view-on-record-line-p) (eobp)))
+;;       (message "?:[%s]" (eolp))
       (next-line 1)))
+;;   (message "2:[%s]" (line-number-at-pos (point)))
   (run-hooks 'ee-view-goto-hook))
 
 (defun ee-view-record-next-with (fun &optional arg)
@@ -1812,17 +1860,19 @@ With argument, move up ARG levels."
 
 ;; old (and still better?) name: ee-view-goto-r-line
 (defun ee-view-record-by-key (key-field-value)
-  (let* (;; TODO: multiple key fields (currently only first key is considered)
+  (let* ( ;; TODO: multiple key fields (currently only first key is considered)
          (key-field-name (car (ee-data-meta-field-get ee-data 'key-fields)))
          (ri (ee-data-record-index-find ee-data key-field-name key-field-value)))
     (if ri
         (ee-view-record-by-index ri))))
 
 (defun ee-view-record-by-index (record-index)
-  (goto-char
-   (or (text-property-any (point-min) (point-max) 'ee-ri record-index)
-       (point)))
-  (run-hooks 'ee-view-goto-hook))
+  "Return non-nil if record was found."
+  (let ((p (text-property-any (point-min) (point-max) 'ee-ri record-index)))
+    (when p
+      (goto-char p)
+      (run-hooks 'ee-view-goto-hook)
+      p)))
 
 
 ;;; View records marking commands
@@ -2214,7 +2264,7 @@ and released on expansion line, then no action is performed."
       (or event (setq event (read-event)))
       (while (not (ee-mouse-button-release-event-p event))
         (if (eq (car-safe event) 'mouse-movement)
-            (let* ((posn (posn-col-row-fixed (event-end event)))
+            (let* ((posn (posn-col-row-sans-header (event-end event)))
                    (next-x (car posn))
                    (next-y (cdr posn)))
               (if (eq next-y prev-y)
@@ -2243,16 +2293,14 @@ and released on expansion line, then no action is performed."
               (setq prev-x next-x
                     prev-y next-y)))
         (setq event (read-event))))
-    (move-to-window-line (cdr (posn-col-row-fixed (event-end event))))
+    (move-to-window-line (cdr (posn-col-row-sans-header (event-end event))))
     (if prev-y
         ;; If button was released after motions
         (ee-view-record-select)
       ;; If button was released without motions
       (ee-view-record-select-or-expansion-show-or-hide))))
 
-;; fixed for Emacs21
-;; TODO: make patch and send to <bug-gnu-emacs@gnu.org>
-(defun posn-col-row-fixed (position)
+(defun posn-col-row-sans-header (position)
   (let ((pair (posn-col-row position)))
     (if (or (and (boundp 'header-line-format) header-line-format)
             (and (boundp 'default-header-line-format) default-header-line-format))
@@ -2294,15 +2342,103 @@ and released on expansion line, then no action is performed."
       (and ee-parent-buffer (set-buffer ee-parent-buffer))
       (and command (funcall command))))
    ((ee-data-field-get 'url)
-    (browse-url (ee-data-field-get 'locations)))
-   ((ee-data-field-get 'url)
+    (browse-url (ee-data-field-get 'url)))
+   ((ee-data-field-get 'url) ; TODO: better
     (browse-url (car (ee-data-field-get 'locations))))))
 
-;; TODO: maybe better to (require 'cl) at run-time?
+
+;;; Compatibility Functions
+
+;; TODO: use package prefix for aliases
+;; qv on emacs-devel Subject: Compatibility aliases, defsubsts, and macros...
+;; (if (fboundp 'mapcan)
+;;     (defalias 'ee-mapcan 'mapcan)
+;;   (defun ee-mapcan (func seq)
+;;     (apply 'nconc (mapcar func seq))))
+;; (defalias 'ee-mapcan ;; defsubst
+;;   (if (fboundp 'mapcan)
+;;       'mapcan
+;;     'mapcan??))
+
 (or (fboundp 'mapcan)
-    (defun mapcan (func seq)
-      "Like `mapcar', but nconc's together the values returned by the function."
-      (apply 'nconc (mapcar func seq))))
+(defun mapcan (func seq)
+  "Like `mapcar', but nconc's together the values returned by the function."
+  (apply 'nconc (mapcar func seq))))
+
+;; GNU Emacs 20.7 compatibility
+(or (fboundp 'mapc)
+(defun mapc (function sequence)
+  "Apply FUNCTION to each element of SEQUENCE for side effects only.
+Unlike `mapcar', don't accumulate the results.  Return SEQUENCE.
+SEQUENCE may be a list, a vector, a bool-vector, or a string."
+  (mapcar function sequence)
+  sequence))
+
+(or (fboundp 'ignore-errors)
+(defmacro ignore-errors (&rest body)
+  "Execute BODY; if an error occurs, return nil.
+Otherwise, return result of last form in BODY."
+  `(condition-case nil (progn ,@body) (error nil))))
+
+(or (fboundp 'delete-dups)
+;; from GNU Emacs 22.0
+(defun delete-dups (list)
+  "Destructively remove `equal' duplicates from LIST.
+Store the result in LIST and return it.  LIST must be a proper list.
+Of several `equal' occurrences of an element in LIST, the first
+one is kept."
+  (let ((tail list))
+    (while tail
+      (setcdr tail (delete (car tail) (cdr tail)))
+      (setq tail (cdr tail))))
+  list))
+
+(or (fboundp 'remove-overlays)
+;; like in GNU Emacs 22.0, but works only on the whole buffer
+(defun remove-overlays ()
+  (mapc 'delete-overlay (overlays-in (point-min) (point-max)))))
+
+;; GNU Emacs 20.7 compatibility
+(or (fboundp 'puthash)
+(defalias 'puthash 'cl-puthash))
+(or (fboundp 'gethash)
+(defalias 'gethash 'cl-gethash))
+
+;; GNU Emacs 20.7 compatibility
+(or (fboundp 'float-time)
+(defun float-time (&optional time)
+  "Return the current time, as a float number of seconds since the epoch.
+If SPECIFIED-TIME is given, it is the time to convert to float
+instead of the current time.  The argument should have the form
+\(HIGH LOW . IGNORED). Thus, you can use times obtained from
+`current-time' and from `file-attributes'.  SPECIFIED-TIME can also
+have the form (HIGH . LOW), but this is considered obsolete.
+
+WARNING: Since the result is floating point, it may not be exact.
+Do not use this function if precise time stamps are required."
+  (let ((time (or time (current-time))))
+    (+ (* (car time) 65536.0) (cadr time)))))
+
+;; GNU Emacs 20.7 compatibility
+(or (fboundp 'substring-no-properties)
+(defun substring-no-properties (string &optional from to)
+  "Return a substring of STRING, without text properties.
+It starts at index FROM and ending before TO.
+TO may be nil or omitted; then the substring runs to the end of STRING.
+If FROM is nil or omitted, the substring starts at the beginning of STRING.
+If FROM or TO is negative, it counts from the end.
+
+With one argument, just copy STRING without its properties."
+  (let ((substring (substring string from to)))
+    (set-text-properties 0 (length substring) nil substring)
+    substring)))
+
+;; XEmacs compatibility from `fsf-compat' package
+(when (featurep 'xemacs)
+  (require 'overlay)
+  (require 'goto-addr)
+  (or (fboundp 'quit-window)
+      (defalias 'quit-window 'bury-buffer)))
 
 
 ;;; Maintenence Functions

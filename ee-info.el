@@ -1,24 +1,24 @@
 ;;; ee-info.el --- browse Info documentation
 
-;; Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
+;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
 ;; Author: Juri Linkov <juri@jurta.org>
 ;; Keywords: ee, help
 
 ;; This file is [not yet] part of GNU Emacs.
 
-;; This file is free software; you can redistribute it and/or modify
+;; This package is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
 ;; the Free Software Foundation; either version 2, or (at your option)
 ;; any later version.
 
-;; This file is distributed in the hope that it will be useful,
+;; This package is distributed in the hope that it will be useful,
 ;; but WITHOUT ANY WARRANTY; without even the implied warranty of
 ;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ;; GNU General Public License for more details.
 
 ;; You should have received a copy of the GNU General Public License
-;; along with GNU Emacs; see the file COPYING.  If not, write to
+;; along with this package; see the file COPYING.  If not, write to
 ;; the Free Software Foundation, Inc., 59 Temple Place - Suite 330,
 ;; Boston, MA 02111-1307, USA.
 
@@ -27,8 +27,10 @@
 ;; See the file README and documentation for more information.
 
 ;; This file contains two main parts: one for ee-info-dir and one for ee-info:
-;; ee-info-dir has unique index buffer created from dir,
+;; ee-info-dir has the unique index buffer created from dir,
 ;; ee-info has own buffer for index of every visited info file.
+
+;; TODO: make ee-info-history tree
 
 ;; TODO: look in the texinfo.info for all possible node types:
 ;;   1. The menu entry name (optional).
@@ -66,12 +68,9 @@
 
 ;;; Constants
 
-(defconst ee-info-dir-mode-name "ee-info"
-  ;; Name "ee-info" (the same as next variable) is better than "ee-info-dir"
-  "*info-dir mode name.")
-
-(defconst ee-info-mode-name "ee-info"
-  "*info mode name.")
+;; Name "ee-info" (the same as next variable) is better than "ee-info-dir"
+(defconst ee-info-dir-mode-name "ee-info")
+(defconst ee-info-mode-name "ee-info")
 
 ;;; Customizable Variables
 
@@ -81,13 +80,13 @@
   :group 'ee)
 
 (defcustom ee-info-dir-read-section-names nil
-  "*Non-nil means to extract section names (defined by `INFO-DIR-SECTION')
+  "Non-nil means to extract section names (defined by `INFO-DIR-SECTION')
 from all info files accessible from dir."
   :type 'file
   :group 'ee-info)
 
 (defcustom ee-info-data-file-name-format "info-%s.ee"
-  "*Format used to create data file name to save data collected from info files.
+  "Format used to create data file name to save data collected from info files.
 Format may contain %s which will be replaced by info file name."
   :type 'file
   :group 'ee-info)
@@ -96,10 +95,6 @@ Format may contain %s which will be replaced by info file name."
 
 (defvar ee-info-file nil
   "Current info file name.")
-
-(defvar ee-info-section-names nil
-  "Global variable to hold association list during data collection.
-The elements of list are (\"section name\" . \"node name\").")
 
 ;;; Info dir
 
@@ -143,7 +138,9 @@ Output: [[title filename nodename dir-section info-dir-section] ...]
             (beginning-of-line)
             (cond
              ;; Menu line
-             ((looking-at "^\\* +\\([^:\t\n]*\\):")
+             ((looking-at (concat "^\\* +\\([^:\t\n]*\\):"
+                                  ;; Skip non-Top menu items
+                                  "[ \t\n]*([^)\t\n]+)\\."))
               (let* ((title (match-string-no-properties 1))
                      (nodename (Info-extract-menu-node-name))
                      filename)
@@ -151,12 +148,12 @@ Output: [[title filename nodename dir-section info-dir-section] ...]
                               nodename)
                 (setq filename (if (= (match-beginning 1) (match-end 1))
                                    ""
-                                 (substring nodename (match-beginning 2) (match-end 2)))
-                      nodename (substring nodename (match-beginning 3) (match-end 3)))
+                                 (substring-no-properties nodename (match-beginning 2) (match-end 2)))
+                      nodename (substring-no-properties nodename (match-beginning 3) (match-end 3)))
                 (let ((trim (string-match "\\s *\\'" filename)))
-                  (if trim (setq filename (substring filename 0 trim))))
+                  (if trim (setq filename (substring-no-properties filename 0 trim))))
                 (let ((trim (string-match "\\s *\\'" nodename)))
-                  (if trim (setq nodename (substring nodename 0 trim))))
+                  (if trim (setq nodename (substring-no-properties nodename 0 trim))))
                 (setq res
                       (cons
                        (mapcar
@@ -172,7 +169,7 @@ Output: [[title filename nodename dir-section info-dir-section] ...]
                         field-names)
                        res))))
              ;; Other non-empty strings in the dir buffer are section names
-             ((looking-at "^\\([^ \t\n][^:\n]*\\)")
+             ((looking-at "^\\([^ \t\n*][^:\n]*\\)")
               (setq section (match-string-no-properties 1))))
             (forward-line 1))
           ;; Read section names from INFO-DIR-SECTION from info files
@@ -242,152 +239,93 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Data Extraction
 
 (defun ee-info-data-collect (data)
-  (let ((new-data (ee-data-convert-lists-to-vectors
-                   (ee-info-data-collect-menus
-                    (ee-data-field-names data)
-                    ee-info-file))))
+  (let* ((field-names (ee-data-field-names data))
+         (new-data
+          (ee-data-convert-lists-to-vectors
+           (mapcar
+            (lambda (node)
+              (mapcar
+               (lambda (field-name)
+                 (cond
+                  ((eq field-name 'nodename) (nth 0 node))
+                  ((eq field-name 'category) (nth 1 node))
+                  ((eq field-name 'menulist) (nth 2 node))
+                  ;; ((eq field-name 'indexlist) (nth 3 node)) ; not used
+                  ))
+               field-names))
+            (Info-build-toc ee-info-file)))))
     (aset new-data 0 (aref data 0))
+    (let ((hack (aref new-data 1)))
+      (aset hack 2 nil)
+      (aset new-data 1 hack))
     new-data))
 
-(defun ee-info-data-collect-menus (field-names filename)
-  (save-excursion
-    (let ((res))
-      (Info-find-node filename "Top")
-      (setq ee-info-section-names '(("Top" "Top")))
-      ;; Read menus from info file of Top node
-      (setq res (ee-info-data-collect-menus-current field-names))
-      ;; Read menus from info subfiles
-      (let ((list ())
-            (osubfile ))
-        ;; Get list of subfiles (code borrowed from `Info-search')
-        (save-excursion
-          (set-buffer (marker-buffer Info-tag-table-marker))
-          (goto-char (point-min))
-          (if (search-forward "\n\^_\nIndirect:" nil t)
-              (save-restriction
-                (narrow-to-region (point)
-                                  (progn (search-forward "\n\^_")
-                                         (1- (point))))
-                (goto-char (point-min))
-                (beginning-of-line)
-                (while (not (eobp))
-                  (re-search-forward "\\(^.*\\): [0-9]+$")
-                  (goto-char (+ (match-end 1) 2))
-                  (setq list (cons (cons (read (current-buffer))
-                                         (buffer-substring-no-properties
-                                          (match-beginning 1) (match-end 1)))
-                                   list))
-                  (goto-char (1+ (match-end 0))))
-                (setq list (nreverse list)
-                      list (cdr list)))))
-        (while list
-          (message "Searching subfile %s..." (cdr (car list)))
-          (Info-read-subfile (car (car list)))
-          (setq res (append (ee-info-data-collect-menus-current field-names) res))
-          (setq list (cdr list)))
-        (nreverse res)))))
-
-(defun ee-info-data-collect-menus-current (field-names)
-  "Returns list of menus extracted from current info file.
-It returns all nodes, even those that are not accessible from menus.
-Output: [[\"nodename1\",(\"subnode2\",\"subnode3\")]]."
-  ;; TODO: restore *info* buffer prev content after search
-  (let ((res))
-    (save-excursion
-      (save-restriction
-        (widen)
-        (goto-char (point-min))
+(or (fboundp 'Info-build-toc)
+;; from GNU Emacs 21.4
+(defun Info-build-toc (file)
+  "Build table of contents from menus of Info FILE and its subfiles."
+  (setq file (Info-find-file file))
+  (with-temp-buffer
+    (let ((default-directory (or (file-name-directory file)
+                                 default-directory))
+          (sections '(("Top" "Top")))
+          nodes subfiles)
+      (while (or file subfiles)
+        (or file (message "Searching subfile %s..." (car subfiles)))
+        (erase-buffer)
+        (info-insert-file-contents (or file (car subfiles)))
         (while (and (search-forward "\n\^_\nFile:" nil 'move)
                     (search-forward "Node: " nil 'move))
-          (let (nodename section-name menu-items index-items ref-items beg bound)
-            (setq nodename (Info-following-node-name))
-            (forward-line 1)
-            (setq beg (point))
-            (search-forward "\n\^_" nil 'move)
-            (beginning-of-line)
-            (forward-line -1)
-            (setq bound (point))
-            (goto-char beg)
-            (when (re-search-forward "^\\* Menu:" bound t)
+          (let ((nodename (substring-no-properties (Info-following-node-name)))
+                (bound (- (or (save-excursion (search-forward "\n\^_" nil t))
+                              (point-max)) 2))
+                (section "Top")
+                menu-items)
+            (when (and (not (string-match "\\<index\\>" nodename))
+                       (re-search-forward "^\\* Menu:" bound t))
               (forward-line 1)
               (beginning-of-line)
-              ;; TODO: read section names from Top node
-              (cond
-               ((equal nodename "Top")
-                (while (and (< (point) bound)
-                            (not (looking-at "^[ \t]*-+ The Detailed Node Listing")))
-                  (cond
-                   ;; Menu line
-                   ((looking-at "^\\* +\\([^:\t\n]*\\):")
-                    (beginning-of-line)
-                    (forward-char 2)
-                    (let ((menu-node-name (Info-extract-menu-node-name)))
-                      (setq menu-items
-                            (cons menu-node-name ;; (list menu-node-name section-name)
-                                  ;; (match-string-no-properties 1)
-                                  menu-items))
-                      (setq ee-info-section-names
-                            (cons (list menu-node-name (or section-name "Top"))
-                                   ee-info-section-names))))
-                   ;; Other non-empty strings in the dir buffer are section names
-                   ((looking-at "^\\([^ \t\n][^:\n]*\\)")
-                    (setq section-name (match-string-no-properties 1))))
-                  (forward-line 1)
-                  (beginning-of-line)))
-               ((string-match "Index" nodename)
-                ;; Accept index menu items, e.g.:
-                ;; * forward-list:                          List Motion.
-                (while (re-search-forward "\n\\* +\\([^:\t\n]*\\):" bound t)
+              (setq bound (or (and (equal nodename "Top")
+                                   (save-excursion
+                                     (re-search-forward
+                                      "^[ \t-]*The Detailed Node Listing" nil t)))
+                              bound))
+              (while (< (point) bound)
+                (cond
+                 ;; Menu item line
+                 ((looking-at "^\\* +[^:]+:")
                   (beginning-of-line)
                   (forward-char 2)
-                  (setq index-items (cons (Info-extract-menu-node-name)
-                                          ;; (match-string-no-properties 1)
-                                          index-items))))
-               (t
-                (while (re-search-forward "\n\\* +\\([^:\t\n]*\\):" bound t)
-                  (beginning-of-line)
-                  (forward-char 2)
-                  (setq menu-items (cons (Info-extract-menu-node-name)
-                                         ;; (match-string-no-properties 1)
-                                         menu-items))))))
-            (setq res (cons
-                       (mapcar
-                        (lambda (field-name)
-                          (cond
-                           ((eq field-name 'nodename)
-                            nodename)
-                           ((eq field-name 'category)
-                            (cadr (assoc nodename ee-info-section-names)))
-                           ((eq field-name 'menulist)
-                            (if (not (equal nodename "Top")) ; hack
-                                (nreverse menu-items)))
-                           ((eq field-name 'indexlist)
-                            (nreverse index-items))))
-                        field-names)
-                       res))
-            (goto-char bound)))))
-    res))
-
-;; TODO: make patch and send to <bug-gnu-emacs@gnu.org>
-(defun Info-extract-menu-node-name (&optional errmessage multi-line)
-  (skip-chars-forward " \t\n")
-  (let ((beg (point))
-        str i)
-    (skip-chars-forward "^:")
-    (forward-char 1)
-    (setq str
-          (if (looking-at ":")
-              (buffer-substring-no-properties beg (1- (point)))
-            (skip-chars-forward " \t\n")
-            (Info-following-node-name (if multi-line "^.,\t" "^.,\t\n"))))
-    (while (setq i (string-match "\n" str i))
-      (aset str i ?\ ))
-    ;; Collapse multiple spaces.
-    (while (string-match "  +" str)
-      (setq str (replace-match " " t t str)))
-    (let ((trim (string-match "\\s *\\'" str)))
-      (if trim (setq str (substring str 0 trim))))
-    str))
+                  (let ((menu-node-name (substring-no-properties
+                                         (Info-extract-menu-node-name))))
+                    (setq menu-items (cons menu-node-name menu-items))
+                    (if (equal nodename "Top")
+                        (setq sections
+                              (cons (list menu-node-name section) sections)))))
+                 ;; Other non-empty strings in the Top node are section names
+                 ((and (equal nodename "Top")
+                       (looking-at "^\\([^ \t\n*=.-][^:\n]*\\)"))
+                  (setq section (match-string-no-properties 1))))
+                (forward-line 1)
+                (beginning-of-line)))
+            (setq nodes (cons (list nodename
+                                    (cadr (assoc nodename sections))
+                                    (nreverse menu-items))
+                              nodes))
+            (goto-char bound)))
+        (if file
+            (save-excursion
+              (goto-char (point-min))
+              (if (search-forward "\n\^_\nIndirect:" nil t)
+                  (let ((bound (save-excursion (search-forward "\n\^_" nil t))))
+                    (while (re-search-forward "\\(^.*\\): [0-9]+$" bound t)
+                      (setq subfiles (cons (match-string-no-properties 1)
+                                           subfiles)))))
+              (setq subfiles (nreverse subfiles)
+                    file nil))
+          (setq subfiles (cdr subfiles))))
+      (message "")
+      (nreverse nodes)))))
 
 ;;; Actions
 
@@ -473,39 +411,45 @@ It inherits key bindings from `ee-mode-map'."
 
 ;;; Top-Level Functions
 
-;; TODO: place next into e.g. (if ee-info-selection-hook-p ...) or (if ee-info-follow-nodes ...)
-(add-hook 'Info-selection-hook
-          (lambda ()
-            (let ((node Info-current-node)
-                  (file Info-current-file)
-                  (curr-buffer (current-buffer))
-                  (curr-window (selected-window))
-                  buffer)
-              (mapc (lambda (dir)
-                      (if (string-match (concat "^" dir) file)
-                          (setq file (substring file (length dir)))))
-                    Info-directory-list)
-              (setq buffer (format "*%s*/%s" ee-info-mode-name file))
-              (cond ((get-buffer-window buffer)
-                     (select-window (get-buffer-window buffer))
-                     (when (not (eq (point-min) (point-max)))
-                       (goto-char (point-min))
-                       (search-forward node nil t)
-                       (beginning-of-line)
-                       ;; TODO: expand hidden branch
-                       (ee-field-set 'read t)
-                       (ee-view-update '(read)))
-                     (select-window curr-window))
-                    ((get-buffer buffer)
-                     (set-buffer buffer)
-                     (when (not (eq (point-min) (point-max)))
-                       (goto-char (point-min))
-                       (search-forward node nil t)
-                       (beginning-of-line)
-                       ;; TODO: expand hidden branch
-                       (ee-field-set 'read t)
-                       (ee-view-update '(read)))
-                     (set-buffer curr-buffer))))))
+(defun ee-info-follow-selection ()
+  (let ((node Info-current-node)
+        (file Info-current-file)
+        (curr-buffer (current-buffer))
+        (curr-window (selected-window))
+        buffer)
+    (mapc (lambda (dir)
+            (if (and (stringp file) (string-match (concat "^" dir) file))
+                (setq file (substring-no-properties file (length dir)))))
+          Info-directory-list)
+    (setq buffer (format "*%s*/%s" ee-info-mode-name file))
+    (cond ((get-buffer-window buffer)
+           (select-window (get-buffer-window buffer))
+           (let ((r (car (ee-data-records-find ee-data (cons 'nodename node)))))
+             (when r
+               (ee-view-record-by-key (ee-field 'nodename r))
+               ;; TODO: expand hidden branch
+               (ee-field-set 'read t)
+               (ee-view-update '(read))))
+           (select-window curr-window))
+          ((get-buffer buffer)
+           (set-buffer buffer)
+           (let ((r (car (ee-data-records-find ee-data (cons 'nodename node)))))
+             (when r
+               (ee-view-record-by-key (ee-field 'nodename r))
+               ;; TODO: expand hidden branch
+               (ee-field-set 'read t)
+               (ee-view-update '(read))))
+           (set-buffer curr-buffer)))))
+
+(defun ee-info-follow-selection-toggle ()
+  (interactive)
+  (if (member 'ee-info-follow-selection Info-selection-hook)
+      (remove-hook 'Info-selection-hook 'ee-info-follow-selection)
+    (add-hook 'Info-selection-hook 'ee-info-follow-selection)))
+
+;; TODO: place next into e.g. (if ee-info-selection-hook-p ...)
+;; or                         (if ee-info-follow-nodes ...)
+(ee-info-follow-selection-toggle)
 
 ;;;###autoload
 (defun ee-info (&optional file)
@@ -521,10 +465,12 @@ The top-level Info directory is made by combining all the files named `dir'
 in all the directories in that path."
   (interactive (if current-prefix-arg
                    ;; TODO: make list of available info node names
-                   (list (read-string "Info file name: " nil nil t))))
-  (or (featurep 'info)
-      (require  'info))
-  (info-initialize)
+                   (list (read-file-name "Info file name: " nil nil t))))
+  (require 'info)
+  ;; Initialize `Info-directory-list'
+  (and (fboundp 'info-initialize) (info-initialize))
+  (or (boundp 'Info-selection-hook)
+      (defvar Info-selection-hook nil))
   (if (not (stringp file))
       (ee-view-buffer-create
        (format "*%s*/dir" ee-info-dir-mode-name)
