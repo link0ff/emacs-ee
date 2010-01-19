@@ -18,7 +18,7 @@
    ;; (r-parent-child-key-fields name children)
    (r-child-parent-key-fields name parent)
    (c-sorter . (lambda (a-level c-level s-level attr-alist)
-                 (lambda (c1 c2) (string< (car c1) (car c2)))))
+    (lambda (c1 c2) (string< (car c1) (car c2)))))
    (c-calculator)
    (r-calculator . (lambda (r a-level r-level children-p result)
     (- (if (vectorp r)

@@ -1,6 +1,6 @@
 (provide 'ee-autoloads)
 
-;;;### (autoloads (ee) "ee" "ee.el" (16154 51476))
+;;;### (autoloads (ee) "ee" "ee.el" (16181 17540))
 ;;; Generated autoloads from ee.el
 
 (autoload (quote ee) "ee" "\
@@ -20,8 +20,8 @@ Summary mode for BBDB." t nil)
 
 ;;;***
 
-;;;### (autoloads (ee-buffers) "ee-buffers" "ee-buffers.el" (16146
-;;;;;;  29530))
+;;;### (autoloads (ee-buffers) "ee-buffers" "ee-buffers.el" (16158
+;;;;;;  29978))
 ;;; Generated autoloads from ee-buffers.el
 
 (autoload (quote ee-buffers) "ee-buffers" "\
@@ -143,7 +143,7 @@ Categorized mode-specific buffer indexes." t nil)
 
 ;;;***
 
-;;;### (autoloads (ee-info) "ee-info" "ee-info.el" (16153 41764))
+;;;### (autoloads (ee-info) "ee-info" "ee-info.el" (16175 50042))
 ;;; Generated autoloads from ee-info.el
 
 (autoload (quote ee-info) "ee-info" "\
@@ -226,7 +226,7 @@ Etags facility." t nil)
 ;;;***
 
 ;;;### (autoloads (ee-textfile-apachelog ee-textfile-changelog) "ee-textfile"
-;;;;;;  "ee-textfile.el" (16146 26612))
+;;;;;;  "ee-textfile.el" (16180 54332))
 ;;; Generated autoloads from ee-textfile.el
 
 (autoload (quote ee-textfile-changelog) "ee-textfile" "\

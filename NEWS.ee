@@ -4,6 +4,12 @@
   (format-version . "0.0.1")
   (database-version . "0.0.1")
   (view-data-file . "view/NEWS.ee")
-  (fields categories version title ())
+  (fields version categories title ())
   (key-fields title))
- [("ee") "0.0.1" "Released" ((date . "2003-07-21"))]]
+ ["0.0.1" () "Released 2003-07-21" ()]
+ ["0.0.2" ("ee-textfile.el") "Added custom variables for ee-textfile-apachelog" ()]
+ ["0.0.2" ("view/NEWS.ee") "Improved views \"by Version/by Category\", \"by Category/by Version\"" ()]
+ ["0.0.2" ("view/apachelog.ee") "Added views \"by Reversed Hostname\", \"by Request\", \"by Referer\",\n                \"by User Agent\", \"by Date\", \"by Size\", \"by Status\"" ()]
+ ["0.0.2" ("view/buffers.ee") "Added view \"by Coding\"" ()]
+ ["0.0.2" ("Makefile") "Removed all compiled *.elc files from the package" ()]
+ ["0.0.2" () "Released 2003-08-09" ()]]

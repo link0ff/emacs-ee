@@ -492,6 +492,7 @@ It inherits key bindings from `ee-mode-map'."
                        (goto-char (point-min))
                        (search-forward node nil t)
                        (beginning-of-line)
+                       ;; TODO: expand hidden branch
                        (ee-field-set 'read t)
                        (ee-view-update '(read)))
                      (select-window curr-window))
@@ -501,6 +502,7 @@ It inherits key bindings from `ee-mode-map'."
                        (goto-char (point-min))
                        (search-forward node nil t)
                        (beginning-of-line)
+                       ;; TODO: expand hidden branch
                        (ee-field-set 'read t)
                        (ee-view-update '(read)))
                      (set-buffer curr-buffer))))))

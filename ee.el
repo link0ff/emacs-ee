@@ -37,7 +37,7 @@
 
 ;;; Constants
 
-(defconst ee-version "0.0.1"
+(defconst ee-version "0.0.2"
   "Version numbers of this version of Ee.")
 
 

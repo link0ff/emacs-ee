@@ -98,7 +98,7 @@ Example:
      (format-version . "0.0.1")
      (view-data-file . "view/buffers.ee")
      (collector . ee-buffers-data-collect)
-     (fields type buffer buffer-name major-mode mode-name file-name directory size read-only modified modtime display-time display-count mark)
+     (fields type buffer buffer-name major-mode mode-name file-name directory size read-only modified modtime display-time display-count file-truename file-format file-coding-system mark ())
      (key-fields buffer))])
 
 ;;; Data Extraction
@@ -120,22 +120,20 @@ Example:
                     ((eq field-name 'type) 'buffer) ; TEST
                     ((eq field-name 'buffer) buffer)
                     ((eq field-name 'buffer-name) (buffer-name buffer))
+                    ((eq field-name 'major-mode) major-mode)
                     ((eq field-name 'mode-name) mode-name)
                     ((eq field-name 'file-name) (buffer-file-name buffer))
                     ((eq field-name 'directory) default-directory)
-                    ((eq field-name 'major-mode) major-mode)
                     ((eq field-name 'size) (buffer-size))
-                    ((eq field-name 'saved-size) buffer-saved-size)
-                    ((eq field-name 'backed-up) buffer-backed-up)
+                    ((eq field-name 'saved-size) buffer-saved-size) ; NOT USED
+                    ((eq field-name 'backed-up) buffer-backed-up) ; NOT USED
                     ((eq field-name 'read-only) buffer-read-only)
                     ((eq field-name 'modified) (buffer-modified-p buffer))
                     ((eq field-name 'modtime) (visited-file-modtime))
                     ((eq field-name 'display-time) buffer-display-time)
                     ((eq field-name 'display-count) buffer-display-count)
-                    ((eq field-name 'file-coding-system) buffer-file-coding-system)
                     ((eq field-name 'file-truename) buffer-file-truename)
                     ((eq field-name 'file-format) buffer-file-format)
-                    ((eq field-name 'file-coding-system) buffer-file-coding-system)
                     ((eq field-name 'file-coding-system) buffer-file-coding-system)))
                  field-names)))
             (buffer-list)))))

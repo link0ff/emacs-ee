@@ -1,3 +1,26 @@
+2003-08-09  Juri Linkov  <juri@jurta.org>
+
+	* ee-textfile.el: Added new custom variables for ee-textfile-apachelog.
+
+	* view/apachelog.ee: Added new views "by Reversed Hostname",
+	"by Request", "by Referer", "by User Agent", "by Date", "by Size",
+	"by Status".
+
+	* view/NEWS.ee: Improved views "by Version/by Category",
+	"by Category/by Version".
+
+	* Makefile (DISTFILES): Removed all compiled *.elc files from the
+	package, because compilation should be performed after installation.
+	Suggested by Jari Aalto <jari.aalto@poboxes.com>.
+
+2003-07-23  Juri Linkov  <juri@jurta.org>
+
+	* ee-buffers.el (ee-buffers-data): Added file-truename,
+	file-format and file-coding-system.
+	(ee-buffers-data-collect): Removed duplicate file-coding-system.
+
+	* view/buffers.ee: Added new view "by Coding".
+
 2003-07-21  Juri Linkov  <juri@jurta.org>
 
 	* ee 0.0.1 released.

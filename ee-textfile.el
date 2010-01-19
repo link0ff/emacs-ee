@@ -42,6 +42,36 @@
   :prefix "ee-textfile-"
   :group 'ee)
 
+(defgroup ee-textfile-apachelog nil
+  "Organize information from Apache log files."
+  :prefix "ee-textfile-apachelog-"
+  :group 'ee-textfile)
+
+(defcustom ee-textfile-apachelog-combined-format "^\\([-a-zA-z0-9.]+\\) - [-A-Za-z]+ \\[\\([0-9]+\\)/\\([a-zA-Z]+\\)/\\([0-9]+\\):\\(.*\\)\\] \"\\([^\"]*\\)\" \\([0-9]+\\) \\([-0-9]+\\) \"\\([^\"]*\\)\" \"\\([^\"]*\\)\""
+  "Apache log combined format regexp."
+  :type 'regexp
+  :group 'ee-textfile-apachelog)
+
+(defcustom ee-textfile-apachelog-common-format "^\\([-a-zA-z0-9.]+\\) - [-A-Za-z]+ \\[\\([0-9]+\\)/\\([a-zA-Z]+\\)/\\([0-9]+\\):\\(.*\\)\\] \"\\([^\"]*\\)\" \\([0-9]+\\) \\([-0-9]+\\)"
+  "Apache log common format regexp."
+  :type 'regexp
+  :group 'ee-textfile-apachelog)
+
+(defcustom ee-textfile-apachelog-remotehost-filter "^127\.0\.0"
+  "Filter out the rows whose field `remote-host' matches this regexp."
+  :type 'regexp
+  :group 'ee-textfile-apachelog)
+
+(defcustom ee-textfile-apachelog-referer-filter "localhost"
+  "Filter out the rows whose field `referer' matches this regexp."
+  :type 'regexp
+  :group 'ee-textfile-apachelog)
+
+(defgroup ee-textfile-changelog nil
+  "Organize information from ChangeLog files."
+  :prefix "ee-textfile-changelog-"
+  :group 'ee-textfile)
+
 ;;; Global Variables
 
 ;; TODO: these regexp defvars could be added to add-log.el
@@ -129,7 +159,7 @@
                 (goto-char (point-min))
                 (while (not (eobp))
                   (cond
-                   ((looking-at "^\\([-a-zA-z0-9.]+\\) - [-A-Za-z]+ \\[\\([0-9]+\\)/\\([a-zA-Z]+\\)/\\([0-9]+\\):\\(.*\\)\\] \"\\([^\"]*\\)\" \\([0-9]+\\) \\([-0-9]+\\) \"\\([^\"]*\\)\" \"\\([^\"]*\\)\"")
+                   ((looking-at ee-textfile-apachelog-combined-format)
                     ;; combined format
                     (setq res (cons
                                (list
@@ -144,7 +174,7 @@
                                       (cons 'user-agent (match-string-no-properties 10))
                                       (cons 'line (buffer-substring (line-beginning-position) (line-end-position)))))
                                res)))
-                   ((looking-at "^\\([-a-zA-z0-9.]+\\) - [-A-Za-z]+ \\[\\([0-9]+\\)/\\([a-zA-Z]+\\)/\\([0-9]+\\):\\(.*\\)\\] \"\\([^\"]*\\)\" \\([0-9]+\\) \\([-0-9]+\\)")
+                   ((looking-at ee-textfile-apachelog-common-format)
                     ;; common format
                     (setq res (cons
                                (list

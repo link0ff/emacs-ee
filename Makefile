@@ -1,7 +1,7 @@
 # Copyright (C) 2002, 2003  Juri Linkov <juri@jurta.org>
 # This file is distributed under the terms of the GNU GPL.
 
-VERSION = 0.0.1
+VERSION = 0.0.2
 
 EMACS    = emacs -no-site-file -no-init-file
 MAKEINFO = makeinfo --no-split
@@ -80,7 +80,7 @@ INFOFILES = $(TEXIFILES:.texi=.info)
 HTMLFILES = $(TEXIFILES:.texi=.html)
 
 DISTFILES = ChangeLog Makefile README \
-            $(ELFILES) $(ELCFILES) \
+            $(ELFILES) \
             $(EEDATAFILES) \
             $(TEXIFILES) $(INFOFILES)
 DISTVIEWFILES = $(EEVIEWFILES)
@@ -91,7 +91,7 @@ DISTNAME = emacs-ee-$(VERSION)
 
 all: elc info
 
-elc: ee.elc ee-autoloads.elc $(ELFILES:.el=.elc)
+elc: ee.elc ee-autoloads.elc $(ELCFILES)
 
 ee.elc: ee.el
 	$(EMACS) -batch -q $(PUSHPATH) -f batch-byte-compile $<

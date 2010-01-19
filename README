@@ -88,6 +88,14 @@ BUGS
     to <URL:mailto:juri@jurta.org> or on the Web pages
     at <URL:http://www.jurta.org/emacs/ee/>.
 
+NOTES
+=====
+
+    You could perform compilation of all *.el files after installation
+    by the following command:
+
+        make -f elc
+
 AUTHOR
 ======
 
