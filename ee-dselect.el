@@ -117,8 +117,8 @@ shouldn't be any need to change it."
              (setq d (point))
              (search-forward "\n\n")
              (aset v (- fields-len 2) (list b d (point)))
-             (aset v 3 (string-to-int (aref v 3))) ; bad hack
-             (aset v 11 (string-to-int (aref v 11))) ; bad hack
+             (aset v 3 (string-to-number (aref v 3))) ; bad hack
+             (aset v 11 (string-to-number (aref v 11))) ; bad hack
              (push v l))))
        (nreverse l)))))
 

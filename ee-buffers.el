@@ -151,7 +151,7 @@ Example:
   (format "*%s*" ee-buffers-mode-name))
 
 (defun ee-buffers-post-update ()
-  "Find previously visited buffer to place point on it after calling ee-buffers."
+  "Find previously visited buffer to place point on it after calling `ee-buffers'."
   (let ((data-getters (ee-data-meta-getters-get-set ee-data)))
     (or ee-current-c-key-field
         ee-current-r-key-field
@@ -306,8 +306,8 @@ It inherits key bindings from `ee-mode-map'."
     ;;     (define-key map "%" 'Buffer-menu-toggle-read-only)
     ;;     (define-key map [mouse-2] 'Buffer-menu-mouse-select)
 
-    ;; HINT: next is useful with (define-key global-map [(control tab)] 'ee-buffers)
-    (define-key map [(control tab)] 'ee-buffers-switch-to-buffer)
+    ;; HINT: next is useful with (define-key global-map [(super tab)] 'ee-buffers)
+    (define-key map [(super tab)] 'ee-buffers-switch-to-buffer)
     (setq ee-buffers-keymap map)))
 
 (or ee-buffers-keymap

@@ -93,8 +93,8 @@
                     (setq res (cons
                                (list
                                 (list (cons (aref field-names 1) (match-string-no-properties 1))
-                                      (cons (aref field-names 2) (string-to-int (match-string-no-properties 2))) ; bad hack
-                                      (cons (aref field-names 3) (string-to-int (match-string-no-properties 3))) ; bad hack
+                                      (cons (aref field-names 2) (string-to-number (match-string-no-properties 2))) ; bad hack
+                                      (cons (aref field-names 3) (string-to-number (match-string-no-properties 3))) ; bad hack
                                       (cons (aref field-names 4) (match-string-no-properties 4))
                                       (cons (aref field-names 5) (match-string-no-properties 5))
                                       (cons (aref field-names 6) (match-string-no-properties 6))

@@ -1470,7 +1470,7 @@ with name `field-name' is equal to `field-value'."
               (princ "\n" (current-buffer))
               (save-buffer)))
           (message "Saving data to %s...done" data-file)))
-    (if (interactive-p)
+    (if (called-interactively-p 'interactive)
         (error "Filename not given"))))
 
 
@@ -1515,7 +1515,7 @@ with name `field-name' is equal to `field-value'."
           (overlay-put e 'invisible nil)
           (ee-view-expansion-update-buffer 'show p))
       (message "Not on expansion line.")))
-  (if (interactive-p)
+  (if (called-interactively-p 'interactive)
       (run-hooks 'ee-view-expansion-show-hook)))
 
 (defun ee-view-expansion-hide (&optional p)
@@ -1526,7 +1526,7 @@ with name `field-name' is equal to `field-value'."
           (overlay-put e 'invisible 'expansion) ; (overlay-put o 'invisible t)?
           (ee-view-expansion-update-buffer 'hide p))
       (message "Not on expansion line.")))
-  (if (interactive-p)
+  (if (called-interactively-p 'interactive)
       (run-hooks 'ee-view-expansion-hide-hook)))
 
 (defun ee-view-expansion-update-buffer (&optional action p)
