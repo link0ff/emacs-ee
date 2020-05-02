@@ -43,7 +43,7 @@
 
 ;;; Top-Level Functions
 
-;;;###autoload (add-to-list 'auto-mode-alist '("\\.ee\\'" . emacs-lisp-mode))
+;;;###autoload (add-to-list 'auto-mode-alist '("\\.ee\\'" . lisp-data-mode))
 ;;;###autoload
 (defun ee-datafile-mode (&optional arg)
   "Datafile view mode.
