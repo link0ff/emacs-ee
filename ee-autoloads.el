@@ -1,6 +1,6 @@
 (provide 'ee-autoloads)
 
-;;;### (autoloads (ee) "ee" "ee.el" (19285 24054))
+;;;### (autoloads nil "ee" "ee.el" (0 0 0 0))
 ;;; Generated autoloads from ee.el
 
 (autoload 'ee "ee" "\
@@ -12,9 +12,11 @@ to read a root file name from the minibuffer.
 
 \(fn &optional FILE)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee" '("ee-" "posn-col-row-sans-header")))
+
 ;;;***
 
-;;;### (autoloads (ee-bbdb) "ee-bbdb" "ee-bbdb.el" (19285 24054))
+;;;### (autoloads nil "ee-bbdb" "ee-bbdb.el" (0 0 0 0))
 ;;; Generated autoloads from ee-bbdb.el
 
 (autoload 'ee-bbdb "ee-bbdb" "\
@@ -22,10 +24,11 @@ Summary mode for BBDB.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-bbdb" '("ee-bbdb-")))
+
 ;;;***
 
-;;;### (autoloads (ee-buffers) "ee-buffers" "ee-buffers.el" (19285
-;;;;;;  24054))
+;;;### (autoloads nil "ee-buffers" "ee-buffers.el" (0 0 0 0))
 ;;; Generated autoloads from ee-buffers.el
 
 (autoload 'ee-buffers "ee-buffers" "\
@@ -33,10 +36,11 @@ Display and manipulate Emacs buffers.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-buffers" '("ee-buffers-")))
+
 ;;;***
 
-;;;### (autoloads (ee-commands) "ee-commands" "ee-commands.el" (19285
-;;;;;;  24054))
+;;;### (autoloads nil "ee-commands" "ee-commands.el" (0 0 0 0))
 ;;; Generated autoloads from ee-commands.el
 
 (autoload 'ee-commands "ee-commands" "\
@@ -44,10 +48,11 @@ Categorized menu of Emacs commands.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-commands" '("ee-commands-")))
+
 ;;;***
 
-;;;### (autoloads (ee-customize) "ee-customize" "ee-customize.el"
-;;;;;;  (19285 24054))
+;;;### (autoloads nil "ee-customize" "ee-customize.el" (0 0 0 0))
 ;;; Generated autoloads from ee-customize.el
 
 (autoload 'ee-customize "ee-customize" "\
@@ -55,12 +60,13 @@ Browse Emacs customization groups.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-customize" '("ee-customize-")))
+
 ;;;***
 
-;;;### (autoloads (ee-datafile ee-datafile-mode) "ee-datafile" "ee-datafile.el"
-;;;;;;  (19285 24054))
+;;;### (autoloads nil "ee-datafile" "ee-datafile.el" (0 0 0 0))
 ;;; Generated autoloads from ee-datafile.el
- (add-to-list 'auto-mode-alist '("\\.ee\\'" . emacs-lisp-mode))
+ (add-to-list 'auto-mode-alist '("\\.ee\\'" . lisp-data-mode))
 
 (autoload 'ee-datafile-mode "ee-datafile" "\
 Datafile view mode.
@@ -74,9 +80,11 @@ Display and edit data files.
 
 \(fn &optional ARG FILE)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-datafile" '("ee-datafile-mode-name")))
+
 ;;;***
 
-;;;### (autoloads (ee-dired) "ee-dired" "ee-dired.el" (19285 24054))
+;;;### (autoloads nil "ee-dired" "ee-dired.el" (0 0 0 0))
 ;;; Generated autoloads from ee-dired.el
 
 (autoload 'ee-dired "ee-dired" "\
@@ -84,10 +92,11 @@ Categorized directory listings.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-dired" '("ee-dired-")))
+
 ;;;***
 
-;;;### (autoloads (ee-dselect) "ee-dselect" "ee-dselect.el" (19285
-;;;;;;  24054))
+;;;### (autoloads nil "ee-dselect" "ee-dselect.el" (0 0 0 0))
 ;;; Generated autoloads from ee-dselect.el
 
 (autoload 'ee-dselect "ee-dselect" "\
@@ -95,9 +104,11 @@ Debian package handling frontend.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-dselect" '("ee-dselect-")))
+
 ;;;***
 
-;;;### (autoloads (ee-edb) "ee-edb" "ee-edb.el" (19285 24054))
+;;;### (autoloads nil "ee-edb" "ee-edb.el" (0 0 0 0))
 ;;; Generated autoloads from ee-edb.el
 
 (autoload 'ee-edb "ee-edb" "\
@@ -105,9 +116,11 @@ Summary mode for EDB.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-edb" '("ee-edb-")))
+
 ;;;***
 
-;;;### (autoloads (ee-ell) "ee-ell" "ee-ell.el" (19285 24054))
+;;;### (autoloads nil "ee-ell" "ee-ell.el" (0 0 0 0))
 ;;; Generated autoloads from ee-ell.el
 
 (autoload 'ee-ell "ee-ell" "\
@@ -115,10 +128,11 @@ Browse the categorized Emacs Lisp List.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-ell" '("ee-ell-")))
+
 ;;;***
 
-;;;### (autoloads (ee-example) "ee-example" "ee-example.el" (19285
-;;;;;;  24054))
+;;;### (autoloads nil "ee-example" "ee-example.el" (0 0 0 0))
 ;;; Generated autoloads from ee-example.el
 
 (autoload 'ee-example "ee-example" "\
@@ -126,9 +140,11 @@ Accompanying example for demonstration of ee capabilities.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-example" '("ee-example-")))
+
 ;;;***
 
-;;;### (autoloads (ee-fields) "ee-fields" "ee-fields.el" (19285 24054))
+;;;### (autoloads nil "ee-fields" "ee-fields.el" (0 0 0 0))
 ;;; Generated autoloads from ee-fields.el
 
 (autoload 'ee-fields "ee-fields" "\
@@ -136,9 +152,11 @@ Display and edit fields of the current record.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-fields" '("ee-fields-")))
+
 ;;;***
 
-;;;### (autoloads (ee-finder) "ee-finder" "ee-finder.el" (19285 24054))
+;;;### (autoloads nil "ee-finder" "ee-finder.el" (0 0 0 0))
 ;;; Generated autoloads from ee-finder.el
 
 (autoload 'ee-finder "ee-finder" "\
@@ -146,9 +164,11 @@ Keyword-based Emacs code finder.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-finder" '("ee-finder-")))
+
 ;;;***
 
-;;;### (autoloads (ee-gnus) "ee-gnus" "ee-gnus.el" (19285 24054))
+;;;### (autoloads nil "ee-gnus" "ee-gnus.el" (0 0 0 0))
 ;;; Generated autoloads from ee-gnus.el
 
 (autoload 'ee-gnus "ee-gnus" "\
@@ -156,10 +176,11 @@ Summary and topic mode for Gnus.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-gnus" '("ee-gnus-")))
+
 ;;;***
 
-;;;### (autoloads (ee-history-shell-command ee-history-extended-command
-;;;;;;  ee-history-command) "ee-history" "ee-history.el" (19285 24054))
+;;;### (autoloads nil "ee-history" "ee-history.el" (0 0 0 0))
 ;;; Generated autoloads from ee-history.el
 
 (autoload 'ee-history-command "ee-history" "\
@@ -177,9 +198,11 @@ Display list from Emacs variable `shell-command-history'.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-history" '("ee-history-")))
+
 ;;;***
 
-;;;### (autoloads (ee-imenu) "ee-imenu" "ee-imenu.el" (19285 24054))
+;;;### (autoloads nil "ee-imenu" "ee-imenu.el" (0 0 0 0))
 ;;; Generated autoloads from ee-imenu.el
 
 (autoload 'ee-imenu "ee-imenu" "\
@@ -187,9 +210,11 @@ Categorized mode-specific buffer indexes.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-imenu" '("ee-imenu-")))
+
 ;;;***
 
-;;;### (autoloads (ee-info) "ee-info" "ee-info.el" (19285 24054))
+;;;### (autoloads nil "ee-info" "ee-info.el" (0 0 0 0))
 ;;; Generated autoloads from ee-info.el
 
 (autoload 'ee-info "ee-info" "\
@@ -206,9 +231,11 @@ in all the directories in that path.
 
 \(fn &optional FILE)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-info" '("ee-info-")))
+
 ;;;***
 
-;;;### (autoloads (ee-marks) "ee-marks" "ee-marks.el" (19285 24054))
+;;;### (autoloads nil "ee-marks" "ee-marks.el" (0 0 0 0))
 ;;; Generated autoloads from ee-marks.el
 
 (autoload 'ee-marks "ee-marks" "\
@@ -216,10 +243,11 @@ Display and go to marked lines in the current Emacs buffer.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-marks" '("ee-marks-")))
+
 ;;;***
 
-;;;### (autoloads (ee-menubar) "ee-menubar" "ee-menubar.el" (19285
-;;;;;;  24054))
+;;;### (autoloads nil "ee-menubar" "ee-menubar.el" (0 0 0 0))
 ;;; Generated autoloads from ee-menubar.el
 
 (autoload 'ee-menubar "ee-menubar" "\
@@ -228,10 +256,11 @@ Categorized access to Emacs menu-bar.
 \(fn &optional ARG)" t nil)
  (defalias 'ee-tmm 'ee-menubar)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-menubar" '("ee-menubar-")))
+
 ;;;***
 
-;;;### (autoloads (ee-outline) "ee-outline" "ee-outline.el" (19285
-;;;;;;  24053))
+;;;### (autoloads nil "ee-outline" "ee-outline.el" (0 0 0 0))
 ;;; Generated autoloads from ee-outline.el
 
 (autoload 'ee-outline "ee-outline" "\
@@ -239,10 +268,11 @@ Manipulate outlines collected from outline-mode.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-outline" '("ee-outline-")))
+
 ;;;***
 
-;;;### (autoloads (ee-processes) "ee-processes" "ee-processes.el"
-;;;;;;  (19285 24053))
+;;;### (autoloads nil "ee-processes" "ee-processes.el" (0 0 0 0))
 ;;; Generated autoloads from ee-processes.el
 
 (autoload 'ee-processes "ee-processes" "\
@@ -250,10 +280,11 @@ Display and manipulate Emacs processes.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-processes" '("ee-processes-")))
+
 ;;;***
 
-;;;### (autoloads (ee-programs) "ee-programs" "ee-programs.el" (19285
-;;;;;;  24053))
+;;;### (autoloads nil "ee-programs" "ee-programs.el" (0 0 0 0))
 ;;; Generated autoloads from ee-programs.el
 
 (autoload 'ee-programs "ee-programs" "\
@@ -261,9 +292,11 @@ Categorized program menu.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-programs" '("ee-programs-")))
+
 ;;;***
 
-;;;### (autoloads (ee-ps) "ee-ps" "ee-ps.el" (19285 24053))
+;;;### (autoloads nil "ee-ps" "ee-ps.el" (0 0 0 0))
 ;;; Generated autoloads from ee-ps.el
 
 (autoload 'ee-ps "ee-ps" "\
@@ -272,9 +305,11 @@ Display CPU processes.
 \(fn &optional ARG)" t nil)
  (fset 'ee-top 'ee-ps)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-ps" '("ee-ps-")))
+
 ;;;***
 
-;;;### (autoloads (ee-tags) "ee-tags" "ee-tags.el" (19285 24053))
+;;;### (autoloads nil "ee-tags" "ee-tags.el" (0 0 0 0))
 ;;; Generated autoloads from ee-tags.el
 
 (autoload 'ee-tags "ee-tags" "\
@@ -282,10 +317,11 @@ Etags facility.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-tags" '("ee-tags-")))
+
 ;;;***
 
-;;;### (autoloads (ee-textfile-apachelog ee-textfile-changelog) "ee-textfile"
-;;;;;;  "ee-textfile.el" (19285 24053))
+;;;### (autoloads nil "ee-textfile" "ee-textfile.el" (0 0 0 0))
 ;;; Generated autoloads from ee-textfile.el
 
 (autoload 'ee-textfile-changelog "ee-textfile" "\
@@ -298,10 +334,11 @@ Organize information from Apache log files.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-textfile" '("ee-textfile-")))
+
 ;;;***
 
-;;;### (autoloads (ee-variables) "ee-variables" "ee-variables.el"
-;;;;;;  (19285 24053))
+;;;### (autoloads nil "ee-variables" "ee-variables.el" (0 0 0 0))
 ;;; Generated autoloads from ee-variables.el
 
 (autoload 'ee-variables "ee-variables" "\
@@ -309,9 +346,11 @@ Categorized menu of Emacs variables.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-variables" '("ee-variables-")))
+
 ;;;***
 
-;;;### (autoloads (ee-views) "ee-views" "ee-views.el" (19285 24053))
+;;;### (autoloads nil "ee-views" "ee-views.el" (0 0 0 0))
 ;;; Generated autoloads from ee-views.el
 
 (autoload 'ee-views "ee-views" "\
@@ -319,14 +358,15 @@ Display, edit and switch views.
 
 \(fn &optional ARG)" t nil)
 
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-views" '("ee-views-")))
+
 ;;;***
 
-;;;### (autoloads (ee-windows ee-windows-add ee-windows-and-add-current)
-;;;;;;  "ee-windows" "ee-windows.el" (19285 24053))
+;;;### (autoloads nil "ee-windows" "ee-windows.el" (0 0 0 0))
 ;;; Generated autoloads from ee-windows.el
 
 (autoload 'ee-windows-and-add-current "ee-windows" "\
-Not documented
+
 
 \(fn &optional ARG)" t nil)
 
@@ -340,9 +380,7 @@ Display and switch Emacs window configurations.
 
 \(fn &optional ARG)" t nil)
 
-;;;***
-
-;;;### (autoloads nil nil ("ee-xemacs.el") (19285 24989 160122))
+(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-windows" '("ee-windows-")))
 
 ;;;***
 
