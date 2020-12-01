@@ -122,6 +122,9 @@ Example:
                     ((eq field-name 'major-mode) major-mode)
                     ((eq field-name 'mode-name) (format-mode-line mode-name nil nil buffer))
                     ((eq field-name 'file-name) (buffer-file-name buffer))
+                    ;; ((eq field-name 'directory) (expand-file-name default-directory)) ; unabbreviate
+                    ;; Above is commented out because expand-file-name causes password reading
+                    ;; on files where default-directory is "/sudo:root@localhost:"
                     ((eq field-name 'directory) default-directory)
                     ((eq field-name 'size) (buffer-size))
                     ((eq field-name 'saved-size) buffer-saved-size) ; NOT USED

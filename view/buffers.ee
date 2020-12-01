@@ -48,6 +48,13 @@
                (and (> (length buffer-name) 0) (eq (aref buffer-name 0) ?\040)))))))
    (c-path-finder . (lambda (r)
     (list (cond
+           ((memq (ee-field 'major-mode r)
+                  '(tags-table-mode))
+            (list "Tags"))
+           ((and (fboundp 'project-current)
+                 (let ((project (cdr (project-current nil (ee-field 'directory r)))))
+                   (when project
+                     (list "(Project)" project (if (ee-field 'file-name r) "Files" "Buffers"))))))
            ((memq (ee-field 'major-mode r) '(dired-mode))
             (list "Dired"
                   (if (string-match "/\\([^:]+\\):" (ee-field 'directory r))
@@ -82,7 +89,13 @@
    ;; alternatively directory tree:
    ;; (c-path-finder . (lambda (r) (list (ee-split-string (ee-field 'directory r) "/"))))
    (c-sorter . (lambda (a-level c-level s-level attr-alist)
-    (lambda (c1 c2) (string< (car c1) (car c2)))))
+    (lambda (c1 c2)
+      (cond
+       ;; Place "Files" before "Buffers"
+       ((and (member (car c1) '("Buffers" "Files"))
+             (member (car c2) '("Buffers" "Files")))
+        (string> (car c1) (car c2)))
+       (t (string< (car c1) (car c2)))))))
    (r-sorter . (lambda (a-level r-level attr-alist)
     (lambda (ri1 ri2)
       ;; TODO: make function with argument 'buffer-name and use it in r-sorter
@@ -118,6 +131,9 @@
                     (let ((val (ee-field 'mode-name r))) (if (> (length val) 16) (substring val 0 16) val))
                     (ee-field 'size r)
                     ;; alternatively show buffer modification time
+                    ;; (if (eq (ee-field 'modtime r) 0)
+                    ;;     (format-time-string "%Y-%m-%d %H:%M" (ee-field 'display-time r))
+                    ;;     (format-time-string "%Y-%m-%d %H:%M" (ee-field 'modtime r)))
                     ;; (if (eq (ee-field 'modtime r) 0) "" (format-time-string "%Y-%m-%d %H:%M" (ee-field 'modtime r)))
                     (format-time-string "%Y-%m-%d %H:%M" (ee-field 'display-time r))
                     (ee-field 'buffer-name r)))
