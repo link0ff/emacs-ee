@@ -54,7 +54,9 @@
            ((and (and (fboundp 'project-current)
                       ;; Tramp tries to read a password
                       (not (file-remote-p (ee-field 'directory r))))
-                 (let* ((project (project-current nil (ee-field 'directory r)))
+                 (let* ((project (when (and (file-exists-p (ee-field 'directory r))
+                                            (file-accessible-directory-p (ee-field 'directory r)))
+                                   (project-current nil (ee-field 'directory r))))
                         (root (when project (project-root project))))
                    (when root
                      (list "(Project)" root (if (ee-field 'file-name r) "Files" "Buffers"))))))
