@@ -1,4 +1,4 @@
-;;; ee.el --- Emacs information manager
+;;; ee.el --- Emacs information manager  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -61,8 +61,8 @@ and searched to read when relative filename is given."
 
 (defcustom ee-data-file-save-format 'records
   "Format used in the saved data files.
-If 'pp, then save data to the file pretty-printed.
-If 'records, then save every record on own line.
+If \\='pp, then save data to the file pretty-printed.
+If \\='records, then save every record on own line.
 If nil, then save unformatted."
   :type 'symbol
   :group 'ee)
@@ -683,21 +683,21 @@ relational data from `ee-data' according to descritions in `ee-view-data'."
         (if (ee-data-field-get 'post-generate ee-view view-getters)
             (funcall (ee-data-field-get 'post-generate ee-view view-getters))))))
 
-(defun ee-gen-r-tree-parent-child (data data-getters parent-field-name child-field-name ri &optional start-index-p)
+(defun ee-gen-r-tree-parent-child (data data-getters-2 parent-field-name child-field-name ri &optional start-index-p)
   (if ri
       (cons ri
             (nreverse
              (mapcar
               (lambda (child-field-value)
                 (ee-gen-r-tree-parent-child
-                 data data-getters parent-field-name child-field-name
+                 data data-getters-2 parent-field-name child-field-name
                  (ee-data-record-index-find
                   data parent-field-name child-field-value
-                  data-getters
+                  data-getters-2
                   (if start-index-p ri))))
-              (ee-data-field-get child-field-name (aref data ri) data-getters))))))
+              (ee-data-field-get child-field-name (aref data ri) data-getters-2))))))
 
-(defun ee-gen-r-tree-child-parent (data data-getters child-field-name parent-field-name ri &optional ri-done)
+(defun ee-gen-r-tree-child-parent (data data-getters-2 child-field-name parent-field-name ri &optional ri-done)
   (if ri
       (cons ri
             (nreverse
@@ -707,15 +707,15 @@ relational data from `ee-data' according to descritions in `ee-view-data'."
                       (when (not (memq child-ri ri-done))
                         (setq ri-done (cons ri (cons child-ri ri-done)))
                         (ee-gen-r-tree-child-parent
-                         data data-getters child-field-name parent-field-name
+                         data data-getters-2 child-field-name parent-field-name
                          child-ri
                          ri-done)))
                     (ee-data-record-indexes-find
                      data (cons child-field-name
                                 (ee-data-field-get
                                  parent-field-name
-                                 (aref data ri) data-getters))
-                     data-getters)))))))
+                                 (aref data ri) data-getters-2))
+                     data-getters-2)))))))
 
 (defun ee-gen-add-path-atree (path new-atree atree)
   "Create path and add new atree."
@@ -919,7 +919,7 @@ and separates element of new list by value of variable
 
 ;; NOT USED currently, because sort is done simultaneously with print
 (defun ee-gen-r-tree-sort (atree a-level r-level r-sorter)
-  (let ((head (if (consp atree) (car atree) atree))
+  (let ((_head (if (consp atree) (car atree) atree))
         (tail (if (consp atree) (cdr atree)))
 ;         (attr-alist (if (consp atree) (assq ee-mark-attr-alist atree)))
         )
@@ -989,36 +989,36 @@ and separates element of new list by value of variable
 
 ;; c-printer: category exapansion line printer
 
-(defun ee-c-printer-1 (a-level c-level s-level header)
+(defun ee-c-printer-1 (a-level _c-level _s-level header)
   (insert (make-string a-level ?\040) "- " header))
 
-(defun ee-c-printer-2 (a-level c-level s-level header)
+(defun ee-c-printer-2 (a-level _c-level _s-level header)
   (insert (make-string (* 2 a-level) ?\040) "- " header))
 
-(defun ee-c-printer-1-1 (a-level c-level s-level header)
+(defun ee-c-printer-1-1 (a-level _c-level _s-level header)
   (insert (make-string (1- a-level) ?\040) "- " header))
 
-(defun ee-c-printer-2-1 (a-level c-level s-level header)
+(defun ee-c-printer-2-1 (a-level _c-level _s-level header)
   (insert (make-string (* 2 (1- a-level)) ?\040) "- " header))
 
-(defun ee-c-printer-1-faces (a-level c-level s-level header)
+(defun ee-c-printer-1-faces (a-level c-level _s-level header)
   (let ((b (point))
-        (face ))
+        (_face ))
     (insert (make-string a-level ?\040) "- " header)
     (if (< c-level (length ee-c-faces))
         (add-text-properties b (point) (list 'face (aref ee-c-faces c-level))))))
 
-(defun ee-c-printer-2-faces (a-level c-level s-level header)
+(defun ee-c-printer-2-faces (a-level c-level _s-level header)
   (let ((b (point)))
     (insert (make-string (* 2 a-level) ?\040) "- " header)
     (add-text-properties b (point) (list 'face (aref ee-c-faces c-level)))))
 
-(defun ee-c-printer-1-1-faces (a-level c-level s-level header)
+(defun ee-c-printer-1-1-faces (a-level c-level _s-level header)
   (let ((b (point)))
     (insert (make-string (1- a-level) ?\040) "- " header)
     (add-text-properties b (point) (list 'face (aref ee-c-faces c-level)))))
 
-(defun ee-c-printer-2-1-faces (a-level c-level s-level header)
+(defun ee-c-printer-2-1-faces (a-level c-level _s-level header)
   (let ((b (point)))
     (insert (make-string (* 2 (1- a-level)) ?\040) "- " header)
     (add-text-properties b (point) (list 'face (aref ee-c-faces c-level)))))
@@ -1045,12 +1045,12 @@ The test for presence of key of AELEMENT is done with `assoc'.
 If AELEMENT is added, it is added at the beginning of the alist,
 unless the optional argument APPEND is non-nil, in which case
 AELEMENT is added at the end.
-Examples: (setq trees '((oak . acorns) (maple . seeds)))
-          (add-to-alist 'trees '(pine . cones))
+Examples: (setq trees \\='((oak . acorns) (maple . seeds)))
+          (add-to-alist \\='trees \\='(pine . cones))
                => ((pine . cones) (oak . acorns) (maple . seeds))
-          (add-to-alist 'trees '(pine . pineapple))
+          (add-to-alist \\='trees \\='(pine . pineapple))
                => ((pine . pineapple) (oak . acorns) (maple . seeds))
-          (add-to-alist 'trees '(pine . nil))
+          (add-to-alist \\='trees \\='(pine . nil))
                => ((oak . acorns) (maple . seeds))
 
 If you want to use `add-to-alist' on a variable that is not defined
@@ -1258,17 +1258,18 @@ other hooks, such as major mode hooks, can do the job."
       (1- (length data))
     0))
 
+(defvar ee-break) ; lambda can change variable `break'
+
 ;; TODO: defmacro?
 (defun ee-data-records-do (data fun &optional start-index)
-  (let ((_len (length data))
-        (_i (or start-index 1))
-        break) ; lambda can change variable `break'
+  (let ((len_1 (length data))
+        (i_1 (or start-index 1)))
     ;; TODO: let data-getters data-setters?
     (if (functionp fun)
-        (while (and (< _i _len) (not break))
-          (if (aref data _i)
-              (funcall fun (aref data _i) _i))
-          (setq _i (1+ _i))))))
+        (while (and (< i_1 len_1) (not ee-break))
+          (if (aref data i_1)
+              (funcall fun (aref data i_1) i_1))
+          (setq i_1 (1+ i_1))))))
 
 (defun ee-data-records-find (data condition &optional getters)
   ;; Current format of `condition' is (field-name . field-value)
@@ -1290,12 +1291,12 @@ with name `field-name' is equal to `field-value'."
   "Find all records from `data' using `condition'
 in the format (field-name . field-value) where value of field
 with name `field-name' is equal to `field-value'."
-  (let ((condition-type (if (consp (cdr condition)) (car condition)))
+  (let ((_condition-type (if (consp (cdr condition)) (car condition)))
         (field-name (car condition))
         (field-value (cdr condition))
         (data-getters (or getters (ee-data-meta-getters-get-set data)))
-        (len (length data))
-        (ri 1)
+        (_len (length data))
+        (_ri 1)
         res)
     (ee-data-records-do
      data
@@ -1329,7 +1330,7 @@ with name `field-name' is equal to `field-value'."
 ;;        (if (equal (ee-data-field-get key-field-name r data-getters)
 ;;                   key-field-value)
 ;;            (setq record-index ri
-;;                  break t)))
+;;                  ee-break t)))
 ;;      start-index)
 ;;     record-index))
 
@@ -1397,11 +1398,11 @@ with name `field-name' is equal to `field-value'."
 
 ;;; Data file related functions
 
-(defun ee-data-file-absolute-name (data-file data-directory)
+(defun ee-data-file-absolute-name (data-file data-directory-2)
   (if data-file
       (if (file-name-absolute-p data-file)
           data-file
-        (expand-file-name data-file data-directory))))
+        (expand-file-name data-file data-directory-2))))
 
 (defun ee-data-file-exists-p (filename)
   (and (stringp filename)
@@ -1459,7 +1460,7 @@ with name `field-name' is equal to `field-value'."
                 (pp (aref data 0) (current-buffer))
                 (ee-data-records-do
                  data
-                 (lambda (r ri)
+                 (lambda (r _ri)
                    (prin1 r (current-buffer))
                    (princ "\n" (current-buffer))))
                 (princ "]" (current-buffer)))
@@ -1587,7 +1588,7 @@ with name `field-name' is equal to `field-value'."
         (ee-view-expansion-show-or-hide-region (overlay-start e)
                                                (overlay-end e)))))
 
-(defun ee-view-expansion-show-children (&optional level)
+(defun ee-view-expansion-show-children (&optional _level)
   "Shows own children up to level, but hides children expansions."
   (interactive)
   ;; TODO: implement it
@@ -1623,7 +1624,7 @@ with name `field-name' is equal to `field-value'."
       (if (and (ee-view-on-expansion-line-p)
                (ee-view-expansion-visible-p))
           (ee-view-expansion-hide))
-      (or (bobp) (previous-line 1)) ; previous-line to ignore invisible lines
+      (or (bobp) (with-no-warnings (previous-line 1))) ; previous-line to ignore invisible lines
       ))
   (ee-view-key-restore)
   ;; (ee-view-expansion-prev)
@@ -1706,16 +1707,16 @@ with name `field-name' is equal to `field-value'."
 With argument, repeats or can move backward if negative."
   (interactive "p")
   (while (and (not (bobp)) (< arg 0))
-    (previous-line 1)        ; previous-line to ignore invisible lines
+    (with-no-warnings (previous-line 1)) ; previous-line to ignore invisible lines
     (while (and (not (bobp))
                 (not (ee-view-on-expansion-line-p)))
-      (previous-line 1))
+      (with-no-warnings (previous-line 1)))
     (setq arg (1+ arg)))
   (while (and (not (eobp)) (> arg 0))
-    (next-line 1)                ; next-line to ignore invisible lines
+    (with-no-warnings (next-line 1))  ; next-line to ignore invisible lines
     (while (and (not (eobp))
                 (not (ee-view-on-expansion-line-p)))
-      (next-line 1))
+      (with-no-warnings (next-line 1)))
     (setq arg (1- arg)))
   (run-hooks 'ee-view-goto-hook))
 
@@ -1787,7 +1788,7 @@ With argument, move up ARG levels."
 ;; (fset 'ee-view-record-current 'ee-view-record-get)
 
 ;; TODO: rename to ...-clone
-(defun ee-view-record-copy (&optional point)
+(defun ee-view-record-copy (&optional _point)
   (interactive)
   (setq ee-data (vconcat ee-data (list (ee-view-record-get))))
   (ee-view-buffer-update))
@@ -1810,30 +1811,30 @@ With argument, move up ARG levels."
       (ee-view-record-next))
   (run-hooks 'ee-view-goto-hook))
 
-(defun ee-view-record-next (&optional arg)
+(defun ee-view-record-next (&optional _arg)
   ;; TODO: use arg
   (interactive)
 ;;   (message "1:[%s]" (line-number-at-pos (point)))
   (when (not (eobp))
 ;;     (message "!1:[%s]" (eobp))
-    (next-line 1)                ; next-line to ignore invisible lines
+    (with-no-warnings (next-line 1))  ; next-line to ignore invisible lines
 ;;     (message "!2:[%s]" (eobp))
     (while (not (or (ee-view-on-record-line-p) (eobp)))
 ;;       (message "?:[%s]" (eolp))
-      (next-line 1)))
+      (with-no-warnings (next-line 1))))
 ;;   (message "2:[%s]" (line-number-at-pos (point)))
   (run-hooks 'ee-view-goto-hook))
 
-(defun ee-view-record-next-with (fun &optional arg)
+(defun ee-view-record-next-with (fun &optional _arg)
   ;; TODO: use arg
   (interactive)
   (when (and fun (not (eobp)))
-    (next-line 1)                ; next-line to ignore invisible lines
+    (with-no-warnings (next-line 1))  ; next-line to ignore invisible lines
     (while (not (or (and (ee-view-on-record-line-p) (funcall fun)) (eobp)))
-      (next-line 1)))
+      (with-no-warnings (next-line 1))))
   (run-hooks 'ee-view-goto-hook))
 
-(defun ee-view-record-next-or-first (arg)
+(defun ee-view-record-next-or-first (_arg)
   ;; TODO: implement it
   )
 
@@ -1845,16 +1846,16 @@ With argument, move up ARG levels."
   ;; TODO: implement it
   )
 
-(defun ee-view-record-prev (&optional arg)
+(defun ee-view-record-prev (&optional _arg)
   ;; TODO: use arg
   (interactive)
   (when (not (bobp))
-    (previous-line 1)        ; previous-line to ignore invisible lines
+    (with-no-warnings (previous-line 1)) ; previous-line to ignore invisible lines
     (while (not (or (ee-view-on-record-line-p) (bobp)))
-      (previous-line 1)))
+      (with-no-warnings (previous-line 1))))
   (run-hooks 'ee-view-goto-hook))
 
-(defun ee-view-record-with (function)
+(defun ee-view-record-with (_function)
   ;; e.g. (ee-view-record-with (lambda () (ee-data-field-get 'unread)))
   )
 
@@ -1987,7 +1988,7 @@ Advances point."
   (or to   (setq to   (point-max)))
   (save-excursion
     (goto-char from)
-    (let ((setters (ee-data-meta-setters-get-set ee-data)))
+    (let ((_setters (ee-data-meta-setters-get-set ee-data)))
       (while (< (point) to) ;;(not (eobp))
         (when (ee-view-on-record-line-p)
           ;;(ee-data-field-set mark-field-name mark-field-value (ee-view-record-get) setters)
@@ -2211,7 +2212,7 @@ and then move up one line.  Prefix arg means move that many lines."
       (revert-buffer)
     (message "No revert function is associated with this buffer.")))
 
-(defun ee-view-buffer-revert-function-default (ignore1 ignore2)
+(defun ee-view-buffer-revert-function-default (_ignore1 _ignore2)
   "Default revert buffer function."
   (ee-view-buffer-update 'collect))
 
@@ -2334,7 +2335,7 @@ and released on expansion line, then no action is performed."
     (nreverse host)))
 
 ;; TODO: move next function to view/links.ee
-(defun ee-links-select (&optional arg)
+(defun ee-links-select (&optional _arg)
   (interactive)
   (cond
    ((ee-data-field-get 'command)
@@ -2371,8 +2372,7 @@ and released on expansion line, then no action is performed."
   "Apply FUNCTION to each element of SEQUENCE for side effects only.
 Unlike `mapcar', don't accumulate the results.  Return SEQUENCE.
 SEQUENCE may be a list, a vector, a bool-vector, or a string."
-  (mapcar function sequence)
-  sequence))
+  (mapcar function sequence)))
 
 (or (fboundp 'ignore-errors)
 (defmacro ignore-errors (&rest body)
@@ -2459,6 +2459,8 @@ With one argument, just copy STRING without its properties."
 
 
 ;;; Display and call the available ee extensions
+
+(declare-function ee-datafile "ee-datafile" (&rest args))
 
 ;;;###autoload
 (defun ee (&optional file)

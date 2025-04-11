@@ -1,4 +1,4 @@
-;;; ee-customize.el --- browse Emacs customization groups
+;;; ee-customize.el --- browse Emacs customization groups  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -83,7 +83,7 @@
 
 ;;; Actions
 
-(defun ee-customize-customize-group (&optional arg)
+(defun ee-customize-customize-group (&optional _arg)
   (interactive)
   (customize-group (ee-field 'name)))
 
@@ -107,7 +107,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-customize (&optional arg)
+(defun ee-customize (&optional _arg)
   "Browse Emacs customization groups."
   (interactive "P")
   (require 'cus-edit)

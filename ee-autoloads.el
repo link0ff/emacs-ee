@@ -1,3 +1,4 @@
+;;; ee-autoloads.el --- automatically extracted autoloads (do not edit)  -*- lexical-binding: t -*-
 (provide 'ee-autoloads)
 
 ;;;### (autoloads nil "ee" "ee.el" (0 0 0 0))
@@ -10,9 +11,9 @@ the default is the top-level mode list.
 In interactive use, a prefix argument directs this command
 to read a root file name from the minibuffer.
 
-\(fn &optional FILE)" t nil)
+\(fn &optional FILE)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee" '("ee-" "posn-col-row-sans-header")))
+(register-definition-prefixes "ee" '("ee-" "posn-col-row-sans-header"))
 
 ;;;***
 
@@ -22,9 +23,9 @@ to read a root file name from the minibuffer.
 (autoload 'ee-bbdb "ee-bbdb" "\
 Summary mode for BBDB.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-bbdb" '("ee-bbdb-")))
+(register-definition-prefixes "ee-bbdb" '("ee-bbdb-"))
 
 ;;;***
 
@@ -34,9 +35,9 @@ Summary mode for BBDB.
 (autoload 'ee-buffers "ee-buffers" "\
 Display and manipulate Emacs buffers.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-buffers" '("ee-buffers-")))
+(register-definition-prefixes "ee-buffers" '("ee-buffers-"))
 
 ;;;***
 
@@ -46,9 +47,9 @@ Display and manipulate Emacs buffers.
 (autoload 'ee-commands "ee-commands" "\
 Categorized menu of Emacs commands.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-commands" '("ee-commands-")))
+(register-definition-prefixes "ee-commands" '("ee-commands-"))
 
 ;;;***
 
@@ -58,9 +59,9 @@ Categorized menu of Emacs commands.
 (autoload 'ee-customize "ee-customize" "\
 Browse Emacs customization groups.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-customize" '("ee-customize-")))
+(register-definition-prefixes "ee-customize" '("ee-customize-"))
 
 ;;;***
 
@@ -73,14 +74,14 @@ Datafile view mode.
 The purpose of this function is to create the view buffer,
 when user visits a file with -*- mode: ee-datafile -*-.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
 (autoload 'ee-datafile "ee-datafile" "\
 Display and edit data files.
 
-\(fn &optional ARG FILE)" t nil)
+\(fn &optional ARG FILE)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-datafile" '("ee-datafile-mode-name")))
+(register-definition-prefixes "ee-datafile" '("ee-datafile-mode-name"))
 
 ;;;***
 
@@ -90,9 +91,9 @@ Display and edit data files.
 (autoload 'ee-dired "ee-dired" "\
 Categorized directory listings.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-dired" '("ee-dired-")))
+(register-definition-prefixes "ee-dired" '("ee-dired-"))
 
 ;;;***
 
@@ -102,9 +103,9 @@ Categorized directory listings.
 (autoload 'ee-dselect "ee-dselect" "\
 Debian package handling frontend.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-dselect" '("ee-dselect-")))
+(register-definition-prefixes "ee-dselect" '("ee-dselect-"))
 
 ;;;***
 
@@ -114,9 +115,9 @@ Debian package handling frontend.
 (autoload 'ee-edb "ee-edb" "\
 Summary mode for EDB.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-edb" '("ee-edb-")))
+(register-definition-prefixes "ee-edb" '("dbc-database" "dbf-summary-" "dbs-" "ee-edb-" "maplinks-"))
 
 ;;;***
 
@@ -126,9 +127,9 @@ Summary mode for EDB.
 (autoload 'ee-ell "ee-ell" "\
 Browse the categorized Emacs Lisp List.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-ell" '("ee-ell-")))
+(register-definition-prefixes "ee-ell" '("ee-ell-"))
 
 ;;;***
 
@@ -138,9 +139,9 @@ Browse the categorized Emacs Lisp List.
 (autoload 'ee-example "ee-example" "\
 Accompanying example for demonstration of ee capabilities.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-example" '("ee-example-")))
+(register-definition-prefixes "ee-example" '("ee-example-"))
 
 ;;;***
 
@@ -150,9 +151,9 @@ Accompanying example for demonstration of ee capabilities.
 (autoload 'ee-fields "ee-fields" "\
 Display and edit fields of the current record.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-fields" '("ee-fields-")))
+(register-definition-prefixes "ee-fields" '("ee-fields-"))
 
 ;;;***
 
@@ -162,9 +163,9 @@ Display and edit fields of the current record.
 (autoload 'ee-finder "ee-finder" "\
 Keyword-based Emacs code finder.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-finder" '("ee-finder-")))
+(register-definition-prefixes "ee-finder" '("ee-finder-"))
 
 ;;;***
 
@@ -174,9 +175,9 @@ Keyword-based Emacs code finder.
 (autoload 'ee-gnus "ee-gnus" "\
 Summary and topic mode for Gnus.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-gnus" '("ee-gnus-")))
+(register-definition-prefixes "ee-gnus" '("ee-gnus-" "gnus-topic-"))
 
 ;;;***
 
@@ -186,19 +187,19 @@ Summary and topic mode for Gnus.
 (autoload 'ee-history-command "ee-history" "\
 Display list from Emacs variable `command-history'.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
 (autoload 'ee-history-extended-command "ee-history" "\
 Display list from Emacs variable `extended-command-history'.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
 (autoload 'ee-history-shell-command "ee-history" "\
 Display list from Emacs variable `shell-command-history'.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-history" '("ee-history-")))
+(register-definition-prefixes "ee-history" '("ee-history-"))
 
 ;;;***
 
@@ -208,9 +209,9 @@ Display list from Emacs variable `shell-command-history'.
 (autoload 'ee-imenu "ee-imenu" "\
 Categorized mode-specific buffer indexes.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-imenu" '("ee-imenu-")))
+(register-definition-prefixes "ee-imenu" '("ee-imenu-"))
 
 ;;;***
 
@@ -229,9 +230,9 @@ The search path for Info files is in the variable `Info-directory-list'.
 The top-level Info directory is made by combining all the files named `dir'
 in all the directories in that path.
 
-\(fn &optional FILE)" t nil)
+\(fn &optional FILE)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-info" '("ee-info-")))
+(register-definition-prefixes "ee-info" '("ee-info-"))
 
 ;;;***
 
@@ -241,9 +242,9 @@ in all the directories in that path.
 (autoload 'ee-marks "ee-marks" "\
 Display and go to marked lines in the current Emacs buffer.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-marks" '("ee-marks-")))
+(register-definition-prefixes "ee-marks" '("ee-marks-"))
 
 ;;;***
 
@@ -253,10 +254,10 @@ Display and go to marked lines in the current Emacs buffer.
 (autoload 'ee-menubar "ee-menubar" "\
 Categorized access to Emacs menu-bar.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
  (defalias 'ee-tmm 'ee-menubar)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-menubar" '("ee-menubar-")))
+(register-definition-prefixes "ee-menubar" '("ee-menubar-"))
 
 ;;;***
 
@@ -266,9 +267,9 @@ Categorized access to Emacs menu-bar.
 (autoload 'ee-outline "ee-outline" "\
 Manipulate outlines collected from outline-mode.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-outline" '("ee-outline-")))
+(register-definition-prefixes "ee-outline" '("ee-outline-"))
 
 ;;;***
 
@@ -278,9 +279,9 @@ Manipulate outlines collected from outline-mode.
 (autoload 'ee-processes "ee-processes" "\
 Display and manipulate Emacs processes.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-processes" '("ee-processes-")))
+(register-definition-prefixes "ee-processes" '("ee-processes-"))
 
 ;;;***
 
@@ -290,9 +291,9 @@ Display and manipulate Emacs processes.
 (autoload 'ee-programs "ee-programs" "\
 Categorized program menu.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-programs" '("ee-programs-")))
+(register-definition-prefixes "ee-programs" '("ee-programs-"))
 
 ;;;***
 
@@ -302,10 +303,10 @@ Categorized program menu.
 (autoload 'ee-ps "ee-ps" "\
 Display CPU processes.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
  (fset 'ee-top 'ee-ps)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-ps" '("ee-ps-")))
+(register-definition-prefixes "ee-ps" '("ee-ps-"))
 
 ;;;***
 
@@ -315,9 +316,9 @@ Display CPU processes.
 (autoload 'ee-tags "ee-tags" "\
 Etags facility.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-tags" '("ee-tags-")))
+(register-definition-prefixes "ee-tags" '("ee-tags-"))
 
 ;;;***
 
@@ -327,14 +328,14 @@ Etags facility.
 (autoload 'ee-textfile-changelog "ee-textfile" "\
 Organize information from ChangeLog files.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
 (autoload 'ee-textfile-apachelog "ee-textfile" "\
 Organize information from Apache log files.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-textfile" '("ee-textfile-")))
+(register-definition-prefixes "ee-textfile" '("ee-textfile-"))
 
 ;;;***
 
@@ -344,9 +345,9 @@ Organize information from Apache log files.
 (autoload 'ee-variables "ee-variables" "\
 Categorized menu of Emacs variables.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-variables" '("ee-variables-")))
+(register-definition-prefixes "ee-variables" '("ee-variables-"))
 
 ;;;***
 
@@ -356,9 +357,9 @@ Categorized menu of Emacs variables.
 (autoload 'ee-views "ee-views" "\
 Display, edit and switch views.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-views" '("ee-views-")))
+(register-definition-prefixes "ee-views" '("ee-views-"))
 
 ;;;***
 
@@ -368,19 +369,17 @@ Display, edit and switch views.
 (autoload 'ee-windows-and-add-current "ee-windows" "\
 
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
 (autoload 'ee-windows-add "ee-windows" "\
-Add current Emacs window configuration.
-
-\(fn)" t nil)
+Add current Emacs window configuration." t)
 
 (autoload 'ee-windows "ee-windows" "\
 Display and switch Emacs window configurations.
 
-\(fn &optional ARG)" t nil)
+\(fn &optional ARG)" t)
 
-(if (fboundp 'register-definition-prefixes) (register-definition-prefixes "ee-windows" '("ee-windows-")))
+(register-definition-prefixes "ee-windows" '("ee-windows-"))
 
 ;;;***
 

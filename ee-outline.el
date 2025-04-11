@@ -1,4 +1,4 @@
-;;; ee-outline.el --- manipulate outlines collected from outline-mode
+;;; ee-outline.el --- manipulate outlines collected from outline-mode  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -37,6 +37,10 @@
 
 (eval-when-compile
   (require 'outline))
+
+(declare-function outline-next-heading "outline" (&rest args))
+(declare-function outline-end-of-heading "outline" (&rest args))
+(declare-function outline-on-heading-p "outline" (&rest args))
 
 ;;; Constants
 
@@ -114,7 +118,7 @@
       (nreverse res))))
 
 ;; this is the same as ee-menubar-c-tree-builder - TODO: make generic function
-(defun ee-outline-c-tree-builder (&optional record-index)
+(defun ee-outline-c-tree-builder (&optional _record-index)
   ;; input:  [[level1 "name1" apos1 bpos1] [level2 "name2" apos2 bpos2] ...]
   ;; output: (1 (2 ...) ...)
   ;; with assumption that order of input vector elements corresponds to tree pre-order
@@ -129,19 +133,19 @@
          (let* ((elt-level (ee-field 'level r))
                 (diff (- elt-level level)))
            (if (> diff 0)
-               (dotimes (i (- diff 1)) (insert "(nil "))
-             (dotimes (i (+ (abs diff) 1)) (insert ")")))
+               (dotimes (_i (- diff 1)) (insert "(nil "))
+             (dotimes (_i (+ (abs diff) 1)) (insert ")")))
            (insert "(")
            (insert (format "%s" ri))
            (setq level elt-level))))
-      (dotimes (i (+ level 1)) (insert ")"))
+      (dotimes (_i (+ level 1)) (insert ")"))
       (insert ")")
       (goto-char (point-min))
       (read (current-buffer)))))
 
 ;;; Actions
 
-(defun ee-outline-switch-to-buffer (&optional arg other-window)
+(defun ee-outline-switch-to-buffer (&optional _arg other-window)
   (interactive)
   (let ((b (ee-field 'b))
         (parent-buffer ee-parent-buffer))
@@ -167,7 +171,7 @@
   (ee-outline-switch-to-buffer arg 'display))
 
 ;; TODO: use arg other-window and bind to some key ("r"?)
-(defun ee-outline-switch-to-buffer-narrow-to-region (&optional other-window)
+(defun ee-outline-switch-to-buffer-narrow-to-region (&optional _other-window)
   (interactive)
   (let* ((r (ee-view-record-get))
          (b (ee-field 'b r))
@@ -179,7 +183,7 @@
       (set-window-start (display-buffer ee-parent-buffer) b))))
 
 ;; TODO: use arg other-window and bind to some key (C-???)
-(defun ee-outline-switch-to-buffer-mark-region (&optional other-window)
+(defun ee-outline-switch-to-buffer-mark-region (&optional _other-window)
   (interactive)
   (let* ((r (ee-view-record-get))
          (b (ee-field 'b r))
@@ -210,7 +214,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-outline (&optional arg)
+(defun ee-outline (&optional _arg)
   "Manipulate outlines collected from outline-mode."
   (interactive "P")
   (require 'outline)

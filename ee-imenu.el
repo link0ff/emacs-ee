@@ -1,4 +1,4 @@
-;;; ee-imenu.el --- categorized mode-specific buffer indexes
+;;; ee-imenu.el --- categorized mode-specific buffer indexes  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -74,7 +74,7 @@
     (if old-data
         (ee-data-records-do
          new-data
-         (lambda (r ri)
+         (lambda (r _ri)
            (if (member (ee-field 'name r) old-data)
                (ee-field-set 'read t r (ee-data-meta-setters-get-set new-data))))))
     new-data))
@@ -105,7 +105,7 @@
 
 ;;; Actions
 
-(defun ee-imenu-switch-to-buffer (&optional arg other-window)
+(defun ee-imenu-switch-to-buffer (&optional _arg other-window)
   (interactive)
   (let ((marker (ee-field 'position-marker))
         (parent-buffer ee-parent-buffer))
@@ -132,7 +132,7 @@
   (interactive)
   (ee-imenu-switch-to-buffer arg 'display))
 
-(defun ee-imenu-execute (r marks)
+(defun ee-imenu-execute (_r _marks)
   ;; TODO: delete referenced region from parent buffer
   )
 
@@ -157,7 +157,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-imenu (&optional arg)
+(defun ee-imenu (&optional _arg)
   "Categorized mode-specific buffer indexes."
   (interactive "P")
   (require 'imenu)

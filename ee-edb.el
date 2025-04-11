@@ -1,4 +1,4 @@
-;;; ee-edb.el --- summary mode for EDB
+;;; ee-edb.el --- summary mode for EDB  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -34,6 +34,16 @@
   (require 'database nil t)
   (require 'db-summary nil t))
 
+(declare-function db-create-summary-buffer "database" (&rest args))
+(declare-function db-debug-message "database" (&rest args))
+(declare-function db-jump-to-record "database" (&rest args))
+(declare-function dbf-set-summary-format "database" (&rest args))
+(declare-function dbf-summary-buffer "database" (&rest args))
+(declare-function link-record "database" (&rest args))
+(declare-function link-set-summary "database" (&rest args))
+(declare-function link-summary "database" (&rest args))
+(declare-function maplinks-macro "database" (&rest args))
+
 ;;; Constants
 
 (defconst ee-edb-mode-name "ee-edb")
@@ -58,6 +68,16 @@
 
 ;;; Data Extraction
 
+(defvar dbc-database nil)
+(defvar dbf-summary-buffer nil)
+(defvar dbf-summary-format nil)
+(defvar dbf-summary-function nil)
+(defvar dbf-summary-recompute-all-p nil)
+(defvar dbs-data-display-buffer nil)
+(defvar dbs-no-of-records nil)
+(defvar maplinks-index nil)
+(defvar maplinks-link nil)
+
 (defun ee-edb-data-collect (data)
   (setq dbs-no-of-records -1)
   (setq dbc-database (with-current-buffer ee-parent-buffer dbc-database))
@@ -73,7 +93,7 @@
                                   (db-create-summary-buffer data-display-buffer)))
                         (setq dbs-data-display-buffer data-display-buffer)
                         (maplinks-macro
-                         (let ((r maplinks-link)
+                         (let ((_r maplinks-link)
                                (summary-function dbf-summary-function)
                                (recompute-all-p dbf-summary-recompute-all-p))
                            (if (or recompute-all-p (not (link-summary maplinks-link)))
@@ -92,7 +112,7 @@
 
 ;;; Actions
 
-(defun ee-edb-switch-to-buffer (&optional arg)
+(defun ee-edb-switch-to-buffer (&optional _arg)
   (interactive "P")
   (let ((ri (ee-view-record-index-get (point))))
     (when (and ri ee-parent-buffer)
@@ -119,7 +139,7 @@ It inherits key bindings from `ee-mode-map'."
     (ee-edb-keymap-make-default))
 
 ;;;###autoload
-(defun ee-edb (&optional arg)
+(defun ee-edb (&optional _arg)
   "Summary mode for EDB."
   (interactive "P")
   (require 'database)

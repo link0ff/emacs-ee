@@ -1,4 +1,4 @@
-;;; ee-processes.el --- display and manipulate Emacs processes
+;;; ee-processes.el --- display and manipulate Emacs processes  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -88,7 +88,7 @@
 
 ;;; Actions
 
-(defun ee-processes-select (&optional arg other-window)
+(defun ee-processes-select (&optional _arg _other-window)
   (interactive)
   (switch-to-buffer (ee-field 'buffer)))
 
@@ -121,7 +121,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-processes (&optional arg)
+(defun ee-processes (&optional _arg)
   "Display and manipulate Emacs processes."
   (interactive "P")
   (ee-view-buffer-create

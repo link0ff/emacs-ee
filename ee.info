@@ -1,16 +1,16 @@
-This is ee.info, produced by makeinfo version 4.11 from ee.texi.
+This is ee.info, produced by makeinfo version 7.1 from ee.texi.
 
 INFO-DIR-SECTION Emacs
 START-INFO-DIR-ENTRY
 * Ee: (ee).		Emacs information manager.
 END-INFO-DIR-ENTRY
 
-   This document describes the Ee, Emacs information manager.
+This document describes the Ee, Emacs information manager.
 
-   This is edition $Revision$ $Date$ of the `Ee User Manual' for `ee'
+   This is edition $Revision$ $Date$ of the ‘Ee User Manual’ for ‘ee’
 Version 0.1.0.
 
-   Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
+   Copyright © 2002, 2003, 2004, 2010 Juri Linkov <juri@jurta.org>
 
    Permission is granted to make and distribute verbatim copies of this
 manual provided the copyright notice and this permission notice are
@@ -19,11 +19,11 @@ preserved on all copies.
 
 File: ee.info,  Node: Top,  Next: Introduction,  Prev: (dir),  Up: (dir)
 
-   This document describes the `ee' version 0.1.0, Emacs information
+This document describes the ‘ee’ version 0.1.0, Emacs information
 manager.
 
-   PLEASE NOTE THAT THIS MANUAL IS NOT FINISHED, BECAUSE THIS PACKAGE
-IS UNDER DEVELOPMENT, AND ALL DETAILS DESCRIBED HERE CAN BE CHANGED.
+   PLEASE NOTE THAT THIS MANUAL IS NOT FINISHED, BECAUSE THIS PACKAGE IS
+UNDER DEVELOPMENT, AND ALL DETAILS DESCRIBED HERE CAN BE CHANGED.
 
 * Menu:
 
@@ -53,7 +53,6 @@ File: ee.info,  Node: Introduction,  Next: Data-Flow Diagram,  Prev: Top,  Up: T
 
 1 Introduction
 **************
-
 
 Ee is the categorizing information manager for Emacs.
 It works by collecting information from different
@@ -114,15 +113,13 @@ File: ee.info,  Node: Data Structures,  Next: View Description,  Prev: Data-Flow
 3 Data Structures
 *****************
 
-`data-file'
+‘data-file’
      Name of the file that contains data.
-
-`view-data-file'
+‘view-data-file’
      Name of the data file that contains the view descriptions.
-
-`collector'
+‘collector’
      Function that collects data from source other than data file, and
-     sets the variable `ee-data'.
+     sets the variable 'ee-data'.
 
    Example of data structure:
      [(meta
@@ -155,45 +152,36 @@ File: ee.info,  Node: View Description,  Next: View Generation,  Prev: Data Stru
 
 Views are described by data structures.
 
-   Currently some fields are functions, where record fields are
-accessed by function `ee-field', e.g. (ee-field 'field-name record).
+   Currently some fields are functions, where record fields are accessed
+by function 'ee-field', e.g.  (ee-field 'field-name record).
 
    Current fields of view description data structure (functions that
 begin with 'c-' prefix operate on categories, functions that begin with
 'r-' prefix operate on records):
 
-`name'
+‘name’
      Unique view name.
-
-`r-filter'
+‘r-filter’
      Function that selects the displayed records.
-
-`c-path-finder'
+‘c-path-finder’
      Function that converts every record to a list of category paths,
      which is used to build a category tree.
-
-`c-sorter'
-     Function that sorts the categories. Arguments are a-level (all
+‘c-sorter’
+     Function that sorts the categories.  Arguments are a-level (all
      levels), c-level (category-level), s-level (subcategory level),
      attr-alist (attributes list).
-
-`r-sorter'
-     Function that sorts the records. Arguments are a-level (all
+‘r-sorter’
+     Function that sorts the records.  Arguments are a-level (all
      levels), r-level (record-level), attr-alist (attributes list).
-
-`c-calculator'
+‘c-calculator’
      Function that calculates the category totals.
-
-`r-calculator'
+‘r-calculator’
      Function that calculates the record totals.
-
-`c-printer'
+‘c-printer’
      Function that prints the category lines.
-
-`r-printer'
+‘r-printer’
      Function that prints the record lines.
-
-`r-select'
+‘r-select’
      Function called after typing RET on a record line.
 
    Example of view description data structure:
@@ -260,7 +248,7 @@ Data:
      '((c-2) 101)
      '((c-2) 104)
 
-   Internal structure `view-atree':
+   Internal structure 'view-atree':
      (root
       (~
        (_r 101))
@@ -347,7 +335,7 @@ Marking and deleting viewed items.
 in all categories.
 
    If marking key is typed, when point is on category line, then the
-whole category is marked, i.e. every record under this category is
+whole category is marked, i.e.  every record under this category is
 marked.
 
 
@@ -361,14 +349,14 @@ You can write new ee extensions.
    To do it, follow the next steps:
 
   1. Create new file.
-     Give it the name beginning with prefix `ee-'.
+     Give it the name beginning with prefix ‘ee-’.
 
   2. Add default data description.
 
   3. Add default view data description.
 
    For list of currently available extensions see
-`http://www.jurta.org/emacs/ee/'.
+<http://www.jurta.org/emacs/ee/>.
 
 
 File: ee.info,  Node: Installation,  Next: Reporting Bugs,  Prev: Writing Extensions,  Up: Top
@@ -376,7 +364,7 @@ File: ee.info,  Node: Installation,  Next: Reporting Bugs,  Prev: Writing Extens
 11 Installation
 ***************
 
-See the file README or `http://www.jurta.org/emacs/ee/'
+See the file README or <http://www.jurta.org/emacs/ee/>
 
 
 File: ee.info,  Node: Reporting Bugs,  Next: Terminology,  Prev: Installation,  Up: Top
@@ -386,7 +374,7 @@ File: ee.info,  Node: Reporting Bugs,  Next: Terminology,  Prev: Installation,  
 
 Please report bugs, make suggestions and contributions to
 <juri@jurta.org> or on the Web pages at
-`http://www.jurta.org/emacs/ee/'.
+<http://www.jurta.org/emacs/ee/>.
 
 
 File: ee.info,  Node: Terminology,  Next: Concept Index,  Prev: Reporting Bugs,  Up: Top
@@ -394,11 +382,9 @@ File: ee.info,  Node: Terminology,  Next: Concept Index,  Prev: Reporting Bugs, 
 13 Terminology
 **************
 
-`category'
-
-`expansion'
-
-`path-finder'
+‘category’
+‘expansion’
+‘path-finder’
 
 
 File: ee.info,  Node: Concept Index,  Next: Command Index,  Prev: Terminology,  Up: Top
@@ -419,44 +405,43 @@ File: ee.info,  Node: Command Index,  Next: Key Index,  Prev: Concept Index,  Up
 Command Index
 *************
 
- [index ]
-* Menu:
 
 File: ee.info,  Node: Key Index,  Next: Variable Index,  Prev: Command Index,  Up: Top
 
 Key Index
 *********
 
- [index ]
-* Menu:
 
 File: ee.info,  Node: Variable Index,  Prev: Key Index,  Up: Top
 
 Variable Index
 **************
 
- [index ]
-* Menu:
 
 
 Tag Table:
-Node: Top556
-Node: Introduction1822
-Node: Data-Flow Diagram2512
-Node: Data Structures3734
-Node: View Description4977
-Node: View Generation8507
-Node: View Buffer9322
-Node: Visibility10556
-Node: Navigation10750
-Node: Marking and Deletion10871
-Node: Writing Extensions11293
-Node: Installation11749
-Node: Reporting Bugs11937
-Node: Terminology12198
-Node: Concept Index12361
-Node: Command Index12722
-Node: Key Index12860
-Node: Variable Index12991
+Node: Top558
+Node: Introduction1825
+Node: Data-Flow Diagram2514
+Node: Data Structures3736
+Node: View Description4989
+Node: View Generation8553
+Node: View Buffer9368
+Node: Visibility10602
+Node: Navigation10796
+Node: Marking and Deletion10917
+Node: Writing Extensions11340
+Node: Installation11800
+Node: Reporting Bugs11988
+Node: Terminology12249
+Node: Concept Index12422
+Node: Command Index12783
+Node: Key Index12901
+Node: Variable Index13012
 
 End Tag Table
+
+
+Local Variables:
+coding: utf-8
+End:

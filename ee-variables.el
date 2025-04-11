@@ -1,4 +1,4 @@
-;;; ee-variables.el --- categorized menu of Emacs variables
+;;; ee-variables.el --- categorized menu of Emacs variables  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -82,7 +82,7 @@
 
 ;;; Actions
 
-(defun ee-variables-call-interactively (&optional arg)
+(defun ee-variables-call-interactively (&optional _arg)
   (interactive)
   (describe-variable (ee-field 'variable)))
 
@@ -106,7 +106,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-variables (&optional arg)
+(defun ee-variables (&optional _arg)
   "Categorized menu of Emacs variables."
   (interactive "P")
   (ee-view-buffer-create

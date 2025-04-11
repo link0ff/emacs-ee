@@ -1,4 +1,4 @@
-;;; ee-bbdb.el --- summary mode for BBDB
+;;; ee-bbdb.el --- summary mode for BBDB  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -32,6 +32,13 @@
 
 (eval-when-compile
   (require 'bbdb-autoloads nil t))
+
+(declare-function bbdb-delete-record-internal "bbdb" (&rest args))
+(declare-function bbdb-send-mail-1 "bbdb" (&rest args))
+(declare-function bbdb-change-record "bbdb" (&rest args))
+(declare-function bbdb-invoke-hook "bbdb" (&rest args))
+(declare-function bbdb-read-new-record "bbdb" (&rest args))
+(declare-function bbdb-records "bbdb" (&rest args))
 
 ;;; Constants
 
@@ -85,8 +92,8 @@ bbdb-create-internal instead."
   "Compose a mail message to the person indicated by the current bbdb record.
 The first (most-recently-added) address is used if there are more than one.
 \\<bbdb-mode-map>
-If \"\\[bbdb-apply-next-command-to-all-records]\\[bbdb-send-mail]\" is \
-used instead of simply \"\\[bbdb-send-mail]\", then mail will be sent to \
+If \"\\[bbdb-apply-next-command-to-all-records]\\[bbdb-send-mail]\" is
+used instead of simply \"\\[bbdb-send-mail]\", then mail will be sent to
 all of the
 folks listed in the *BBDB* buffer instead of just the person at point."
   (interactive (list (ee-field 'bbdb-record)))
@@ -120,7 +127,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-bbdb (&optional arg)
+(defun ee-bbdb (&optional _arg)
   "Summary mode for BBDB."
   (interactive "P")
   (require 'bbdb-autoloads)

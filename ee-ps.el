@@ -1,4 +1,4 @@
-;;; ee-ps.el --- display CPU processes
+;;; ee-ps.el --- display CPU processes  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -139,7 +139,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-ps (&optional arg)
+(defun ee-ps (&optional _arg)
   "Display CPU processes."
   (interactive "P")
   (ee-view-buffer-create

@@ -1,4 +1,4 @@
-;;; ee-datafile.el --- display and edit data files
+;;; ee-datafile.el --- display and edit data files  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -65,7 +65,7 @@ when user visits a file with -*- mode: ee-datafile -*-."
     (ee-datafile arg)))
 
 ;;;###autoload
-(defun ee-datafile (&optional arg file)
+(defun ee-datafile (&optional _arg file)
   "Display and edit data files."
   (interactive "P")
   (ee-view-buffer-create

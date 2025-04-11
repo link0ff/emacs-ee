@@ -1,4 +1,4 @@
-;;; ee-gnus.el --- summary and topic mode for Gnus
+;;; ee-gnus.el --- summary and topic mode for Gnus  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -32,6 +32,9 @@
 
 (eval-when-compile
   (require 'gnus))
+
+(defvar gnus-topic-alist nil)
+(defvar gnus-topic-topology nil)
 
 ;;; Constants
 
@@ -89,7 +92,7 @@
 
 ;;; Actions
 
-(defun ee-gnus-execute (r marks)
+(defun ee-gnus-execute (_r marks)
   (mapc (lambda (mark)
           (cond
            ((eq mark ee-mark-del)
@@ -118,7 +121,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-gnus (&optional arg)
+(defun ee-gnus (&optional _arg)
   "Summary and topic mode for Gnus."
   (interactive "P")
   (require 'gnus)

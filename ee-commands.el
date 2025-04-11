@@ -1,4 +1,4 @@
-;;; ee-commands.el --- categorized menu of Emacs commands
+;;; ee-commands.el --- categorized menu of Emacs commands  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -84,7 +84,7 @@
 
 ;;; Actions
 
-(defun ee-commands-call-interactively (&optional arg)
+(defun ee-commands-call-interactively (&optional _arg)
   (interactive)
   (let ((command (ee-field 'command))
         (parent-buffer ee-parent-buffer))
@@ -112,7 +112,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-commands (&optional arg)
+(defun ee-commands (&optional _arg)
   "Categorized menu of Emacs commands."
   (interactive "P")
   (ee-view-buffer-create

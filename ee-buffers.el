@@ -1,4 +1,4 @@
-;;; ee-buffers.el --- display and manipulate Emacs buffers
+;;; ee-buffers.el --- display and manipulate Emacs buffers  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -60,7 +60,7 @@ Used in the view description to place the buffer file directory name
 into different categories depending on the file directory name.
 
 Example:
-  '((\"ee\" . \"ee\")
+  \\='((\"ee\" . \"ee\")
     (\"emacs\" . \"emacs\")
     (\"\\\\(html\\\\|www\\\\)\" . \"www\"))"
   :type '(repeat (cons (regexp :tag "Directory name regexp")
@@ -74,7 +74,7 @@ Used in the view description to place the buffer file directory name
 into different categories depending on the file name.
 
 Example:
-  '((\".emacs\" . \"emacs\"))"
+  \\='((\".emacs\" . \"emacs\"))"
   :type '(repeat (cons (regexp :tag "File name regexp")
                        (string :tag "Category name")))
   :group 'ee-buffers)
@@ -145,7 +145,7 @@ Example:
     (if old-data
         (ee-data-records-do
          new-data
-         (lambda (r ri)
+         (lambda (r _ri)
            (if (memq (ee-field 'buffer r) old-data)
                (ee-field-set 'mark 'D r)))))
     new-data))
@@ -155,7 +155,7 @@ Example:
 
 (defun ee-buffers-post-update ()
   "Find previously visited buffer to place point on it after calling `ee-buffers'."
-  (let ((data-getters (ee-data-meta-getters-get-set ee-data)))
+  (let ((_data-getters (ee-data-meta-getters-get-set ee-data)))
     (or ee-current-c-key-field
         ee-current-r-key-field
         (ee-view-record-by-key ee-parent-buffer))
@@ -242,7 +242,7 @@ See also `ee-buffers-auto-refresh-delay' for hook setter."
 
 ;;; Actions
 
-(defun ee-buffers-switch-to-buffer (&optional arg other-window)
+(defun ee-buffers-switch-to-buffer (&optional _arg other-window)
   (interactive)
   (let ((buffer (ee-field 'buffer)))
     (if (and buffer (buffer-name buffer))
@@ -319,7 +319,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-buffers (&optional arg)
+(defun ee-buffers (&optional _arg)
   "Display and manipulate Emacs buffers."
   (interactive "P")
   (ee-view-buffer-create

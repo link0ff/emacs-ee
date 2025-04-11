@@ -1,4 +1,4 @@
-;;; ee-ell.el --- browse the categorized Emacs Lisp List
+;;; ee-ell.el --- browse the categorized Emacs Lisp List  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -123,7 +123,7 @@
 
 ;;; Actions
 
-(defun ee-ell-select (&optional arg)
+(defun ee-ell-select (&optional _arg)
   (interactive)
   (message "%s" (ee-view-record-get)))
 
@@ -173,7 +173,7 @@ Negative arg means uninstall backwards."
       (find-file local-file)
       (load (concat ee-ell-install-dir local-file)))))
 
-(defun ee-ell-uninstall (r)
+(defun ee-ell-uninstall (_r)
   (interactive)
   ;; TODO
   )
@@ -200,7 +200,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-ell (&optional arg)
+(defun ee-ell (&optional _arg)
   "Browse the categorized Emacs Lisp List."
   (interactive "P")
   (ee-view-buffer-create

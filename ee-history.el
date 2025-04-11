@@ -1,4 +1,4 @@
-;;; ee-history.el --- display lists from Emacs history variables
+;;; ee-history.el --- display lists from Emacs history variables  -*- lexical-binding: t; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
@@ -31,7 +31,7 @@
 (require 'ee)
 
 (eval-when-compile
-  (require 'cl))
+  (require 'cl-lib))
 
 ;;; Constants
 
@@ -99,7 +99,7 @@
 
 ;;; Actions
 
-(defun ee-history-select (&optional arg)
+(defun ee-history-select (&optional _arg)
   (let ((name (ee-field 'name))
         (parent-buffer ee-parent-buffer)
         (type ee-history-type))
@@ -152,7 +152,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-history-command (&optional arg)
+(defun ee-history-command (&optional _arg)
   "Display list from Emacs variable `command-history'."
   (interactive "P")
   (ee-view-buffer-create
@@ -163,7 +163,7 @@ It inherits key bindings from `ee-mode-map'."
   (setq ee-history-type 'command))
 
 ;;;###autoload
-(defun ee-history-extended-command (&optional arg)
+(defun ee-history-extended-command (&optional _arg)
   "Display list from Emacs variable `extended-command-history'."
   (interactive "P")
   (ee-view-buffer-create
@@ -174,7 +174,7 @@ It inherits key bindings from `ee-mode-map'."
   (setq ee-history-type 'extended-command))
 
 ;;;###autoload
-(defun ee-history-shell-command (&optional arg)
+(defun ee-history-shell-command (&optional _arg)
   "Display list from Emacs variable `shell-command-history'."
   (interactive "P")
   (ee-view-buffer-create

@@ -108,7 +108,8 @@ ee-autoloads.elc: ee-autoloads.el
 
 ee-autoloads.el: $(ELFILES)
 	@$(RM) $@;
-	@echo "(provide 'ee-autoloads)" > $@;
+	@echo ";;; ee-autoloads.el --- automatically extracted autoloads (do not edit)  -*- lexical-binding: t -*-" > $@;
+	@echo "(provide 'ee-autoloads)" >> $@;
 	@echo "" >> $@;
 	$(EMACS) -batch -q -l autoload \
 		--eval '(setq generated-autoload-file "'`pwd`'/$@")' \
