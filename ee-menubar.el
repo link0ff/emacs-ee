@@ -38,6 +38,8 @@
 (eval-when-compile
   (require 'tmm nil t))
 
+(declare-function tmm-get-keybind "tmm" (&rest args))
+
 ;;; Constants
 
 (defconst ee-menubar-mode-name "ee-menubar")
@@ -82,7 +84,7 @@
     (if old-data
         (ee-data-records-do
          new-data
-         (lambda (r ri)
+         (lambda (r _ri)
            (if (member (ee-field 'name r) old-data)
                (ee-field-set 'read t r (ee-data-meta-setters-get-set new-data))))))
     new-data))
@@ -117,7 +119,7 @@
        (reverse (cdr menu)))))
 
 ;; this is the same as ee-outline-c-tree-builder - TODO: make generic function
-(defun ee-menubar-c-tree-builder (&optional record-index)
+(defun ee-menubar-c-tree-builder (&optional _record-index)
   ;; input:  [[level1 "name1" apos1 bpos1] [level2 "name2" apos2 bpos2] ...]
   ;; output: (1 (2 ...) ...)
   ;; with assumption that order of input vector elements corresponds to tree pre-order
@@ -131,19 +133,19 @@
          (let* ((elt-level (ee-field 'level r))
                 (diff (- elt-level level)))
            (if (> diff 0)
-               (dotimes (i (- diff 1)) (insert "(nil "))
-             (dotimes (i (+ (abs diff) 1)) (insert ")")))
+               (dotimes (_i (- diff 1)) (insert "(nil "))
+             (dotimes (_i (+ (abs diff) 1)) (insert ")")))
            (insert "(")
            (insert (format "%s" ri))
            (setq level elt-level))))
-      (dotimes (i (+ level 1)) (insert ")"))
+      (dotimes (_i (+ level 1)) (insert ")"))
       (insert ")")
       (goto-char (point-min))
       (read (current-buffer)))))
 
 ;;; Actions
 
-(defun ee-menubar-select (&optional arg)
+(defun ee-menubar-select (&optional _arg)
   (interactive)
   (if (ee-view-on-expansion-line-p)
       (ee-view-expansion-show-or-hide)
@@ -155,7 +157,7 @@
         (switch-to-buffer parent-buffer)
         (call-interactively command ee-menubar-record-flag)))))
 
-(defun ee-menubar-execute (r marks)
+(defun ee-menubar-execute (_r _marks)
   (interactive))
 
 ;;; Key Bindings
@@ -178,7 +180,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-menubar (&optional arg)
+(defun ee-menubar (&optional _arg)
   "Categorized access to Emacs menu-bar."
   (interactive "P")
   (require 'tmm)

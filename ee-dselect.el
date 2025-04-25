@@ -31,7 +31,7 @@
 (require 'ee)
 
 (eval-when-compile
-  (require 'cl))
+  (require 'cl-lib))
 
 ;;; Constants
 
@@ -149,7 +149,7 @@ shouldn't be any need to change it."
 
 ;;; Actions
 
-(defun ee-dselect-display-info-with-narrow (&optional arg)
+(defun ee-dselect-display-info-with-narrow (&optional _arg)
   (interactive)
   (let* ((d (ee-field 'description))
          ;; 12 is the length of the string "Description:"
@@ -160,7 +160,7 @@ shouldn't be any need to change it."
         (goto-char b))
       (set-window-start (display-buffer (ee-dselect-get-buffer-available)) b))))
 
-(defun ee-dselect-display-description-with-narrow (&optional arg)
+(defun ee-dselect-display-description-with-narrow (&optional _arg)
   (interactive)
   (let* ((d (ee-field 'description))
          ;; 12 is the length of the string "Description:"
@@ -191,7 +191,7 @@ It inherits key bindings from `ee-mode-map'."
     (ee-dselect-keymap-make-default))
 
 ;;;###autoload
-(defun ee-dselect (&optional arg)
+(defun ee-dselect (&optional _arg)
   "Debian package handling frontend."
   (interactive "P")
   (ee-view-buffer-create

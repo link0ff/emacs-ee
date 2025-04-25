@@ -56,23 +56,23 @@
 
 ;;; Data Extraction
 
-(defun ee-views-data-collect (data)
+(defun ee-views-data-collect (_data)
   (with-current-buffer ee-parent-buffer
     ee-view-data))
 
 ;;; Actions
 
-(defun ee-views-switch-to-buffer (&optional arg)
+(defun ee-views-switch-to-buffer (&optional _arg)
   (interactive)
   (let ((setters (ee-data-meta-setters-get-set ee-data)))
     ;; Change default view
     (ee-data-records-do
      ee-data
-     (lambda (r i)
+     (lambda (r _i)
        (ee-data-field-set 'default nil r setters)))
     (ee-data-field-set 'default t (ee-view-record-get) setters))
   (switch-to-buffer ee-parent-buffer)
-  (let ((data-getters (ee-data-meta-getters-get-set ee-data)))
+  (let ((_data-getters (ee-data-meta-getters-get-set ee-data)))
     (ee-view-buffer-update)))
 
 ;;; Key Bindings
@@ -95,7 +95,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-views (&optional arg)
+(defun ee-views (&optional _arg)
   "Display, edit and switch views."
   (interactive "P")
   (if (eq major-mode 'ee-mode)

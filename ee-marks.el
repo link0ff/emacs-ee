@@ -93,7 +93,7 @@
 
 ;;; Actions
 
-(defun ee-marks-switch-to-buffer (&optional arg other-window)
+(defun ee-marks-switch-to-buffer (&optional _arg other-window)
   (interactive)
   (let ((parent-buffer ee-parent-buffer)
         (line-number (ee-field 'line-number)))
@@ -103,7 +103,7 @@
             (split-window-horizontally))
         (select-window (next-window)))
       (switch-to-buffer parent-buffer)
-      (goto-line line-number)
+      (with-no-warnings (goto-line line-number))
       ;; if only display other window, then return back to view buffer
       (if (eq other-window 'display)
           (select-window (next-window))))))
@@ -116,7 +116,7 @@
   (interactive)
   (ee-marks-switch-to-buffer arg 'display))
 
-(defun ee-marks-execute (r marks)
+(defun ee-marks-execute (_r _marks)
   ;; TODO: delete mark from mark-ring?
   )
 
@@ -141,7 +141,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-marks (&optional arg)
+(defun ee-marks (&optional _arg)
   "Display and go to marked lines in the current Emacs buffer."
   (interactive "P")
   (ee-view-buffer-create

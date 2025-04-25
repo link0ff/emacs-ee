@@ -70,16 +70,18 @@
 
 ;;; Actions
 
+(declare-function gnus-edit-form "gnus-eform" (&rest args))
+
 ;; TODO: make function to read from separate buffer as in Gnus format, C-c C-c
 ;; (if (or (consp value) (and (stringp value) (string-match "\n" value)))
 ;;     (create-buffer (pp value)))
-(defun ee-fields-edit-field-in-buffer (&optional arg)
+(defun ee-fields-edit-field-in-buffer (&optional _arg)
   (interactive)
   ;; TODO: instead of gnus-edit-form make generic functions and modes
   ;; for editing strings and sexps in the separate buffers
   (gnus-edit-form (ee-field 'value) "documentation" 'ee-fields-edit-field-in-buffer-done))
 
-(defun ee-fields-edit-field-in-buffer-done (new-value &optional arg)
+(defun ee-fields-edit-field-in-buffer-done (new-value &optional _arg)
   (interactive)
   (let* ((r (ee-view-record-get))
          (data-getters (ee-data-meta-getters-get-set ee-data))
@@ -90,7 +92,7 @@
         (ee-view-buffer-update)))
     (ee-view-buffer-update t)))
 
-(defun ee-fields-edit-field-in-minibuffer (&optional arg)
+(defun ee-fields-edit-field-in-minibuffer (&optional _arg)
   (interactive)
   (let* ((r (ee-view-record-get))
          (data-getters (ee-data-meta-getters-get-set ee-data))
@@ -126,7 +128,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-fields (&optional arg)
+(defun ee-fields (&optional _arg)
   "Display and edit fields of the current record."
   (interactive "P")
   (if (eq major-mode 'ee-mode)

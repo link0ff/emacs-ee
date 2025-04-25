@@ -65,7 +65,7 @@ when user visits a file with -*- mode: ee-datafile -*-."
     (ee-datafile arg)))
 
 ;;;###autoload
-(defun ee-datafile (&optional arg file)
+(defun ee-datafile (&optional _arg file)
   "Display and edit data files."
   (interactive "P")
   (ee-view-buffer-create

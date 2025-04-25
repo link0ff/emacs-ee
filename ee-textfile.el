@@ -117,7 +117,7 @@
   (let* ((field-names (ee-data-field-names data))
          (new-data
           (ee-data-convert-lists-to-vectors
-           (let (res date name email file)
+           (let (res date name email _file)
              (with-current-buffer ee-parent-buffer
                (save-excursion
                  (save-restriction
@@ -137,8 +137,7 @@
                                  email (match-string-no-properties 2))))
                       ((looking-at ee-textfile-changelog-file-regexp)
                        (mapc (lambda (elt)
-                               (setq file elt
-                                     res (cons
+                               (setq res (cons
                                           (mapcar (lambda (field-name)
                                                     (cond
                                                      ((eq field-name 'date) date)
@@ -199,7 +198,7 @@
 
 ;;; Actions
 
-(defun ee-textfile-changelog-select (&optional arg other-window)
+(defun ee-textfile-changelog-select (&optional _arg other-window)
   (interactive)
   (let* ((data-getters (ee-data-meta-getters-get-set ee-data))
          (r (ee-view-record-get))
@@ -226,7 +225,7 @@
   (interactive)
   (ee-textfile-changelog-select arg 'display))
 
-(defun ee-textfile-execute (r marks)
+(defun ee-textfile-execute (_r _marks)
   (interactive)
   )
 
@@ -267,7 +266,7 @@ It inherits key bindings from `ee-textfile-keymap'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-textfile-changelog (&optional arg)
+(defun ee-textfile-changelog (&optional _arg)
   "Organize information from ChangeLog files."
   (interactive "P")
   (require 'add-log)
@@ -278,7 +277,7 @@ It inherits key bindings from `ee-textfile-keymap'."
    ee-textfile-changelog-data))
 
 ;;;###autoload
-(defun ee-textfile-apachelog (&optional arg)
+(defun ee-textfile-apachelog (&optional _arg)
   "Organize information from Apache log files."
   (interactive "P")
   (ee-view-buffer-create

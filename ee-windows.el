@@ -59,13 +59,13 @@
 
 ;;; Data Extraction
 
-(defun ee-windows-data-collect (data)
+(defun ee-windows-data-collect (_data)
   ;; Returns global data value as is
   ee-windows-data)
 
 ;;; Actions
 
-(defun ee-windows-select (&optional arg)
+(defun ee-windows-select (&optional _arg)
   (interactive)
   (let ((wc (ee-field 'window-configuration))
         (bl (delq nil (mapcar (lambda (b) (and (buffer-live-p b) b))
@@ -76,7 +76,7 @@
     (modify-frame-parameters (selected-frame) (list (cons 'buried-buffer-list bbl)))
     (set-window-configuration wc)))
 
-(defun ee-windows-select-and-delete-current (&optional arg)
+(defun ee-windows-select-and-delete-current (&optional _arg)
   (interactive)
   (let ((wc (ee-field 'window-configuration))
         (bl (delq nil (mapcar (lambda (b) (and (buffer-live-p b) b))
@@ -91,7 +91,7 @@
     (modify-frame-parameters (selected-frame) (list (cons 'buried-buffer-list bbl)))
     (set-window-configuration wc)))
 
-(defun ee-windows-execute (r marks)
+(defun ee-windows-execute (_r _marks)
   (interactive)
   ;; TODO: make general function in ee.el
   ;; to delete empty rows (rows with nil values)
@@ -156,7 +156,7 @@ It inherits key bindings from `ee-mode-map'."
   )
 
 ;;;###autoload
-(defun ee-windows (&optional arg)
+(defun ee-windows (&optional _arg)
   "Display and switch Emacs window configurations."
   (interactive "P")
   (ee-view-buffer-create

@@ -33,6 +33,10 @@
 (eval-when-compile
   (require 'etags))
 
+(declare-function etags-goto-tag-location "etags" (&rest args))
+(declare-function etags-snarf-tag "etags" (&rest args))
+(declare-function etags-tags-table-files "etags" (&rest args))
+
 ;;; Constants
 
 (defconst ee-tags-mode-name "ee-tags")
@@ -80,7 +84,7 @@
     (if old-data
         (ee-data-records-do
          new-data
-         (lambda (r ri)
+         (lambda (r _ri)
            (if (member (ee-field 'tag r) old-data)
                (ee-field-set 'read t r (ee-data-meta-setters-get-set new-data))))))
     new-data))
@@ -113,7 +117,7 @@
 ;;; Actions
 
 ;; TODO: take hair from `find-tag-other-window'
-(defun ee-tags-select (&optional arg other-window)
+(defun ee-tags-select (&optional _arg _other-window)
   (interactive)
   (ee-field-set 'read t)
   (ee-view-update '(read)) ;; (ee-view-record-update)
@@ -147,7 +151,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-tags (&optional arg)
+(defun ee-tags (&optional _arg)
   "Etags facility."
   (interactive "P")
   (require 'etags)

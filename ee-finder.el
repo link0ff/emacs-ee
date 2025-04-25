@@ -85,18 +85,18 @@
                   ((eq field-name 'synopsis) (nth 1 package))
                   ((eq field-name 'keywords) (nth 2 package))))
                field-names))
-            finder-package-info))))
+            package--builtins))))
     (aset new-data 0 (aref data 0))
     new-data))
 
 ;;; Actions
 
-(defun ee-finder-select (&optional arg other-window)
+(defun ee-finder-select (&optional _arg _other-window)
   (interactive)
   ;; TODO: find file
   (find-file (locate-library (ee-field 'file))))
 
-(defun ee-finder-commentary (&optional arg other-window)
+(defun ee-finder-commentary (&optional _arg _other-window)
   "Display FILE's commentary section."
   (interactive)
   (finder-commentary (ee-field 'file)))
@@ -123,7 +123,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-finder (&optional arg)
+(defun ee-finder (&optional _arg)
   "Keyword-based Emacs code finder."
   (interactive "P")
   (require 'finder)

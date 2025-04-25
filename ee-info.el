@@ -66,6 +66,14 @@
 (eval-when-compile
   (require 'info))
 
+(declare-function Info-build-toc "info" (&rest args))
+(declare-function Info-extract-menu-node-name "info" (&rest args))
+(declare-function Info-find-file "info" (&rest args))
+(declare-function Info-find-node "info" (&rest args))
+(declare-function Info-following-node-name "info" (&rest args))
+(declare-function Info-insert-dir "info" (&rest args))
+(declare-function info-insert-file-contents "info" (&rest args))
+
 ;;; Constants
 
 ;; Name "ee-info" (the same as next variable) is better than "ee-info-dir"
@@ -191,12 +199,12 @@ Output: [[title filename nodename dir-section info-dir-section] ...]
 
 ;;; Actions
 
-(defun ee-info-dir-ee-info (&optional arg)
+(defun ee-info-dir-ee-info (&optional _arg)
   (interactive)
   (let ((filename (ee-field 'filename)))
     (and filename (ee-info filename))))
 
-(defun ee-info-dir-find-node (&optional arg)
+(defun ee-info-dir-find-node (&optional _arg)
   (let* ((r (ee-view-record-get))
          (filename (ee-field 'filename))
          (nodename (ee-field 'nodename)))
@@ -329,7 +337,7 @@ It inherits key bindings from `ee-mode-map'."
 
 ;;; Actions
 
-(defun ee-info-find-node (&optional arg other-window)
+(defun ee-info-find-node (&optional _arg other-window)
   (interactive)
   (let ((nodename (ee-field 'nodename))
         ;; Set ee-info-file to info-file, because buffer-local

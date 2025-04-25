@@ -74,11 +74,11 @@
 
 ;;; Actions
 
-(defun ee-example-select (&optional arg)
+(defun ee-example-select (&optional _arg)
   (interactive)
   (message "%s" (ee-field 'name)))
 
-(defun ee-example-execute (r marks)
+(defun ee-example-execute (_r _marks)
   (interactive))
 
 ;;; Key Bindings
@@ -101,7 +101,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-example (&optional arg)
+(defun ee-example (&optional _arg)
   "Accompanying example for demonstration of ee capabilities."
   (interactive "P")
   (ee-view-buffer-create

@@ -180,7 +180,7 @@
 
 ;;; Actions
 
-(defun ee-programs-start-process (&optional arg)
+(defun ee-programs-start-process (&optional _arg)
   (interactive)
   (ee-field-set 'read t)
   (ee-view-update '(read)) ;; (ee-view-record-update)
@@ -225,7 +225,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-programs (&optional arg)
+(defun ee-programs (&optional _arg)
   "Categorized program menu."
   (interactive "P")
   (ee-view-buffer-create

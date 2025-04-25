@@ -33,6 +33,9 @@
 (eval-when-compile
   (require 'gnus))
 
+(defvar gnus-topic-alist nil)
+(defvar gnus-topic-topology nil)
+
 ;;; Constants
 
 (defconst ee-gnus-mode-name "ee-gnus")
@@ -89,7 +92,7 @@
 
 ;;; Actions
 
-(defun ee-gnus-execute (r marks)
+(defun ee-gnus-execute (_r marks)
   (mapc (lambda (mark)
           (cond
            ((eq mark ee-mark-del)
@@ -118,7 +121,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-gnus (&optional arg)
+(defun ee-gnus (&optional _arg)
   "Summary and topic mode for Gnus."
   (interactive "P")
   (require 'gnus)

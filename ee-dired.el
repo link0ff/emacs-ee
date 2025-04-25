@@ -88,7 +88,7 @@
 
 ;;; Actions
 
-(defun ee-dired-find-file (&optional arg)
+(defun ee-dired-find-file (&optional _arg)
   (interactive)
   (find-file (expand-file-name (ee-field 'file-name) (ee-field 'directory))))
 
@@ -112,7 +112,7 @@ It inherits key bindings from `ee-mode-map'."
 ;;; Top-Level Functions
 
 ;;;###autoload
-(defun ee-dired (&optional arg)
+(defun ee-dired (&optional _arg)
   "Categorized directory listings."
   (interactive "P")
   (ee-view-buffer-create

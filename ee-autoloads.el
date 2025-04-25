@@ -117,7 +117,7 @@ Summary mode for EDB.
 
 \(fn &optional ARG)" t)
 
-(register-definition-prefixes "ee-edb" '("ee-edb-"))
+(register-definition-prefixes "ee-edb" '("dbc-database" "dbf-summary-" "dbs-" "ee-edb-" "maplinks-"))
 
 ;;;***
 
@@ -177,7 +177,7 @@ Summary and topic mode for Gnus.
 
 \(fn &optional ARG)" t)
 
-(register-definition-prefixes "ee-gnus" '("ee-gnus-"))
+(register-definition-prefixes "ee-gnus" '("ee-gnus-" "gnus-topic-"))
 
 ;;;***
 
