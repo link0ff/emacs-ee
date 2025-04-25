@@ -1,4 +1,4 @@
-;;; ee-gnus.el --- summary and topic mode for Gnus
+;;; ee-gnus.el --- summary and topic mode for Gnus  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

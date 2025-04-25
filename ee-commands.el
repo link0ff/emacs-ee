@@ -1,4 +1,4 @@
-;;; ee-commands.el --- categorized menu of Emacs commands
+;;; ee-commands.el --- categorized menu of Emacs commands  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

@@ -1,4 +1,4 @@
-;;; ee-ps.el --- display CPU processes
+;;; ee-ps.el --- display CPU processes  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

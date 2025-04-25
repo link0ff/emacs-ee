@@ -1,4 +1,4 @@
-;;; ee.el --- Emacs information manager
+;;; ee.el --- Emacs information manager  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

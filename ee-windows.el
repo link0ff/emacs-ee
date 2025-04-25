@@ -1,4 +1,4 @@
-;;; ee-windows.el --- display and switch Emacs window configurations
+;;; ee-windows.el --- display and switch Emacs window configurations  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

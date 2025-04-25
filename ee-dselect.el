@@ -1,4 +1,4 @@
-;;; ee-dselect.el --- Debian package handling frontend
+;;; ee-dselect.el --- Debian package handling frontend  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

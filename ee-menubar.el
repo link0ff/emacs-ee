@@ -1,4 +1,4 @@
-;;; ee-menubar.el --- categorized access to Emacs menu-bar
+;;; ee-menubar.el --- categorized access to Emacs menu-bar  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

@@ -1,4 +1,4 @@
-;;; ee-datafile.el --- display and edit data files
+;;; ee-datafile.el --- display and edit data files  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

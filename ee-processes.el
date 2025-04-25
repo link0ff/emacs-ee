@@ -1,4 +1,4 @@
-;;; ee-processes.el --- display and manipulate Emacs processes
+;;; ee-processes.el --- display and manipulate Emacs processes  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

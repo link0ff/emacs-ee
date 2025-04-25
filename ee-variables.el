@@ -1,4 +1,4 @@
-;;; ee-variables.el --- categorized menu of Emacs variables
+;;; ee-variables.el --- categorized menu of Emacs variables  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

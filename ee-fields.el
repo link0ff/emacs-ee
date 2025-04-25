@@ -1,4 +1,4 @@
-;;; ee-fields.el --- display and edit fields of the current record
+;;; ee-fields.el --- display and edit fields of the current record  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

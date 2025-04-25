@@ -1,4 +1,4 @@
-;;; ee-textfile.el --- organize information from text files
+;;; ee-textfile.el --- organize information from text files  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

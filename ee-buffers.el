@@ -1,4 +1,4 @@
-;;; ee-buffers.el --- display and manipulate Emacs buffers
+;;; ee-buffers.el --- display and manipulate Emacs buffers  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

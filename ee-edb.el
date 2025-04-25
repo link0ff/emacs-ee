@@ -1,4 +1,4 @@
-;;; ee-edb.el --- summary mode for EDB
+;;; ee-edb.el --- summary mode for EDB  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

@@ -1,4 +1,4 @@
-;;; ee-views.el --- display, edit and switch views
+;;; ee-views.el --- display, edit and switch views  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

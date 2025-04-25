@@ -1,4 +1,4 @@
-;;; ee-history.el --- display lists from Emacs history variables
+;;; ee-history.el --- display lists from Emacs history variables  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

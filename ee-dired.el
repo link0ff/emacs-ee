@@ -1,4 +1,4 @@
-;;; ee-dired.el --- categorized directory listings
+;;; ee-dired.el --- categorized directory listings  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

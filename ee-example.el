@@ -1,4 +1,4 @@
-;;; ee-example.el --- accompanying example for demonstration of ee capabilities
+;;; ee-example.el --- accompanying example for demonstration of ee capabilities  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

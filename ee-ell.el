@@ -1,4 +1,4 @@
-;;; ee-ell.el --- browse the categorized Emacs Lisp List
+;;; ee-ell.el --- browse the categorized Emacs Lisp List  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

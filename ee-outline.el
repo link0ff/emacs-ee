@@ -1,4 +1,4 @@
-;;; ee-outline.el --- manipulate outlines collected from outline-mode
+;;; ee-outline.el --- manipulate outlines collected from outline-mode  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 

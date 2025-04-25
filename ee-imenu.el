@@ -1,4 +1,4 @@
-;;; ee-imenu.el --- categorized mode-specific buffer indexes
+;;; ee-imenu.el --- categorized mode-specific buffer indexes  -*- lexical-binding: nil; -*-
 
 ;; Copyright (C) 2002, 2003, 2004, 2010  Juri Linkov <juri@jurta.org>
 
